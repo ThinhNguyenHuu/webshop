@@ -5,7 +5,7 @@
 		Screen Stylesheet
 
 version:   	1.4.5
-date:      	18/06/15
+date:      	06/01/15
 author:		magikcommerce
 email:      support@magikcommerce.com
 website:   	http://www.magikcommerce.com/
@@ -162,7 +162,7 @@ website:   	http://www.magikcommerce.com/
 	font-size: 72px;
 }
 .tp-caption.LargeTitle span {
-	color: #7bbd42
+	color: #fff
 }
 .view-more {
 	padding: 10px 40px;
@@ -170,13 +170,13 @@ website:   	http://www.magikcommerce.com/
 	text-transform: uppercase;
 	font-weight: 500;
 	color: #3d3d3d;
-	border: 2px #fff solid;
-	font-family: 'Roboto', sans-serif; background:#fff;
+	border: 2px #3d3d3d solid; background-color:#fff;
+	font-family: 'Roboto', sans-serif;
 }
 .buy-btn {
 	padding: 10px 40px;
-	background-color: #7bbd42;
-	border: 2px #68a632 solid;
+	background-color: #ad0800;
+	border: 2px #7a0202 solid;
 	font-size: 14px;
 	text-transform: uppercase;
 	font-weight: 500;
@@ -201,13 +201,13 @@ website:   	http://www.magikcommerce.com/
 	width: 500px
 }
 .black-text .tp-caption.Title {
-	color: #333;
+	color: #fff;
 }
 .black-text .tp-caption.LargeTitle {
-	color: #3d3d3d;
+	color: #fff;
 }
 .black-text .tp-caption.ExtraLargeTitle {
-	color: #333;
+	color: #fff;
 }
 .tp-caption.TitleOrange {
 	font-size: 18px;
@@ -526,5 +526,3 @@ a.tp-button {
 #magik-slideshow .col-lg-8 {
 	padding-right: 0px;
 }
-
-.tp-caption.LargeTitle.sfl.tp-resizeme span.text-color{ color:#fff;}

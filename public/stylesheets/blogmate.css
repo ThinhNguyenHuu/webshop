@@ -127,7 +127,7 @@
 	border-radius: 0px;
 }
 .blog_entry .btn:hover {
-	background: #7bbd42!important;
+	background: #ad0800!important;
 	color: #fff;
 }
 /* #Misc
@@ -160,7 +160,7 @@
 	transition: all 0.1s ease-out;
 }
 .pagination li a:hover {
-	background: #7bbd42;
+	background: #ad0800;
 	color: #fff;
 	text-decoration: none;
 }
@@ -194,8 +194,8 @@
 	text-transform: none;
 }
 .widget__sidebar .widget-title span {
-	background: none repeat scroll 0 0 #7bbd42;
-	border-bottom: 3px solid #7bbd42;
+	background: none repeat scroll 0 0 #ad0800;
+	border-bottom: 3px solid #ad0800;
 	color: #fff;
 	display: inline-block;
 	font-family: DIN, Helvetica, Arial, sans-serif;
@@ -250,7 +250,7 @@
 	color: #999;
 }
 .popular-posts .post-meta a {
-	color: #7bbd42;
+	color: #ad0800;
 	-webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
 	transition: all 0.2s ease-out;
@@ -285,10 +285,10 @@
 }
 .post-meta span a:hover {
 	text-decoration: none;
-	color: #7bbd42;
+	color: #ad0800;
 }
 .post-meta span a:hover [class^="icon-"] {
-	color: #7bbd42;
+	color: #ad0800;
 }
 .post-excerpt p {
 	margin-bottom: 1.3em;
@@ -515,7 +515,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea, selec
 	margin-top: 15px
 }
 .bnt-comment:hover {
-	background: #7bbd42!important;
+	background: #ad0800!important;
 	color: #fff;
 }
 /*      Blockquotes  */
@@ -701,8 +701,8 @@ blockquote cite a, blockquote cite a:visited, blockquote cite a:visited {
 	text-transform: none;
 }
 .widget_categories .widget-title span {
-	background: none repeat scroll 0 0 #7bbd42;
-	border-bottom: 3px solid #7bbd42;
+	background: none repeat scroll 0 0 #ad0800;
+	border-bottom: 3px solid #ad0800;
 	color: #fff;
 	display: inline-block;
 	font-family: DIN, Helvetica, Arial, sans-serif;
@@ -875,7 +875,7 @@ blockquote cite a, blockquote cite a:visited, blockquote cite a:visited {
 	margin-bottom: 10px;
 }
 .btn-mega {
-	background: #7bbd42;
+	background: #ad0800;
 	color: #fff!important;
 	font: .9em "Open Sans", sans-serif;
 	padding: 8px 14px !important;

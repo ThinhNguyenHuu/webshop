@@ -324,7 +324,7 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/fancyb
 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/fancybox/fancy_shadow_ne.html', sizingMethod='scale');
 }
 .fancybox-ie #fancybox-bg-e {
-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/fancybox/fancy_shadow_e.html', sizingMethod='scale');
+filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/fancybox/fancy_shadow_e.png', sizingMethod='scale');
 }
 .fancybox-ie #fancybox-bg-se {
 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/fancybox/fancy_shadow_se.html', sizingMethod='scale');
