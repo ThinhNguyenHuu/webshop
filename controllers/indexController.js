@@ -1,7 +1,10 @@
+const productModel = require('../models/productModel');
 
+exports.index = async (req, res, next) => {
+  const list = await productModel.list();
 
-exports.index = (req, res, next) => {
   res.render('index', {
-    title: 'Home'
-  })
+    title: 'Home',
+    list
+  });
 } 
