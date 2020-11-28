@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
+const {db} = require('./db.js');
 
 const indexRouter = require('./routes/index');
 
@@ -12,7 +13,7 @@ const app = express();
 // view engine setup
 app.engine('hbs', exphbs({
   defaultLayout: 'layout',
-  extname: '.hbs'
+  extname: '.hbs',
 }))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
