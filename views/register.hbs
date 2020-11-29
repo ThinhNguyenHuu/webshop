@@ -7,31 +7,39 @@
             </div>
             <fieldset class="col1-set">
             
-            <div class="col-1 registered-users"><strong>Registered Customers</strong>
-                <div class="content">
-                    <ul class="form-list">
-                        <li>
-                            <label for="email">Email Address <span class="required">*</span></label>
-                            <br>
-                        <input type="text" title="Email Address" class="input-text required-entry" id="email" value="" name="login[username]">
-                        </li>
-                        <li>
-                            <label for="pass">Password <span class="required">*</span></label>
-                            <br>
-                            <input type="password" title="Password" id="pass" class="input-text required-entry validate-password" name="login[password]">
-                        </li>
-                        <li>
-                            <label for="confirm">Confirm Password <span class="required">*</span></label>
-                            <br>
-                            <input type="text" title="Confirm Password <" class="input-text required-entry" id="confirm" value="" name="login[confirm]">
-                        </li>
-                    </ul>
-                    <p class="required">* Required Fields</p>
-                <div class="buttons-set">
-                <button id="send2" name="send" type="submit" class="button login"><span>Register</span></button>
-            </div>
-          </div>
-        </fieldset>
+                <div class="col-1 registered-users">
+                    <div class="content">
+                        <form class="form-list">
+                            
+                                <label for="name">Full Name <span class="required">*</span></label>
+                                <br>
+                                <input type="text" title="Full Name" class="input-text required-entry" id="name" value="" name="register[name]">
+                                <br>
+
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <br>
+                                <input type="text" title="Email Address" class="input-text required-entry" id="email" value="" name="register[email]">
+                                <br>
+                            
+                                <label for="pass">Password <span class="required">*</span></label>
+                                <br>
+                                <input type="password" title="Password" id="pass" class="input-text required-entry validate-password" name="register[pass]">
+                                <br>
+                        
+                                <label for="confirm">Confirm Password <span class="required">*</span></label>
+                                <br>
+                                <input type="password" title="Confirm Password " class="input-text required-entry" id="confirm" value="" name="register[confirm]">
+                                <br>
+
+                                <p class="required">* Required Fields</p>
+                                <div class="buttons-set">
+                                    <input id="send2" name="send" type="submit" class="button login" value="Register">
+                                </div>
+                            
+                        </form> 
+                    </div>
+                </div>
+            </fieldset>
       </div>
       <br>
       <br>
