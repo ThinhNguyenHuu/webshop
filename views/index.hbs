@@ -94,14 +94,16 @@
                     </div>
                     <div class="info">
                       <div class="info-inner">
-                        <div class="item-title"> <a title="{{name}}" href="/product/{{_id}}"> {{name}} </a> </div>
                         <!--item-title-->
+                        <div class="item-title"> <a title="{{name}}" href="/product/{{_id}}"> {{name}} </a> </div>
                         <div class="item-content">
+                          <!-- rate -->
                           <div class="ratings">
                             <div class="rating-box">
-                              <div style="width:60%" class="rating"></div>
+                              <div style="width:{{#rating reviews}}{{/rating}}%;" class="rating"></div>
                             </div>
                           </div>
+                          <!-- price -->
                           <div class="price-box">
                             <p class="special-price"> <span class="price"> ${{price}} </span> </p>
                             <p class="old-price"> <span class="price-sep">-</span> <span class="price"> ${{price}} </span> </p>
@@ -151,7 +153,7 @@
                         <div class="item-content">
                           <div class="ratings">
                             <div class="rating-box">
-                              <div style="width:60%" class="rating"></div>
+                              <div style="width:{{rating reviews}}%" class="rating"></div>
                             </div>
                           </div>
                           <div class="price-box">
@@ -213,7 +215,7 @@
                     <div class="item-content">
                       <div class="ratings">
                         <div class="rating-box">
-                          <div style="width:60%" class="rating"></div>
+                          <div style="width:{{rating reviews}}%" class="rating"></div>
                         </div>
                       </div>
                       <div class="price-box">
@@ -253,43 +255,43 @@
           <div class="slider-items slider-width-col4"> 
             
             {{#each list}}
-            <div class="item">  
-            <div class="col-item">
-              <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/{{_id}}"> <img src="{{images_sources.[0]}}" class="img-responsive" alt="a" /> </a>
-                <div class="actions">
-                  <div class="actions-inner">
-                    <button type="button" title="Add to Cart" class="button btn-cart"><span>Add to Cart</span></button>
-                    <ul class="add-to-links">
-                      <li><a href="wishlist.html" title="Add to Wishlist" class="link-wishlist"><span>Add to Wishlist</span></a></li>
-                      <li><a href="compare.html" title="Add to Compare" class="link-compare "><span>Add to Compare</span></a></li>
-                    </ul>
+              <div class="item">  
+              <div class="col-item">
+                <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/{{_id}}"> <img src="{{images_sources.[0]}}" class="img-responsive" alt="a" /> </a>
+                  <div class="actions">
+                    <div class="actions-inner">
+                      <button type="button" title="Add to Cart" class="button btn-cart"><span>Add to Cart</span></button>
+                      <ul class="add-to-links">
+                        <li><a href="wishlist.html" title="Add to Wishlist" class="link-wishlist"><span>Add to Wishlist</span></a></li>
+                        <li><a href="compare.html" title="Add to Compare" class="link-compare "><span>Add to Compare</span></a></li>
+                      </ul>
+                    </div>
                   </div>
+                  <div class="qv-button-container"> <a href="/quickview/{{_id}}" class="qv-e-button btn-quickview-1"><span><span>Quick View</span></span></a> </div>
                 </div>
-                <div class="qv-button-container"> <a href="/quickview/{{_id}}" class="qv-e-button btn-quickview-1"><span><span>Quick View</span></span></a> </div>
-              </div>
-              <div class="info">
-                <div class="info-inner">
-                  <div class="item-title"> <a title="{{name}}" href="/product/{{_id}}"> {{name}} </a> </div>
-                  <!--item-title-->
-                  <div class="item-content">
-                    <div class="ratings">
-                      <div class="rating-box">
-                        <div style="width:60%" class="rating"></div>
+                <div class="info">
+                  <div class="info-inner">
+                    <div class="item-title"> <a title="{{name}}" href="/product/{{_id}}"> {{name}} </a> </div>
+                    <!--item-title-->
+                    <div class="item-content">
+                      <div class="ratings">
+                        <div class="rating-box">
+                          <div style="width:{{rating reviews}}%" class="rating"></div>
+                        </div>
+                      </div>
+                      <div class="price-box">
+                        <p class="special-price"> <span class="price"> ${{price}} </span> </p>
+                        <p class="old-price"> <span class="price-sep">-</span> <span class="price"> ${{price}} </span> </p>
                       </div>
                     </div>
-                    <div class="price-box">
-                      <p class="special-price"> <span class="price"> ${{price}} </span> </p>
-                      <p class="old-price"> <span class="price-sep">-</span> <span class="price"> ${{price}} </span> </p>
-                    </div>
+                    <!--item-content--> 
                   </div>
-                  <!--item-content--> 
+                  <!--info-inner-->
+                  <div class="clearfix"> </div>
                 </div>
-                <!--info-inner-->
-                <div class="clearfix"> </div>
               </div>
-            </div>
-            </div>
-          {{/each}}
+              </div>
+            {{/each}}
 
           </div>
         </div>

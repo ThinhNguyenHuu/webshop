@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
+const hbs = require('hbs');
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
@@ -16,9 +17,20 @@ const app = express();
 app.engine('hbs', exphbs({
   defaultLayout: 'layout',
   extname: '.hbs',
+  helpers: {
+    // get rating from reviews
+    rating: function (reviews) { 
+        let rating = 0;
+        for (review of reviews) { rating += (review.value + review.quality + review.price); }
+        return rating / (reviews.length * 3);
+    },
+    // date to string
+    dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); }
+  }
 }))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,7 +46,7 @@ app.use('/api/product', apiProductRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
-});
+}); 
 
 // error handler
 app.use(function(err, req, res, next) {

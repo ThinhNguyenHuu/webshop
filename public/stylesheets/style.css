@@ -5655,7 +5655,7 @@ div.moreview_description.rtl {
 .product-view .product-shop .add-to-box {
 	padding: 0px;
 	overflow: hidden;
-	text-align: center;
+	text-align: left;
 	margin: 0px;
 }
 .product-view .product-shop .add-to-box a:hover {
@@ -5909,7 +5909,7 @@ div.moreview_description.rtl {
 	margin-bottom: 5px;
 	width: 100%;
 	overflow: hidden;
-	margin-top: 20px;
+	margin-top: 70px;
 	display: inline-block;
 }
 .addtional-info {
@@ -6560,6 +6560,7 @@ fieldset {
 /* Block: Additional */
 
 .product-view .box-additional {
+	margin-top: 50px;
 }
 /* Block: Upsell */
 
