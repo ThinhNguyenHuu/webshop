@@ -16,7 +16,7 @@ module.exports.details = async (productId) => {
   
   const brandPromise = db().collection('brand').findOne({_id: ObjectId(product.brand)});
   const categoryPromise = db().collection('category').findOne({_id: ObjectId(product.category)});
-  const relatedListPromise = db().collection('product').find({category: ObjectId(product.category)}).limit(7).toArray();
+  const relatedListPromise = db().collection('product').find({_id: {$ne: ObjectId(productId)}, category: ObjectId(product.category)}).limit(7).toArray();
 
   const brand = await brandPromise;
   const category = await categoryPromise;
