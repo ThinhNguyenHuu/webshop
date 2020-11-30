@@ -163,6 +163,7 @@ legend {
 	background-color: #fff;
 	min-height: 400px;
 	padding: 20px 0 0px;
+	margin: 50px 0 50px 0;
 }
 /* 3. Header */
 .logo {
@@ -2345,7 +2346,7 @@ ul.topnav em:hover {
 	margin-right: 0px;
 	border: 1px #d12631 solid;
 }
-#recommend-slider .sale-label, #recommend-slider .new-label {
+#slider .sale-label, #recommend-slider .new-label {
 	width: 38px;
 	height: 19px;
 	line-height: 19px;
@@ -3057,7 +3058,7 @@ small {
 	right: 15%;
 }
 .recommend {
-	margin: 20px auto;
+	margin: 20px auto 50px auto;
 	position: relative;
 }
 .recommend .controls .next {
@@ -9148,6 +9149,7 @@ a.button.wishlist {
 /* 39. Footer */
 
 .footer {
+	margin-top: 70px;
 	background: none repeat scroll 0 0 #710303;
 }
 .footer-top {
@@ -9319,8 +9321,9 @@ a.button.wishlist {
 	margin-bottom: 10px;
 	margin-top: 12px;
 }
-.coppyright {
+.copyright {
 	color: #e99995;
+	text-align: center;
 }
 .footer-bottom .company-links ul {
 	padding: 0px;
@@ -10261,6 +10264,7 @@ nav {
 	padding-bottom: 20px;
 	height: auto
 }
+
 .featured-pro {
 	margin-bottom: 20px
 }
