@@ -20,9 +20,15 @@ app.engine('hbs', exphbs({
   helpers: {
     // get rating from reviews
     rating: function (reviews) { 
-        let rating = 0;
-        for (review of reviews) { rating += (review.value + review.quality + review.price); }
-        return rating / (reviews.length * 3);
+      let rating = 0;
+
+      if(reviews.length) {
+        for (review of reviews) { 
+          rating += (review.value + review.quality + review.price); 
+        }
+      }
+      
+      return rating / (reviews.length * 3);
     },
     // date to string
     dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); }

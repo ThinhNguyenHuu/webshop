@@ -28,9 +28,9 @@
                 
                   {{#each product.images_sources}}
                     <li class="moreview_thumb"> 
-                      <img class="moreview_thumb_image" src="{{this}}" alt="product-image"> 
-                      <img class="moreview_source_image" src="{{this}}" alt="product-image">
-                      <img style="position: absolute;" class="zoomImg" src="{{this}}" alt="product-image">
+                      <img class="moreview_thumb_image" src="{{this.url}}" alt="product-image"> 
+                      <img class="moreview_source_image" src="{{this.url}}" alt="product-image">
+                      <img style="position: absolute;" class="zoomImg" src="{{this.url}}" alt="product-image">
                     </li>
                   {{/each}}
                 
