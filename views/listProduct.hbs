@@ -80,21 +80,21 @@
               <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6">
                 <div class="col-item">
                   <div class="sale-label sale-top-right">Sale</div>
-                  <div class="images-container"> <a class="product-image" title="{{name}}" href="product/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
+                  <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                     <div class="actions">
                       <div class="actions-inner">
                         <button type="button" title="Add to Cart" class="button btn-cart"><span>Add to Cart</span></button>
                         <ul class="add-to-links">
-                          <li><a href="product/{{_id}}" title="Add to Wishlist" class="link-wishlist"><span>Add to Wishlist</span></a></li>
-                          <li><a href="product/{{_id}}" title="Add to Compare" class="link-compare "><span>Add to Compare</span></a></li>
+                          <li><a href="/product/detail/{{_id}}" title="Add to Wishlist" class="link-wishlist"><span>Add to Wishlist</span></a></li>
+                          <li><a href="/product/detail/{{_id}}" title="Add to Compare" class="link-compare "><span>Add to Compare</span></a></li>
                         </ul>
                       </div>
                     </div>
-                    <div class="qv-button-container"> <a class="qv-e-button btn-quickview-1" href="product/{{_id}}"><span><span>Quick View</span></span></a> </div>
+                    <div class="qv-button-container"> <a class="qv-e-button btn-quickview-1" href="/product/detail/{{_id}}"><span><span>Quick View</span></span></a> </div>
                   </div>
                   <div class="info">
                     <div class="info-inner">
-                      <div class="item-title"> <a title=" {{name}}" href="product/{{_id}}"> {{name}} </a> </div>
+                      <div class="item-title"> <a title=" {{name}}" href="/product/detail/{{_id}}"> {{name}} </a> </div>
                       <!--item-title-->
                       <div class="item-content">
                         <div class="ratings">
@@ -128,204 +128,18 @@
             <!-- BEGIN BOX-CATEGORY -->
             <div class="box-content box-category">
               <ul>
-                <li> <a class="active" href="/product">Women</a> <span class="subDropdown minus"></span>
+                {{#each listCategory_brand}}
+                <li> <a class="active" href="/product/{{category.name}}">{{category.name}}</a> <span class="subDropdown minus"></span>
                   <ul class="level0_415" style="display:block">
-                    <li> <a href="/product"> Tops </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Evening Tops </a> </li>
-                        <li> <a href="/product"> Shirts &amp; Blouses </a> </li>
-                        <li> <a href="/product"> Tunics </a> </li>
-                        <li> <a href="/product"> Vests </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Bags </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Bags </a> </li>
-                        <li> <a href="/product"> Designer Handbags </a> </li>
-                        <li> <a href="/product"> Purses </a> </li>
-                        <li> <a href="/product"> Shoulder Bags </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Shoes </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Flat Shoes </a> </li>
-                        <li> <a href="/product"> Flat Sandals </a> </li>
-                        <li> <a href="/product"> Boots </a> </li>
-                        <li> <a href="/product"> Heels </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Jewellery </a>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Bracelets </a> </li>
-                        <li> <a href="/product"> Necklaces &amp; Pendants </a> </li>
-                        <li> <a href="/product"> Pins &amp; Brooches </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Dresses </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Casual Dresses </a> </li>
-                        <li> <a href="/product"> Evening </a> </li>
-                        <li> <a href="/product"> Designer </a> </li>
-                        <li> <a href="/product"> Party </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Lingerie </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Bras </a> </li>
-                        <li> <a href="/product"> Bodies </a> </li>
-                        <li> <a href="/product"> Lingerie Sets </a> </li>
-                        <li> <a href="/product"> Shapewear </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Jackets </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Coats </a> </li>
-                        <li> <a href="/product"> Jackets </a> </li>
-                        <li> <a href="/product"> Leather Jackets </a> </li>
-                        <li> <a href="/product"> Blazers </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Swimwear </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Swimsuits </a> </li>
-                        <li> <a href="/product"> Beach Clothing </a> </li>
-                        <li> <a href="/product"> Bikinis </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
+                    {{#each brand}}
+                    <li> <a href="/product/{{cate_brand}}"> {{name}} </a></li>
+                    {{/each}}
                   </ul>
                   <!--level0--> 
                 </li>
-                <!--level 0-->
-                <li> <a href="/product">Men</a> <span class="subDropdown plus"></span>
-                  <ul class="level0_455" style="display:none">
-                    <li> <a href="/product"> Shoes </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Flat Shoes </a> </li>
-                        <li> <a href="/product"> Boots </a> </li>
-                        <li> <a href="/product"> Heels </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Jewellery </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Bracelets </a> </li>
-                        <li> <a href="/product"> Necklaces &amp; Pendants </a> </li>
-                        <li> <a href="/product"> Pins &amp; Brooches </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Dresses </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Casual Dresses </a> </li>
-                        <li> <a href="/product"> Evening </a> </li>
-                        <li> <a href="/product"> Designer </a> </li>
-                        <li> <a href="/product"> Party </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Jackets </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Coats </a> </li>
-                        <li> <a href="/product"> Jackets </a> </li>
-                        <li> <a href="/product"> Leather Jackets </a> </li>
-                        <li> <a href="/product"> Blazers </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Swimwear </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Swimsuits </a> </li>
-                        <li> <a href="/product"> Beach Clothing </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                  </ul>
-                  <!--level0--> 
-                </li>
-                <!--level 0-->
-                <li> <a href="/product">Electronics</a> <span class="subDropdown plus"></span>
-                  <ul class="level0_482" style="display:none">
-                    <li> <a href="/product"> Smartphones </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Samsung </a> </li>
-                        <li> <a href="/product"> Apple </a> </li>
-                        <li> <a href="/product"> Blackberry </a> </li>
-                        <li> <a href="/product"> Nokia </a> </li>
-                        <li> <a href="/product"> HTC </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Cameras </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> Digital Cameras </a> </li>
-                        <li> <a href="/product"> Camcorders </a> </li>
-                        <li> <a href="/product"> Lenses </a> </li>
-                        <li> <a href="/product"> Filters </a> </li>
-                        <li> <a href="/product"> Tripod </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                    <li> <a href="/product"> Accesories </a> <span class="subDropdown plus"></span>
-                      <ul class="level1" style="display:none">
-                        <li> <a href="/product"> HeadSets </a> </li>
-                        <li> <a href="/product"> Batteries </a> </li>
-                        <li> <a href="/product"> Screen Protectors </a> </li>
-                        <li> <a href="/product"> Memory Cards </a> </li>
-                        <li> <a href="/product"> Cases </a> </li>
-                        <!--end for-each -->
-                      </ul>
-                      <!--level1--> 
-                    </li>
-                    <!--level1-->
-                  </ul>
-                  <!--level0--> 
-                </li>
-                <!--level 0-->
-                <li> <a href="/product">Digital</a> </li>
-                <!--level 0-->
-                <li class="last"> <a href="/product">Fashion</a> </li>
-                <!--level 0-->
+                {{/each}}
               </ul>
             </div>
-            <!--box-content box-category--> 
           </div>
           <div class="block block-layered-nav">
             <div class="block-title"><span>Shop By</span></div>

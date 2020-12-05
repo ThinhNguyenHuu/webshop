@@ -109,83 +109,32 @@
             <span>Home</span>
           </a>
         </li>
+
+        <li class="level0 nav-5 level-top first">
+          <a href="/product/all" class="level-top">
+            <span>All</span>
+          </a>
+        </li>
         
-        <li class="level0 nav-5 level-top first"> <a href="/product" class="level-top"> <span>Smart Phones</span> </a>
+        {{#each listCategory_brand}}
+        <li class="level0 nav-5 level-top first"> <a href="/product/{{category.name}}" class="level-top"> <span>{{category.name}}</span> </a>
           <div class="level0-wrapper dropdown-6col" style="display:none;">
             <div class="level0-wrapper2">
               <div class="nav-block nav-block-center grid12-8 itemgrid itemgrid-4col">
                 <ul class="level0">
-                  <li class="level1 nav-6-1 parent item"> <a href="/product"><span>Brand</span></a> 
-                    <!--sub sub category-->
+                  <li class="level1 nav-6-1 parent item"><span>Brand</span></a> 
                     <ul class="level1">
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Apple</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Samsung</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Oppo</span></a> </li>
+                      {{#each brand}}
+                      <li class="level2 nav-6-1-1"> <a href="/product/{{cate_brand}}"><span>{{name}}</span></a> </li>
+                      {{/each}}
                     </ul>
-                    <!--sub sub category--> 
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </li>
-        <li class="level0 nav-7 level-top parent"> <a href="/product" class="level-top"> <span>Cameras</span> </a>
-          <div class="level0-wrapper dropdown-6col" style="display: none;">
-            <div class="level0-wrapper2"> 
-              <div class="nav-block nav-block-center grid12-8 itemgrid itemgrid-4col">
-                <ul class="level0">
-                   <li class="level1 nav-6-1 parent item"> <a href="/product"><span>Brand</span></a> 
-                    <!--sub sub category-->
-                    <ul class="level1">
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Apple</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Samsung</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Oppo</span></a> </li>
-                    </ul>
-                    <!--sub sub category--> 
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="level0 nav-5 level-top first"> <a class="level-top" href="/product"> <span>Laptops</span> </a>
-          <div style="display:none;" class="level0-wrapper dropdown-6col">
-            <div class="level0-wrapper2">
-              <div class="nav-block nav-block-center grid12-8 itemgrid itemgrid-4col"> 
-                <ul class="level0">
-                   <li class="level1 nav-6-1 parent item"> <a href="/product"><span>Brand</span></a> 
-                    <!--sub sub category-->
-                    <ul class="level1">
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Apple</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Samsung</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Oppo</span></a> </li>
-                    </ul>
-                    <!--sub sub category--> 
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="level0 nav-5 level-top first"> <a class="level-top" href="/product"> <span>Headphones</span> </a>
-          <div style="display:none;" class="level0-wrapper dropdown-6col">
-            <div class="level0-wrapper2">
-              <div class="nav-block nav-block-center grid12-8 itemgrid itemgrid-4col"> 
-                <ul class="level0">
-                   <li class="level1 nav-6-1 parent item"> <a href="/product"><span>Brand</span></a> 
-                    <!--sub sub category-->
-                    <ul class="level1">
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Apple</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Samsung</span></a> </li>
-                      <li class="level2 nav-6-1-1"> <a href="/product"><span>Oppo</span></a> </li>
-                    </ul>
-                    <!--sub sub category--> 
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </li>
+        {{/each}}
       </ul>
     </div> 
   </div>
