@@ -1,7 +1,10 @@
 const { ObjectId } = require('mongodb');
 const {db} = require('../db');
 
-module.exports.list = async () =>  await db().collection('product').find().toArray();
+module.exports.list = async () =>  
+{
+  return await db().collection('product').find().toArray();
+}
 
 module.exports.listCategory_brand = async () =>
 {
@@ -25,12 +28,6 @@ module.exports.listCategory_brand = async () =>
 
 module.exports.listClassifiedProduct = async (category_brand) =>
 {
-  if(category_brand === "all")
-  {
-    const list = await db().collection('product').find().toArray();
-    return list;
-  }
-  
   let category = "";
   let brand = "";
 

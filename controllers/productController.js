@@ -14,7 +14,6 @@ module.exports.getList = async (req, res, next) => {
 
 module.exports.getListClassifiedProduct = async (req, res, next) =>
 {
-
   const list = await productModel.listClassifiedProduct(req.params.category_brand);
   const listCategory_brand = await productModel.listCategory_brand();
   
@@ -28,12 +27,14 @@ module.exports.getListClassifiedProduct = async (req, res, next) =>
 
 exports.productDetails = async (req, res, next) => {
   const { product, brand, category, relatedList } = await productModel.details(req.params.productId);
-
+  const listCategory_brand = await productModel.listCategory_brand();
+  
   res.render('productDetails', {
     title: product.name,
     product,
     brand,
     category,
-    relatedList
+    relatedList, 
+    listCategory_brand
   })
 }

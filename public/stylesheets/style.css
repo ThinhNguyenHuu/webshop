@@ -2653,6 +2653,7 @@ margin-right: 10px;
 .item .col-item .images-container {
 	position: relative;
 	overflow: hidden;
+	height: 270px;
 }
 .item .col-item .images-container .product-image:before {
 	background: rgba(0,0,0,0.19);
