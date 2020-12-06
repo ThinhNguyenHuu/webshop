@@ -5,7 +5,7 @@ const controller = require('../controllers/productController');
 
 router.get('/', controller.getList);
 
-router.get('/:category_brand', controller.getListClassifiedProduct)
+router.get('/:category_brand', controller.getListFilteredProduct)
 
 
 router.get('/detail/:productId', controller.productDetails);

@@ -2,13 +2,13 @@ const express = require('express');
 const productModel = require('../models/productModel');
 
 
-const ProductNum_per_page = 9;
 module.exports.getList = async (req, res, next) => {
-  const pagination = await productModel.list(req.query.page, ProductNum_per_page);
+  const pagination = await productModel.list(req.query.page, req.query.numProduct);
   const listCategory_brand = await productModel.listCategory_brand();
   
   const url = (req.originalUrl).split("?",1);
 
+  const numProduct = +req.query.numProduct || 9;
   
   res.render('listProduct', {
     title: 'Product',
@@ -19,16 +19,20 @@ module.exports.getList = async (req, res, next) => {
     prePage: pagination.prePage,
     beforePrePage: pagination.beforePrePage,
     listCategory_brand: listCategory_brand,
-    url: url[0]
+    url: url[0],
+    numProduct: numProduct
   });
 } 
 
-module.exports.getListClassifiedProduct = async (req, res, next) =>
+module.exports.getListFilteredProduct = async (req, res, next) =>
 {
-  const pagination = await productModel.listClassifiedProduct(req.params.category_brand, req.query.page, ProductNum_per_page);
+  const pagination = await productModel.listFilteredProduct(req.params.category_brand, req.query.page, req.query.numProduct);
   const listCategory_brand = await productModel.listCategory_brand();
 
   const url = (req.originalUrl).split("?",1);
+
+  const numProduct = +req.query.numProduct || 9;
+
   
   res.render('listProduct', {
     title: 'Product',
@@ -39,7 +43,8 @@ module.exports.getListClassifiedProduct = async (req, res, next) =>
     prePage: pagination.prePage,
     beforePrePage: pagination.beforePrePage,
     listCategory_brand: listCategory_brand,
-    url: url[0]
+    url: url[0],
+    numProduct: numProduct
   });
 }
 

@@ -2,18 +2,19 @@ const { ObjectId } = require('mongodb');
 const {db} = require('../db');
 
 
-module.exports.list = async (pageIndex, ProductNum_per_page) =>  
+module.exports.list = async (pageIndex, product_per_page) =>  
 {
   let page = +pageIndex || 1;
+  const numProduct = +product_per_page || 9;
 
   const count = await db().collection('product').find().count();
 
-  const totalPage = Math.ceil(count / ProductNum_per_page);
+  const totalPage = Math.ceil(count / numProduct);
 
   page = (page < 0) ? 1 : page;
   page = (page > totalPage) ? totalPage : page;
 
-  let list = await db().collection('product').find().limit(Number(ProductNum_per_page)).skip((page - 1) * ProductNum_per_page).toArray();
+  let list = await db().collection('product').find().limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();
   
   for(let i = 0; i < list.length; i++)
     list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
@@ -47,7 +48,7 @@ module.exports.listCategory_brand = async () =>
   return category_brand;
 }
 
-module.exports.listClassifiedProduct = async (category_brand, pageIndex, ProductNum_per_page) =>
+module.exports.listFilteredProduct = async (category_brand, pageIndex, product_per_page) =>
 {
   let category = "";
   let brand = "";
@@ -56,16 +57,17 @@ module.exports.listClassifiedProduct = async (category_brand, pageIndex, Product
   if(temp === -1)
   {
     let page = +pageIndex || 1;
+    const numProduct = +product_per_page || 9;
 
     const listCategory = await db().collection('category').find({name: category_brand}).toArray();
     const count = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).count();
 
-    const totalPage = Math.ceil(count / ProductNum_per_page);
+    const totalPage = Math.ceil(count / numProduct);
     
     page = (page < 0) ? 1 : page;
     page = (page > totalPage) ? totalPage : page;
 
-    let list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(ProductNum_per_page)).skip((page - 1) * ProductNum_per_page).toArray();
+    let list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();
     
     for(let i = 0; i < list.length; i++)
       list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
@@ -86,6 +88,7 @@ module.exports.listClassifiedProduct = async (category_brand, pageIndex, Product
       brand = brand + category_brand.charAt(i);
 
     let page = +pageIndex || 1;
+    const numProduct = +product_per_page || 9;
 
     const listCategory = await db().collection('category').find({name: category}).toArray();
     const listBrand = await db().collection('brand').find({name: brand}).toArray();
@@ -93,12 +96,12 @@ module.exports.listClassifiedProduct = async (category_brand, pageIndex, Product
     const count = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).count();
 
 
-    const totalPage = Math.ceil(count / ProductNum_per_page);
+    const totalPage = Math.ceil(count / numProduct);
     
     page = (page < 0) ? 1 : page;
     page = (page > totalPage) ? totalPage : page;
 
-    let list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(ProductNum_per_page)).skip((page - 1) * ProductNum_per_page).toArray();
+    let list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();
     
     for(let i = 0; i < list.length; i++)
       list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
