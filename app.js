@@ -18,6 +18,7 @@ app.engine('hbs', exphbs({
   extname: '.hbs',
   helpers: {
     // get rating from reviews
+    
     rating: function (reviews) { 
       let rating = 0;
 
@@ -31,6 +32,7 @@ app.engine('hbs', exphbs({
     },
     // date to string
     dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); }
+    
   }
 }))
 app.set('views', path.join(__dirname, 'views'));

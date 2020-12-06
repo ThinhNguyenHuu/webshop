@@ -1,9 +1,29 @@
 const { ObjectId } = require('mongodb');
 const {db} = require('../db');
 
-module.exports.list = async () =>  
+
+module.exports.list = async (pageIndex, ProductNum_per_page) =>  
 {
-  return await db().collection('product').find().toArray();
+  let page = +pageIndex || 1;
+
+  const count = await db().collection('product').find().count();
+
+  const totalPage = Math.ceil(count / ProductNum_per_page);
+  
+  page = (page > totalPage) ? 1 : page;
+
+  let list = await db().collection('product').find().limit(Number(ProductNum_per_page)).skip((page - 1) * ProductNum_per_page).toArray();
+  
+  for(let i = 0; i < list.length; i++)
+    list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
+
+  const nextPage = (page + 1) > totalPage ? 0 : page + 1;
+  const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
+
+  const prePage = (page - 1) <= 0 ? 0 : page - 1;
+  const beforePrePage = (page - 2) <= 0  ? 0 : page - 2;
+
+  return {list: list, currentPage: page, nextPage: nextPage, afterNextPage: afterNextPage, prePage: prePage, beforePrePage: beforePrePage};
 }
 
 module.exports.listCategory_brand = async () =>

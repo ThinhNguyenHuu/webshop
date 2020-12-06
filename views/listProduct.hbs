@@ -64,13 +64,32 @@
                 <div class="pages">
                   <label>Page:</label>
                   <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
+                    <li></li>
+                    {{#if prePage}}
+                    <li><a href="{{url}}?page={{prePage}}">&laquo;</a></li>
+                    {{/if}}
+
+                    {{#if beforePrePage}}
+                    <li><a href="{{url}}?page={{beforePrePage}}">{{beforePrePage}}</a> </li>
+                    {{/if}}
+
+                    {{#if prePage}}
+                    <li><a href="{{url}}?page={{prePage}}">{{prePage}}</a> </li>
+                    {{/if}}
+
+                    <li class="active"><a href="{{url}}?page={{currentPage}}">{{currentPage}}</a></li>
+
+                    {{#if nextPage}}
+                    <li><a href="{{url}}?page={{nextPage}}">{{nextPage}}</a> </li>
+                    {{/if}}
+
+                    {{#if afterNextPage}}
+                    <li><a href="{{url}}?page={{afterNextPage}}">{{afterNextPage}}</a> </li>
+                    {{/if}}
+
+                    {{#if nextPage}}
+                    <li><a href="{{url}}?page={{nextPage}}">&raquo;</a></li>
+                    {{/if}}
                   </ul>
                 </div>
               </div>
@@ -104,7 +123,7 @@
                         </div>
                         <div class="price-box">
                           <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
-                          <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{price}}đ </span> </p>
+                          <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
                         </div>
                       </div>
                       <!--item-content--> 
