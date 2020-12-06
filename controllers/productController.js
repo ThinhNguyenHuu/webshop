@@ -25,13 +25,21 @@ module.exports.getList = async (req, res, next) => {
 
 module.exports.getListClassifiedProduct = async (req, res, next) =>
 {
-  const list = await productModel.listClassifiedProduct(req.params.category_brand);
+  const pagination = await productModel.listClassifiedProduct(req.params.category_brand, req.query.page, ProductNum_per_page);
   const listCategory_brand = await productModel.listCategory_brand();
+
+  const url = (req.originalUrl).split("?",1);
   
   res.render('listProduct', {
     title: 'Product',
-    list: list,
-    listCategory_brand: listCategory_brand
+    list: pagination.list,
+    currentPage: pagination.currentPage,
+    nextPage: pagination.nextPage,
+    afterNextPage: pagination.afterNextPage,
+    prePage: pagination.prePage,
+    beforePrePage: pagination.beforePrePage,
+    listCategory_brand: listCategory_brand,
+    url: url[0]
   });
 }
 
