@@ -31,17 +31,9 @@
       <div class="col-lg-7 col-sm-4 col-md-6 col-xs-12"> 
         <!-- Search-col -->
         <div class="search-box">
-          <form action="#" method="GET" id="search_mini_form" name="Categories">
-            <select name="category_id" class="cate-dropdown hidden-xs">
-              <option value="0">All Categories</option>
-              <option value="42">Smart Phones</option>
-              <option value="43">Cameras</option>
-              <option value="44">Laptops</option>
-              <option value="45">Headphone</option>
-              <option value="41">Featured</option>
-            </select>
+          <form action="{{currentUrl}}" method="GET" id="search_mini_form" name="Categories">
             <input type="text" placeholder="Search here..." value="" maxlength="70" class="" name="search" id="search">
-            <button id="submit-button" class="search-btn-bg"><span>Search</span></button>
+            <button id="submit-button" class="search-btn-bg" style="width: 36%"><span>Search</span></button>
           </form>
         </div>
         <!-- End Search-col --> 

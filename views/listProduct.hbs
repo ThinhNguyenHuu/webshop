@@ -40,29 +40,29 @@
                   <ul class="pagination">
                     <li></li>
                     {{#if prePage}}
-                    <li><a href="{{url}}?page={{prePage}}&numProduct={{numProduct}}">&laquo;</a></li>
+                    <li><a href="{{url}}page={{prePage}}&numProduct={{numProduct}}">&laquo;</a></li>
                     {{/if}}
 
                     {{#if beforePrePage}}
-                    <li><a href="{{url}}?page={{beforePrePage}}&numProduct={{numProduct}}">{{beforePrePage}}</a> </li>
+                    <li><a href="{{url}}page={{beforePrePage}}&numProduct={{numProduct}}">{{beforePrePage}}</a> </li>
                     {{/if}}
 
                     {{#if prePage}}
-                    <li><a href="{{url}}?page={{prePage}}&numProduct={{numProduct}}">{{prePage}}</a> </li>
+                    <li><a href="{{url}}page={{prePage}}&numProduct={{numProduct}}">{{prePage}}</a> </li>
                     {{/if}}
 
-                    <li class="active"><a href="{{url}}?page={{currentPage}}&numProduct={{numProduct}}">{{currentPage}}</a></li>
+                    <li class="active"><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}">{{currentPage}}</a></li>
 
                     {{#if nextPage}}
-                    <li><a href="{{url}}?page={{nextPage}}&numProduct={{numProduct}}">{{nextPage}}</a> </li>
+                    <li><a href="{{url}}page={{nextPage}}&numProduct={{numProduct}}">{{nextPage}}</a> </li>
                     {{/if}}
 
                     {{#if afterNextPage}}
-                    <li><a href="{{url}}?page={{afterNextPage}}&numProduct={{numProduct}}">{{afterNextPage}}</a> </li>
+                    <li><a href="{{url}}page={{afterNextPage}}&numProduct={{numProduct}}">{{afterNextPage}}</a> </li>
                     {{/if}}
 
                     {{#if nextPage}}
-                    <li><a href="{{url}}?page={{nextPage}}&numProduct={{numProduct}}">&raquo;</a></li>
+                    <li><a href="{{url}}page={{nextPage}}&numProduct={{numProduct}}">&raquo;</a></li>
                     {{/if}}
                   </ul>
                 </div>
@@ -88,11 +88,11 @@
                 <div id="limiter">
                   <label>View: </label>
                   <ul>
-                    <li><a href="{{url}}?numProduct={{numProduct}}">{{numProduct}}<span class="right-arrow"></span></a>
+                    <li><a href="{{url}}numProduct={{numProduct}}">{{numProduct}}<span class="right-arrow"></span></a>
                       <ul>
-                        <li><a href="{{url}}?numProduct=9">9</a></li>
-                        <li><a href="{{url}}?numProduct=12">12</a></li>
-                        <li><a href="{{url}}?numProduct=15">15</a></li>
+                        <li><a href="{{url}}numProduct=9">9</a></li>
+                        <li><a href="{{url}}numProduct=12">12</a></li>
+                        <li><a href="{{url}}numProduct=15">15</a></li>
                       </ul>
                     </li>
                   </ul>

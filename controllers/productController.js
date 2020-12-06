@@ -3,10 +3,29 @@ const productModel = require('../models/productModel');
 
 
 module.exports.getList = async (req, res, next) => {
-  const pagination = await productModel.list(req.query.page, req.query.numProduct);
+  let pagination;
+  if((req.originalUrl).indexOf("search=") == -1)
+     pagination = await productModel.list(req.query.page, req.query.numProduct, "");
+  else
+    pagination = await productModel.list(req.query.page, req.query.numProduct, req.query.search);
+
   const listCategory_brand = await productModel.listCategory_brand();
   
-  const url = (req.originalUrl).split("?",1);
+  let url;
+  if((req.originalUrl).indexOf("search=") == -1 )
+  {
+    url =  ((req.originalUrl).split("?",1))[0] + "?";
+  }
+  else if ((req.originalUrl).indexOf("&") == -1)
+  {
+    url = req.originalUrl + "&";
+  }
+  else
+  {
+    url = ((req.originalUrl).split("&",1))[0] + "&";
+  }
+  
+  const currentUrl = (req.originalUrl).split("?", 1)[0];
 
   const numProduct = +req.query.numProduct || 9;
   
@@ -19,17 +38,36 @@ module.exports.getList = async (req, res, next) => {
     prePage: pagination.prePage,
     beforePrePage: pagination.beforePrePage,
     listCategory_brand: listCategory_brand,
-    url: url[0],
+    url: url,
+    currentUrl: currentUrl,
     numProduct: numProduct
   });
 } 
 
-module.exports.getListFilteredProduct = async (req, res, next) =>
-{
-  const pagination = await productModel.listFilteredProduct(req.params.category_brand, req.query.page, req.query.numProduct);
+module.exports.getListFilteredProduct = async (req, res, next) =>{
+  let pagination;
+  if((req.originalUrl).indexOf("search=") == -1)
+    pagination = await productModel.listFilteredProduct(req.params.category_brand,req.query.page, req.query.numProduct, "");
+  else
+    pagination = await productModel.listFilteredProduct(req.params.category_brand,req.query.page, req.query.numProduct, req.query.search);
+
   const listCategory_brand = await productModel.listCategory_brand();
 
-  const url = (req.originalUrl).split("?",1);
+  let url;
+  if((req.originalUrl).indexOf("search=") == -1 )
+  {
+    url =  ((req.originalUrl).split("?",1))[0] + "?";
+  }
+  else if ((req.originalUrl).indexOf("&") == -1)
+  {
+    url = req.originalUrl + "&";
+  }
+  else
+  {
+    url = ((req.originalUrl).split("&",1))[0] + "&";
+  }
+
+  const currentUrl = (req.originalUrl).split("?", 1)[0];
 
   const numProduct = +req.query.numProduct || 9;
 
@@ -43,7 +81,8 @@ module.exports.getListFilteredProduct = async (req, res, next) =>
     prePage: pagination.prePage,
     beforePrePage: pagination.beforePrePage,
     listCategory_brand: listCategory_brand,
-    url: url[0],
+    url: url,
+    currentUrl: currentUrl,
     numProduct: numProduct
   });
 }
