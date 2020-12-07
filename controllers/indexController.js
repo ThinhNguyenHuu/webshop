@@ -8,7 +8,5 @@ exports.index = async (req, res, next) => {
     title: 'Home',
     listCategory_brand: listCategory_brand,
     list: list.list,
-    currentUrl: "/product"
-    
   });
 } 

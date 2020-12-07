@@ -5,6 +5,8 @@ const controller = require('../controllers/productController');
 
 router.get('/', controller.getList);
 
+router.get('/search', controller.getListSearchedProduct)
+
 router.get('/:category_brand', controller.getListFilteredProduct)
 
 

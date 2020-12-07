@@ -2,49 +2,29 @@ const { ObjectId } = require('mongodb');
 const {db} = require('../db');
 
 
-module.exports.list = async (pageIndex, product_per_page, search) =>  
+module.exports.list = async (pageIndex, product_per_page) =>  
 {
   let page = +pageIndex || 1;
   const numProduct = +product_per_page || 9;
 
   let count;
-  if(search === "")
-  {
-    try{ count =  await db().collection('product').find().count();}
-    catch{count = 0}
+  try{
+    count = await db().collection('product').find().count();
   }
-  else
-  {
-    try{
-      count = await db().collection('product').find({$or:[
-                                                    { $text: { $search: search } },
-                                                    { name: { $regex: search, $options: 'i' } }
-                                                  ]}).count();
-    }
-    catch{count =  0;}
-  }
+  catch{count =  0;}
 
   const totalPage = Math.ceil(count / numProduct);
 
-  page = (page < 0) ? 1 : page;
+  page = (page <= 0) ? 1 : page;
   page = (page > totalPage) ? totalPage : page;
 
   let list;
-  if(search === "")
-  {
-    try{  list = await db().collection('product').find().limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
-    catch{list = []}
+ 
+  try{
+    list = await db().collection('product').find().limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
   }
-  else
-  {
-    try{
-      list = await db().collection('product').find({$or:[
-                                                    { $text: { $search: search } },
-                                                    { name: { $regex: search, $options: 'i' } }
-                                                  ]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
-    }
     catch { list = [];}
-  }
+  
 
   
   for(let i = 0; i < list.length; i++)
@@ -79,7 +59,7 @@ module.exports.listCategory_brand = async () =>
   return category_brand;
 }
 
-module.exports.listFilteredProduct = async (category_brand, pageIndex, product_per_page, search) =>
+module.exports.listFilteredProduct = async (category_brand, pageIndex, product_per_page) =>
 {
   let category = "";
   let brand = "";
@@ -93,22 +73,10 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     const listCategory = await db().collection('category').find({name: category_brand}).toArray();
 
     let count;
-    if(search === "")
-    {
-      try{ count =  await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).count();}
-      catch{ count = 0}
+    try{
+        count = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).count();
     }
-    else
-    {
-      try{
-        count = await db().collection('product').find({$and: [{category: ObjectId(listCategory[0]._id)}, 
-                                                      {$or:[
-                                                        { $text: { $search: search } },
-                                                        { name: { $regex: search, $options: 'i' } }
-                                                      ]}]}).count();
-      }
       catch{ count =  0;}
-    }
   
     const totalPage = Math.ceil(count / numProduct);
     
@@ -116,22 +84,9 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     page = (page > totalPage) ? totalPage : page;
     
     let list;
-    if(search === "")
-    {
-      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
-      catch{ list = []}
-    }
-    else
-    {
-      try{
-        list = await db().collection('product').find({$and: [{category: ObjectId(listCategory[0]._id)}, 
-                                                      {$or:[
-                                                        { $text: { $search: search } },
-                                                        { name: { $regex: search, $options: 'i' } }
-                                                      ]}]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
-      }
-      catch{ list = [];}
-    }
+    try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+    catch{ list = []}
+    
     for(let i = 0; i < list.length; i++)
       list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
 
@@ -157,23 +112,8 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     const listBrand = await db().collection('brand').find({name: brand}).toArray();
 
     let count;
-    if(search === "")
-    {
-      try{ count =  await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).count();}
-      catch{ count = 0}
-    }
-
-    else
-    {
-      try{
-        count = await db().collection('product').find({$and: [{category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)},
-                                                      {$or:[
-                                                        { $text: { $search: search } },
-                                                        { name: { $regex: search, $options: 'i' } }
-                                                      ]}]}).count();
-      }
-      catch{ count =  0;}
-    }
+    try{ count =  await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).count();}
+    catch{ count = 0}
 
     const totalPage = Math.ceil(count / numProduct);
     
@@ -181,22 +121,9 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     page = (page > totalPage) ? totalPage : page;
 
     let list;
-    if(search === "")
-    {
-      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
-      catch{ list = []}
-    }
-    else
-    {
-      try{
-        list = await db().collection('product').find({$and: [{category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)},
-                                                      {$or:[
-                                                        { $text: { $search: search } },
-                                                        { name: { $regex: search, $options: 'i' } }
-                                                      ]}]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
-      }
-      catch{  list = [];}
-    }
+    try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+    catch{ list = []}
+    
     
     for(let i = 0; i < list.length; i++)
       list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
@@ -208,9 +135,51 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     const beforePrePage = (page - 2) <= 0  ? 0 : page - 2;
 
     return {list: list, currentPage: page, nextPage: nextPage, afterNextPage: afterNextPage, prePage: prePage, beforePrePage: beforePrePage};
-    
   }
 }
+
+module.exports.listSearchedProduct = async (pageIndex, product_per_page, search) =>  
+{
+  let page = +pageIndex || 1;
+  const numProduct = +product_per_page || 9;
+
+  let count;
+  try{
+    count = await db().collection('product').find({$or:[
+                                                  { $text: { $search: search } },
+                                                  { name: { $regex: search, $options: 'i' } }
+                                                ]}).count();
+  }
+  catch{count =  0;}
+
+  const totalPage = Math.ceil(count / numProduct);
+
+  page = (page <= 0) ? 1 : page;
+  page = (page > totalPage) ? totalPage : page;
+
+  let list;
+ 
+  try{
+    list = await db().collection('product').find({$or:[
+                                                  { $text: { $search: search } },
+                                                  { name: { $regex: search, $options: 'i' } }
+                                                ]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+  }
+  catch { list = [];}
+
+  
+  for(let i = 0; i < list.length; i++)
+    list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
+
+  const nextPage = (page + 1) > totalPage ? 0 : page + 1;
+  const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
+
+  const prePage = (page - 1) <= 0 ? 0 : page - 1;
+  const beforePrePage = (page - 2) <= 0  ? 0 : page - 2;
+
+  return {list: list, currentPage: page, nextPage: nextPage, afterNextPage: afterNextPage, prePage: prePage, beforePrePage: beforePrePage};
+}
+
 
 module.exports.best_seller = async () => {}
 
