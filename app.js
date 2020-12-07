@@ -2,6 +2,8 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const fileupload = require('express-fileupload');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
 const hbs = require('hbs');
@@ -38,7 +40,7 @@ app.engine('hbs', exphbs({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-
+app.use(fileupload({ useTempFiles: true }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

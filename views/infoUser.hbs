@@ -1,0 +1,46 @@
+<section class="main-container col1-layout">
+  <div class="main container">
+    <div class="account-login">
+      <div class="page-title">
+        <h2>Your account</h2>
+      </div>
+      <fieldset class="col2-set">
+        <form class="form-list" action="/user/info/change/{{info._id}}" method="POST" enctype="multipart/form-data">
+            <div class="col-1 new-users">
+                <img src="{{info.avatar.url}}" alt = "avatar"  style="max-width: 100%; max-height: 80%"/>
+                <br>
+                <label for="image">Choose image and click "Change" button to change your avatar:</label>
+                <input type="file" name="image" id="image" accept="image/*" value=""/>
+            </div>
+            <div class="col-2 registered-users">
+                <div class="content">
+                    <label for="name">Full Name</label>
+                    <br>
+                    <input type="text" title="Full Name" class="input-text required-entry" id="fullname" value="{{info.fullname}}" name="fullname" >
+                    <br>
+
+                    <label for="email">Email Address</label>
+                    <br>
+                    <input type="text" title="Email Address" class="input-text required-entry" id="email" value="{{info.email}}" name="email" readonly>
+                    <br>
+                                
+                    <label for="password">Password</label>
+                    <br>
+                    <input type="password" title="Password" id="password" class="input-text required-entry validate-password" name="password" value="{{info.password}}" >
+                    <br>
+
+                    <div class="buttons-set">
+                        <input id="send2" name="send" type="submit" class="button login" value="Change">
+                    </div>
+            </div>
+        </div>
+        </form>
+      </fieldset>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+</section>
