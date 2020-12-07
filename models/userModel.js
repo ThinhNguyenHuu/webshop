@@ -7,7 +7,6 @@ const ObjectId = require('mongodb').ObjectID;
 module.exports.info = async () =>
 {
     const info = await db().collection('user').find().toArray();
-    console.log(info);
     return info[0];
 }
 
