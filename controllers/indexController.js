@@ -1,7 +1,7 @@
 const productModel = require('../models/productModel');
 
 exports.index = async (req, res, next) => {
-  const list = await productModel.list(1, 9, "");
+  const list = await productModel.list(1, 9);
   const listCategory_brand = await productModel.listCategory_brand();
 
   res.render('index', {
