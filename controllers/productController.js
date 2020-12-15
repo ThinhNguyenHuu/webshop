@@ -13,7 +13,7 @@ module.exports.getList = async (req, res, next) => {
   const numProduct = +req.query.numProduct || 9;
   
   res.render('listProduct', {
-    title: 'Product',
+    title: 'Sản phẩm',
     list: pagination.list,
     currentPage: pagination.currentPage,
     nextPage: pagination.nextPage,
@@ -38,7 +38,7 @@ module.exports.getListFilteredProduct = async (req, res, next) =>{
 
   
   res.render('listProduct', {
-    title: 'Product',
+    title: req.params.category_brand,
     list: pagination.list,
     currentPage: pagination.currentPage,
     nextPage: pagination.nextPage,
@@ -60,9 +60,11 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
   const url = (req.originalUrl).split("&",1)[0] + "&";
 
   const numProduct = +req.query.numProduct || 9;
+
+  const title = "Kết quả tìm kiếm " + req.query.search;
   
   res.render('listProduct', {
-    title: 'Product',
+    title: title,
     list: pagination.list,
     currentPage: pagination.currentPage,
     nextPage: pagination.nextPage,

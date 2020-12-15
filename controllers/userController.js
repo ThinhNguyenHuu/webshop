@@ -4,7 +4,7 @@ const productModel = require('../models/productModel');
 exports.login = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('login', {
-    title: 'Login',
+    title: 'Đăng nhập',
     listCategory_brand: listCategory_brand
    });
 } 
@@ -12,7 +12,7 @@ exports.login = async (req, res, next) => {
 exports.register = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('register', { 
-    title: 'Register',
+    title: 'Đăng ký',
     listCategory_brand: listCategory_brand
   });
 } 
@@ -22,7 +22,7 @@ module.exports.info = async (req, res, next) => {
   const info = await userModel.info();
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('infoUser', {
-    title: 'Information',
+    title: 'Tài khoản',
     info: info,
     listCategory_brand: listCategory_brand
    });

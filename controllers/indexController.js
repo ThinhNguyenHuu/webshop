@@ -5,7 +5,7 @@ exports.index = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
 
   res.render('index', {
-    title: 'Home',
+    title: 'Trang chủ',
     listCategory_brand: listCategory_brand,
     list: list.list,
   });
