@@ -36,7 +36,7 @@
               
               <div class="sorter">
                  <div class="pages">
-                  <label>Page:</label>
+                  <label>Trang:</label>
                   <ul class="pagination">
                     <li></li>
                     {{#if prePage}}
@@ -86,7 +86,7 @@
               
               <div class="pager">
                 <div id="limiter">
-                  <label>View: </label>
+                  <label>Số sản phẩm trên trang: </label>
                   <ul>
                     <li><a href="{{url}}numProduct={{numProduct}}">{{numProduct}}<span class="right-arrow"></span></a>
                       <ul>
@@ -103,18 +103,20 @@
             {{#each list}}
               <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6">
                 <div class="col-item">
-                  <div class="sale-label sale-top-right">Sale</div>
+                  {{#if discount}}
+                  <div class="sale-label sale-top-right">Khuyến mãi</div>
+                  {{/if}}
                   <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                     <div class="actions">
                       <div class="actions-inner">
-                        <button type="button" title="Add to Cart" class="button btn-cart"><span>Add to Cart</span></button>
-                        <ul class="add-to-links">
+                        <button type="button" title="Thêm vào giỏ hàng" class="button btn-cart"><span>Thêm vào giỏ</span></button>
+                        <!--ul class="add-to-links">
                           <li><a href="/product/detail/{{_id}}" title="Add to Wishlist" class="link-wishlist"><span>Add to Wishlist</span></a></li>
                           <li><a href="/product/detail/{{_id}}" title="Add to Compare" class="link-compare "><span>Add to Compare</span></a></li>
-                        </ul>
+                        </ul-->
                       </div>
                     </div>
-                    <div class="qv-button-container"> <a class="qv-e-button btn-quickview-1" href="/product/detail/{{_id}}"><span><span>Quick View</span></span></a> </div>
+                    <div class="qv-button-container"> <a class="qv-e-button btn-quickview-1" href="/product/detail/{{_id}}"><span><span>Xem chi tiết</span></span></a> </div>
                   </div>
                   <div class="info">
                     <div class="info-inner">
@@ -147,7 +149,7 @@
         </section>
         <aside class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9 wow">
           <div class="side-nav-categories">
-            <div class="block-title"> Categories </div>
+            <div class="block-title"> PHÂN LOẠI </div>
             <!--block-title--> 
             <!-- BEGIN BOX-CATEGORY -->
             <div class="box-content box-category">
@@ -166,26 +168,26 @@
             </div>
           </div>
           <div class="block block-layered-nav">
-            <div class="block-title"><span>Shop By</span></div>
+            <div class="block-title"><span>BỘ LỌC</span></div>
             <div class="block-content">
-              <p class="block-subtitle">Shopping Options</p>
+              <p class="block-subtitle">Tiêu chí lọc</p>
               <dl id="narrow-by-list">
-                <dt class="odd">Price</dt>
+                <dt class="odd">Giá cả</dt>
                 <dd class="odd">
                   <ol>
-                    <li> <a href="#"><span class="price">$0.00</span> - <span class="price">$99.99</span></a> (6) </li>
-                    <li> <a href="#"><span class="price">$100.00</span> and above</a> (6) </li>
+                    <li> <a href="#"><span class="price">0</span> - <span class="price">5.000.000 đ</span></a> (6) </li>
+                    <li> <a href="#"><span class="price">5.000.000 đ</span> trở lên</a> (6) </li>
                   </ol>
                 </dd>
-                <dt class="even">Manufacturer</dt>
+                <dt class="even">Khuyến mãi</dt>
                 <dd class="even">
                   <ol>
-                    <li> <a href="#">TheBrand</a> (9) </li>
-                    <li> <a href="#">Company</a> (4) </li>
-                    <li> <a href="#">LogoFashion</a> (1) </li>
+                    <li> <a href="#">0 - 10 %</a> (9) </li>
+                    <li> <a href="#">10 - 20 %</a> (4) </li>
+                    <li> <a href="#">Trên 20%</a> (1) </li>
                   </ol>
                 </dd>
-                <dt class="odd">Color</dt>
+                <!--dt class="odd">Color</dt>
                 <dd class="odd">
                   <ol>
                     <li> <a href="#">Green</a> (1) </li>
@@ -204,11 +206,11 @@
                     <li> <a href="#">L</a> (4) </li>
                     <li> <a href="#">XL</a> (4) </li>
                   </ol>
-                </dd>
+                </dd-->
               </dl>
             </div>
           </div>
-          <div class="block block-cart">
+          <!--div class="block block-cart">
             <div class="block-title"><span>My Cart</span></div>
             <div class="block-content">
               <div class="summary">
@@ -231,13 +233,13 @@
                     <div class="access"> <a class="btn-remove1" title="Remove This Item" href="#"> <span class="icon"></span> Remove </a> </div>
                     <p class="product-name"> <a href="#"> Sample Fashion Product Prince Lionheart </a> </p>
                     <strong>1</strong> x <span class="price">$8.00</span> 
-                    <!--access clearfix--> 
+                    <!access clearfix> 
                   </div>
                 </li>
               </ul>
             </div>
-          </div>
-          <div class="block block-subscribe">
+          </div-->
+          <!--div class="block block-subscribe">
             <div class="block-title"><span>Newsletter</span></div>
             <form action="#" method="post" id="newsletter-validate-detail">
               <div class="block-content">
@@ -327,7 +329,7 @@
               <div class="actions"> <a class="view-all" href="#">View All Tags</a> </div>
             </div>
           </div>
-          <div class="block block-banner"><a href="#"><img src="/images/block-banner.png" alt="block-banner"></a></div>
+          <div class="block block-banner"><a href="#"><img src="/images/block-banner.png" alt="block-banner"></a></div-->
         </aside>
       </div>
     </div>
