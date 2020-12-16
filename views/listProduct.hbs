@@ -104,7 +104,7 @@
               <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6">
                 <div class="col-item">
                   {{#if discount}}
-                  <div class="sale-label sale-top-right">Khuyến mãi</div>
+                  <div class="sale-label sale-top-right">Sale</div>
                   {{/if}}
                   <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                     <div class="actions">
@@ -130,7 +130,9 @@
                         </div>
                         <div class="price-box">
                           <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
+                          {{#if discount}}
                           <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
+                          {{/if}}
                         </div>
                       </div>
                       <!--item-content--> 

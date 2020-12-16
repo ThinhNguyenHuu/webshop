@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <ul>
-        <li class="home"> <a href="/">Home</a><span>&mdash;›</span></li>
+        <li class="home"> <a href="/">Trang chủ</a><span>&mdash;›</span></li>
         <li class=""> <a href="/product">{{category.name}}</a><span>&mdash;›</span></li>
         <li class=""> <a href="/product">{{brand.name}}</a><span>&mdash;›</span></li>
         <li class="category13"><strong>{{product.name}}</strong></li>
@@ -48,30 +48,35 @@
                   <div class="rating-box">
                     <div style="width:{{rating product.reviews}}%" class="rating"></div>
                   </div>
-                  <p class="rating-links"> <a onclick="getToReview()" href="#product-detail-tab"> {{product.reviews.length}} Review</a> <span class="separator">|</span><a onclick="getToReview()" href="#product-detail-tab">Add Your Review</a></p> 
+                  <p class="rating-links"> <a onclick="getToReview()" href="#product-detail-tab"> {{product.reviews.length}} Đánh giá</a> <span class="separator">Thêm đánh giá của bạn</span><a onclick="getToReview()" href="#product-detail-tab"></a></p> 
                 </div>
                 {{!-- <p class="availability in-stock"><span>In Stock</span></p> --}}
                 <div class="price-block">
                   <div class="price-box">
-                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price">{{product.price}}đ</span> </p>
-                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price">{{product.price}}đ</span> </p>
+                    {{#if product.discount}}
+                    <p class="old-price"> <span class="price-label">Giá bình thường:</span> <span class="price">{{product.old_price}}đ</span> </p>
+                    {{/if}}
+                    <p class="special-price"> <span class="price-label">Giá ưu đãi:</span> <span class="price">{{product.price}}đ</span> </p>
+                    
                   </div>
                 </div>
                 <div class="short-description">
-                  <h2>Quick Overview</h2>
+                  <h2>Tổng quan</h2>
                   <p>{{product.description}}</p>
                 </div>
                 <div class="add-to-box">
                   <div class="add-to-cart">
-                    <label for="qty">Quantity:</label>
+                    <label for="qty">Số lượng:</label>
                     <div class="pull-left">
                       <div class="custom pull-left">
-                        <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
-                        <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
                         <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon-minus">&nbsp;</i></button>
+
+                        <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
+                        
+                        <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
                       </div>
                     </div>
-                    <button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> Add to Cart</span></button>
+                    <button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Thêm vào giỏ hàng" type="button"><span><i class="icon-basket"></i> Thêm vào giỏ</span></button>
                   </div>
                   {{!-- <div class="email-addto-box">
                     <ul class="add-to-links">
@@ -89,9 +94,9 @@
             <!-- Tabs -->
             <div class="col-sm-12 wow">
               <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                <li class="active"> <a href="#product_tabs_description" data-toggle="tab">Description </a> </li>
-                <li><a href="#product_tabs_tags" data-toggle="tab">Tags</a></li>
-                <li> <a href="#reviews_tabs" data-toggle="tab" id="reviews_tabs_nav">Reviews</a> </li>
+                <li class="active"> <a href="#product_tabs_description" data-toggle="tab">Mô tả </a> </li>
+                <li><a href="#product_tabs_tags" data-toggle="tab">Nhãn </a></li>
+                <li> <a href="#reviews_tabs" data-toggle="tab" id="reviews_tabs_nav">Đánh giá</a> </li>
               </ul>
 
               <div id="productTabContent" class="tab-content">
@@ -107,17 +112,17 @@
                     <div class="tags">
                       <form id="addTagForm" action="#" method="get">
                         <div class="form-add-tags">
-                          <label for="productTagName">Add Tags:</label>
+                          <label for="productTagName">Thêm nhãn:</label>
                           <div class="input-box">
                             <input class="input-text required-entry" name="productTagName" id="productTagName" type="text" style="width:35%;">
-                            <button type="button" title="Add Tags" class=" button btn-add" onClick="submitTagForm()"> <span>Add Tags</span> </button>
+                            <button type="button" title="Add Tags" class=" button btn-add" onClick="submitTagForm()"> <span>Thêm nhãn</span> </button>
                           </div>
                           <!--input-box--> 
                         </div>
                       </form>
                     </div>
                     <!--tags-->
-                    <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
+                    <p class="note">Dùng dấu cách để phân tách giữa các nhãn. Dùng dấu nháy đơn (') cho các cụm từ.</p>
                   </div>
                 </div>
                 <!-- Tab review -->
@@ -127,9 +132,9 @@
                       <div class="form-add">
                         <!-- Review form -->
                         <form id="review-form" method="post" action="#">
-                          <h3>Write Your Own Review</h3>
+                          <h3>Viết đánh giá của bạn</h3>
                           <fieldset>
-                            <h4>How do you rate this product? <em class="required">*</em></h4>
+                            <h4>Bạn đánh giá sản phẩm này như thế nào? <em class="required">*</em></h4>
                             <span id="input-message-box"></span>
                             <table id="product-review-table" class="data-table">
                               <colgroup>
@@ -152,7 +157,7 @@
                               </thead>
                               <tbody>
                                 <tr class="first odd">
-                                  <th>Price</th>
+                                  <th>Giá cả</th>
                                   <td class="value"><input type="radio" class="radio" value="11" id="Price_1" name="ratings[3]"></td>
                                   <td class="value"><input type="radio" class="radio" value="12" id="Price_2" name="ratings[3]"></td>
                                   <td class="value"><input type="radio" class="radio" value="13" id="Price_3" name="ratings[3]"></td>
@@ -160,7 +165,7 @@
                                   <td class="value last"><input type="radio" class="radio" value="15" id="Price_5" name="ratings[3]"></td>
                                 </tr>
                                 <tr class="even">
-                                  <th>Value</th>
+                                  <th>Giá trị</th>
                                   <td class="value"><input type="radio" class="radio" value="6" id="Value_1" name="ratings[2]"></td>
                                   <td class="value"><input type="radio" class="radio" value="7" id="Value_2" name="ratings[2]"></td>
                                   <td class="value"><input type="radio" class="radio" value="8" id="Value_3" name="ratings[2]"></td>
@@ -168,7 +173,7 @@
                                   <td class="value last"><input type="radio" class="radio" value="10" id="Value_5" name="ratings[2]"></td>
                                 </tr>
                                 <tr class="last odd">
-                                  <th>Quality</th>
+                                  <th>Chất lượng</th>
                                   <td class="value"><input type="radio" class="radio" value="1" id="Quality_1" name="ratings[1]"></td>
                                   <td class="value"><input type="radio" class="radio" value="2" id="Quality_2" name="ratings[1]"></td>
                                   <td class="value"><input type="radio" class="radio" value="3" id="Quality_3" name="ratings[1]"></td>
@@ -181,13 +186,13 @@
                             <div class="review1">
                               <ul class="form-list">
                                 <li>
-                                  <label class="required" for="nickname_field">Nickname<em>*</em></label>
+                                  <label class="required" for="nickname_field">Tên của bạn<em>*</em></label>
                                   <div class="input-box">
                                     <input type="text" class="input-text required-entry" id="nickname_field" name="nickname">
                                   </div>
                                 </li>
                                 <li>
-                                  <label class="required" for="summary_field">Summary<em>*</em></label>
+                                  <label class="required" for="summary_field">Tóm tắt<em>*</em></label>
                                   <div class="input-box">
                                     <input type="text" class="input-text required-entry" id="summary_field" name="title">
                                   </div>
@@ -197,14 +202,14 @@
                             <div class="review2">
                               <ul>
                                 <li>
-                                  <label class="required label-wide" for="review_field">Review<em>*</em></label>
+                                  <label class="required label-wide" for="review_field">Đánh giá<em>*</em></label>
                                   <div class="input-box">
                                     <textarea class="required-entry" rows="3" cols="5" id="review_field" name="detail"></textarea>
                                   </div>
                                 </li>
                               </ul>
                               <div class="buttons-set">
-                                <button class="button submit" title="Submit Review" type="submit"><span>Submit Review</span></button>
+                                <button class="button submit" title="Submit Review" type="submit"><span>Đăng tải đánh giá</span></button>
                               </div>
                             </div>
                           </fieldset>
@@ -212,7 +217,7 @@
                       </div>
                     </div>
                     <div class="box-reviews2">
-                      <h3>Customer Reviews</h3>
+                      <h3>Các đánh giá của khách hàng</h3>
                       <div class="box visible">
                         <ul>
                           {{#each product.reviews}}
@@ -225,21 +230,21 @@
                               <tbody>
                                 <!-- Value -->
                                 <tr>
-                                  <th>Value</th>
+                                  <th>Giá trị</th>
                                   <td><div class="rating-box">
                                       <div class="rating" style="width:{{value}}%;"></div>
                                     </div></td>
                                 </tr>
                                 <!-- Quality -->
                                 <tr>
-                                  <th>Quality</th>
+                                  <th>Chất lượng</th>
                                   <td><div class="rating-box">
                                       <div class="rating" style="width:{{quality}}%;"></div>
                                     </div></td>
                                 </tr>
                                 <!-- Price -->
                                 <tr>
-                                  <th>Price</th>
+                                  <th>Giá cả</th>
                                   <td><div class="rating-box">
                                       <div class="rating" style="width:{{price}}%;"></div>
                                     </div></td>
@@ -248,14 +253,14 @@
                             </table>
                             <div class="review">
                               <h6>{{summary}}</h6>
-                              <small>Review by <strong>{{name}}</strong> on {{dateToString date}} </small>
+                              <small>Viết bởi <strong>{{name}}</strong> vào ngày {{dateToString date}} </small>
                               <div class="review-txt">{{review}}</div>
                             </div>
                           </li>
                           {{/each}}
                         </ul>
                       </div>
-                      <div class="actions"> <a class="button view-all" id="revies-button"><span><span>View all</span></span></a> </div>
+                      <div class="actions"> <a class="button view-all" id="revies-button"><span><span>Xem tất cả</span></span></a> </div>
                     </div>
                     <div class="clear"></div>
                   </div>
@@ -269,7 +274,7 @@
               <div class="box-additional">
                 <div class="related-pro wow">
                   <div class="slider-items-products">
-                    <div class="new_title center"><h2>RELATED PRODUCTS</h2></div>
+                    <div class="new_title center"><h2>SẢN PHẨM LIÊN QUAN</h2></div>
                     <div id="related-products-slider" class="product-flexslider hidden-buttons">
                       <div class="slider-items slider-width-col4"> 
                         
@@ -279,14 +284,14 @@
                               <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                                 <div class="actions">
                                   <div class="actions-inner">
-                                    <button type="button" title="Add to Cart" class="button btn-cart"><span>Add to Cart</span></button>
-                                    <ul class="add-to-links">
+                                    <button type="button" title="Thêm vào giỏ hàng" class="button btn-cart"><span>Thêm vào giỏ</span></button>
+                                    <!--ul class="add-to-links">
                                       <li><a href="wishlist.html" title="Add to Wishlist" class="link-wishlist"><span>Add to Wishlist</span></a></li>
                                       <li><a href="compare.html" title="Add to Compare" class="link-compare "><span>Add to Compare</span></a></li>
-                                    </ul>
+                                    </ul-->
                                   </div>
                                 </div>
-                                <div class="qv-button-container"> <a href="/quickview/{{_id}}" class="qv-e-button btn-quickview-1"><span><span>Quick View</span></span></a> </div>
+                                <div class="qv-button-container"> <a href="/product/detail/{{_id}}" class="qv-e-button btn-quickview-1"><span><span>Xem chi tiết</span></span></a> </div>
                               </div>
                               <div class="info">
                                 <div class="info-inner">
@@ -300,7 +305,9 @@
                                     </div>
                                     <div class="price-box">
                                       <p class="special-price"> <span class="price"> ${{price}} </span> </p>
-                                      <p class="old-price"> <span class="price-sep">-</span> <span class="price"> ${{price}} </span> </p>
+                                      {{#if discount}}
+                                      <p class="old-price"> <span class="price-sep">-</span> <span class="price"> ${{old_price}} </span> </p>
+                                      {{/if}}
                                     </div>
                                   </div>
                                   <!--item-content--> 

@@ -191,6 +191,8 @@ module.exports.featured = async () => {}
 
 module.exports.details = async (productId) => {
   const product = await db().collection('product').findOne({_id: ObjectId(productId)});
+
+  product.old_price = (product.discount != 0) ? Math.ceil((product.price * 100) / (100 - product.discount)): product.price;
   
   const brandPromise = db().collection('brand').findOne({_id: ObjectId(product.brand)});
   const categoryPromise = db().collection('category').findOne({_id: ObjectId(product.category)});
@@ -199,6 +201,9 @@ module.exports.details = async (productId) => {
   const brand = await brandPromise;
   const category = await categoryPromise;
   const relatedList = await relatedListPromise;
+
+  for(let i = 0; i < relatedList.length; i++)
+      relatedList[i].old_price = (relatedList[i].discount != 0) ? Math.ceil((relatedList[i].price * 100) / (100 - relatedList[i].discount)): relatedList[i].price;
   
   return { product, brand, category, relatedList };
 }
