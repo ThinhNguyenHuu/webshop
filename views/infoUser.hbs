@@ -2,35 +2,40 @@
   <div class="main container">
     <div class="account-login">
       <div class="page-title">
-        <h2>Your account</h2>
+        <h2>Tài khoản của bạn</h2>
       </div>
       <fieldset class="col2-set">
         <form class="form-list" action="/user/info/change/{{info._id}}" method="POST" enctype="multipart/form-data">
             <div class="col-1 new-users">
                 <img src="{{info.avatar.url}}" alt = "avatar"  style="max-width: 100%; max-height: 80%"/>
                 <br>
-                <label for="image">Choose image and click "Change" button to change your avatar:</label>
+                <label for="image">Chọn ảnh và click nút "Thay đổi" để thay đổi ảnh đại diện:</label>
                 <input type="file" name="image" id="image" accept="image/*" value=""/>
             </div>
             <div class="col-2 registered-users">
                 <div class="content">
-                    <label for="name">Full Name</label>
+                    <label for="name">Họ và tên</label>
                     <br>
-                    <input type="text" title="Full Name" class="input-text required-entry" id="fullname" value="{{info.fullname}}" name="fullname" >
+                    <input type="text" title="Full Name" class="input-text required-entry" id="name" value="{{info.fullname}}" name="name" >
                     <br>
 
-                    <label for="email">Email Address</label>
+                    <label for="email">Địa chỉ email</label>
                     <br>
-                    <input type="text" title="Email Address" class="input-text required-entry" id="email" value="{{info.email}}" name="email" readonly>
+                    <input type="text" title="Email Address" class="input-text required-entry" id="email" value="{{info.email}}" name="email">
+                    <br>
+
+                    <label for="username">Tên đăng nhập</label>
+                    <br>
+                    <input type="text" title="Username" class="input-text required-entry" id="username" value="{{info.username}}" name="username" readonly>
                     <br>
                                 
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <br>
                     <input type="password" title="Password" id="password" class="input-text required-entry validate-password" name="password" value="{{info.password}}" >
                     <br>
 
                     <div class="buttons-set">
-                        <input id="send2" name="send" type="submit" class="button login" value="Change">
+                        <input id="send2" name="send" type="submit" class="button login" value="Thay đổi">
                     </div>
             </div>
         </div>
