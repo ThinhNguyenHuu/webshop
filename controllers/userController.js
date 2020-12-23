@@ -34,25 +34,33 @@ module.exports.logout = (req, res, next) => {
 
 module.exports.info = async (req, res, next) => {
 
-  const info = await userModel.info();
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('infoUser', {
     title: 'Tài khoản',
-    info: info,
     listCategory_brand: listCategory_brand
    });
 } 
 
 
-module.exports.change = async (req, res, next) => {
+module.exports.getUpdateInfo = async (req, res, next) => {
   
-  if(req.params._id) {
+  const listCategory_brand = await productModel.listCategory_brand();
+  res.render('updateInfoUser', {
+    title: 'Cập nhật thông tin',
+    listCategory_brand: listCategory_brand
+   });
+
+}
+
+module.exports.postUpdateInfo = async (req, res, next) => {
+  
+  if(req.user) {
     let file = null;
     if (req.files != null && req.files.image != null) {
       file = req.files.image;
     }
     
-    await userModel.change(req.body, file, req.params._id);
+    await userModel.updateInfoUser(req.body, file, req.user);
     res.redirect("/user/info");
   } else {
     next();

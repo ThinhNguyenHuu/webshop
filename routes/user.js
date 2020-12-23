@@ -16,6 +16,8 @@ router.post('/register', userController.postRegister);
 router.get('/logout', userController.logout);
 
 router.get('/info', userController.info);
-router.post('/info/change/:_id', userController.change);
+
+router.get('/info/updateinfo', userController.getUpdateInfo);
+router.post('/info/updateinfo', userController.postUpdateInfo);
 
 module.exports = router;

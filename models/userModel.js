@@ -58,50 +58,41 @@ module.exports.addUser = async (body) =>
     
 }
 
-module.exports.info = async () =>
-{
-    const info = await db().collection('user').find().toArray();
-    return info[0];
-}
-
-module.exports.change = async (body, file, id) => {
-    const user = await db().collection('user').find({_id: ObjectId(id)}).toArray();
+module.exports.updateInfoUser = async (body, file, user) => {
 
     let fullname;
-    let avatar;
+    let username;
     let email;
-    let password;
  
-    if(body.fullname !== "")
+    if(body.fullname)
         fullname = body.fullname;
     else
-        fullname = user[0].fullname;
+        fullname = user.fullname;
 
     
-    if(body.email !== "")
+    if(body.email)
         email = body.email;
     else
-        email = user[0].email;
+        email = user.email;
 
-    if(body.password !== "")
-        password = body.password;
+    if(body.username)
+        username = body.username;
     else
-        password = user[0].password;
-
+        username = user.username;
        
     let source = null;
     if (file) {
-        const destroyPromise = destroyFiles(user[0].avatar);
+        const destroyPromise = destroyFiles(user.avatar);
         const new_source = await uploadFiles(file);
         await destroyPromise;
         source = new_source;
     }
 
-    await db().collection('user').updateOne( {_id: ObjectId(id)} ,{$set: {
+    await db().collection('user').updateOne( {_id: ObjectId(user._id)} ,{$set: {
         fullname: fullname, 
         email: email,
-        avatar: source ? source : user[0].avatar, 
-        password: password, 
+        avatar: source ? source : user.avatar, 
+        username: username, 
     }}, null);
 }
 
@@ -112,12 +103,12 @@ const uploadFiles = async (file) => {
     source = uploaded;
     fs.unlinkSync(file.tempFilePath);
     
-
     return source;
 }
 
 const destroyFiles = async (source) => {
-    cloudinary.destroy(source.id);
+    if(source)
+        cloudinary.destroy(source.id);
 }
 
 
