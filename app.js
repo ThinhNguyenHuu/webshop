@@ -9,7 +9,9 @@ const fileupload = require('express-fileupload');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
 const hbs = require('hbs');
+const session = require("express-session")
 
+const passport = require('./passport');
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
 const userRouter = require('./routes/user');
@@ -48,6 +50,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(session({ secret: 'keyboard cat',
+                  resave: true,
+                  saveUninitialized: true }));
+                  
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/', indexRouter);
 app.use('/product', productRouter);

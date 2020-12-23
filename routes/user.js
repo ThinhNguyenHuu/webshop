@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const passport = require('../passport');
 
 
 router.get('/login', userController.getLogin);
-//router.post('/login', userController.postLogin);
+router.post('/login', passport.authenticate('local',
+                        { successRedirect: '/',
+                        failureRedirect: '/user/login' }));
 
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);

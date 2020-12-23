@@ -119,3 +119,25 @@ const uploadFiles = async (file) => {
 const destroyFiles = async (source) => {
     cloudinary.destroy(source.id);
 }
+
+
+module.exports.checkUser = async (username, password) =>
+{
+    const user = await db().collection('user').findOne({username: username});
+    if(user)
+    {
+        const match = await bcrypt.compare(password, user.password);
+        if(match)
+            return user;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+module.exports.findUser = async (id) =>
+{
+    const user = await db().collection('user').findOne({_id: ObjectId(id)});
+    return user;
+}
