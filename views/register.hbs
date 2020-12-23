@@ -9,31 +9,31 @@
             
                 <div class="col-1 registered-users">
                     <div class="content">
-                        <form class="form-list">
+                        <form class="form-list" action="/user/register" method="POST">
                             
                                 <label for="name">Họ và tên <span class="required">*</span></label>
                                 <br>
-                                <input type="text" title="Full Name" class="input-text required-entry" id="name" value="" name="register[name]">
+                                <input type="text" title="Full Name" class="input-text required-entry" id="fullname" value="" name="fullname">
                                 <br>
 
                                 <label for="email">Địa chỉ email <span class="required">*</span></label>
                                 <br>
-                                <input type="text" title="Email Address" class="input-text required-entry" id="email" value="" name="register[email]">
+                                <input type="text" title="Email Address" class="input-text required-entry" id="email" value="" name="email">
                                 <br>
 
                                 <label for="username">Tên đăng nhập <span class="required">*</span></label>
                                 <br>
-                                <input type="text" title="Username" class="input-text required-entry" id="username" value="" name="register[username]">
+                                <input type="text" title="Username" class="input-text required-entry" id="username" value="" name="username">
                                 <br>
                             
-                                <label for="pass">Mật khẩu <span class="required">*</span></label>
+                                <label for="password">Mật khẩu <span class="required">*</span></label>
                                 <br>
-                                <input type="password" title="Password" id="pass" class="input-text required-entry validate-password" name="register[pass]">
+                                <input type="password" title="Password" id="password" class="input-text required-entry validate-password" name="password">
                                 <br>
                         
                                 <label for="confirm">Nhập lại mật khẩu <span class="required">*</span></label>
                                 <br>
-                                <input type="password" title="Confirm Password " class="input-text required-entry" id="confirm" value="" name="register[confirm]">
+                                <input type="password" title="Confirm Password " class="input-text required-entry" id="confirm" value="" name="confirm">
                                 <br>
 
                                 <p class="required">* Bắt buộc</p>

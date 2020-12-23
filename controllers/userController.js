@@ -1,7 +1,7 @@
 const userModel = require('../models/userModel');
 const productModel = require('../models/productModel');
 
-exports.login = async (req, res, next) => {
+module.exports.getLogin = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('login', {
     title: 'Đăng nhập',
@@ -9,13 +9,25 @@ exports.login = async (req, res, next) => {
    });
 } 
 
-exports.register = async (req, res, next) => {
+
+
+
+module.exports.getRegister = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('register', { 
     title: 'Đăng ký',
     listCategory_brand: listCategory_brand
   });
 } 
+
+module.exports.postRegister = async (req, res, next) => {
+  const resultAddUser = await userModel.addUser(req.body);
+  if(resultAddUser)
+    res.redirect('/user/login');
+  else
+    res.redirect('/user/register');
+}
+
 
 module.exports.info = async (req, res, next) => {
 
