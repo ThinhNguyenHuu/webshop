@@ -13,6 +13,8 @@ router.post('/login', passport.authenticate('local',
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
 
+router.get('/logout', userController.logout);
+
 router.get('/info', userController.info);
 router.post('/info/change/:_id', userController.change);
 

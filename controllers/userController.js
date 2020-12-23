@@ -9,9 +9,6 @@ module.exports.getLogin = async (req, res, next) => {
    });
 } 
 
-
-
-
 module.exports.getRegister = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('register', { 
@@ -26,6 +23,12 @@ module.exports.postRegister = async (req, res, next) => {
     res.redirect('/user/login');
   else
     res.redirect('/user/register');
+}
+
+module.exports.logout = (req, res, next) => {
+
+    req.logout();
+    res.redirect('/');
 }
 
 
