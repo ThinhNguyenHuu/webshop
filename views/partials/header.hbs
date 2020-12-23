@@ -11,7 +11,9 @@
           <!-- Header Top Links -->
           <div class="toplinks">
             <div class="links">
+              {{#if user}}
               <div class="myaccount"><a title="My Account" href="/user/info"><span class="hidden-xs">Tài khoản</span></a></div>
+              {{/if}}
               <div class="wishlist"><a title="My Wishlist" href="#"><span class="hidden-xs">Wishlist</span></a></div>
               <div class="check"><a title="Checkout" href="#"><span class="hidden-xs">Thanh toán</span></a></div>
             </div>
@@ -83,7 +85,11 @@
         </div>
         <div class="signup"><a title="Login" href="/user/register"><span>Đăng ký</span></a></div>
         <span class="or"> | </span>
+        {{#if user}}
+        <div class="login"><a title="Logout" href="/user/logout"><span>Đăng xuất</span></a></div>
+        {{else}}
         <div class="login"><a title="Login" href="/user/login"><span>Đăng nhập</span></a></div>
+        {{/if}}
       </div>
       <!-- End Top Cart --> 
     </div>

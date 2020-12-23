@@ -7,7 +7,8 @@ const passport = require('../passport');
 router.get('/login', userController.getLogin);
 router.post('/login', passport.authenticate('local',
                         { successRedirect: '/',
-                        failureRedirect: '/user/login' }));
+                        failureRedirect: '/user/login',
+                        failureFlash: true }));
 
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
