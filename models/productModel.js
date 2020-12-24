@@ -181,13 +181,21 @@ module.exports.listSearchedProduct = async (pageIndex, product_per_page, search)
 }
 
 
-module.exports.best_seller = async () => {}
+module.exports.listBestSellerProduct = async () => {
+  return await db().collection('product').find({}).sort({sell_count: -1}).limit(7).toArray();
+}
 
-module.exports.lastest = async () => {}
+module.exports.listLatestProduct = async () => {
+  return await db().collection('product').find({}).sort({_id: -1}).limit(5).toArray();
+}
 
-module.exports.recommend = async () => {}
+module.exports.listSaleProduct = async () => {
+  return await db().collection('product').find({}).sort({discount: -1}).limit(8).toArray();
+}
 
-module.exports.featured = async () => {}
+module.exports.listFeaturedProduct = async () => {
+  return  await db().collection('product').aggregate([{$sample: {size: 8}}]).toArray();
+}
 
 module.exports.details = async (productId) => {
   const product = await db().collection('product').findOne({_id: ObjectId(productId)});

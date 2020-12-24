@@ -105,7 +105,9 @@
                 <div class="col-item">
                   {{#if discount}}
                   <div class="sale-label sale-top-right">Sale</div>
-                  {{/if}}
+                  {{else}} {{#if (isNewProduct _id)}}
+                  <div class="new-label new-top-right">New</div>
+                  {{/if}} {{/if}}
                   <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                     <div class="actions">
                       <div class="actions-inner">
@@ -129,10 +131,16 @@
                           </div>
                         </div>
                         <div class="price-box">
-                          <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
+                          {{#if discount}}
+                          <p class="special-price"> <span class="price"> {{discountPrice price discount}}đ </span> </p>
+                          <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{price}}đ </span> </p>
+                          {{else}}
+                          <span class="regular-price"> <span class="price">{{price}}đ</span> </span>
+                          {{/if}}
+                          {{!-- <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
                           {{#if discount}}
                           <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
-                          {{/if}}
+                          {{/if}} --}}
                         </div>
                       </div>
                       <!--item-content--> 

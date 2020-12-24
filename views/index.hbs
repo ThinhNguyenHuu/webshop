@@ -22,47 +22,6 @@
 </div>
 <!-- end Slider --> 
 
-<!-- header service -->
-{{!-- <div class="header-service">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 col-sm-6 col-xs-12">
-        <div class="content">
-          <div class="icon-truck">&nbsp;</div>
-          <span><strong>FREE SHIPPING</strong> on order over $99</span></div>
-      </div>
-      <div class="col-lg-3 col-sm-6 col-xs-12">
-        <div class="content">
-          <div class="icon-support">&nbsp;</div>
-          <span><strong>Customer Support</strong> Service</span></div>
-      </div>
-      <div class="col-lg-3 col-sm-6 col-xs-12">
-        <div class="content">
-          <div class="icon-money">&nbsp;</div>
-          <span><strong>3 days Money Back</strong> Guarantee</span></div>
-      </div>
-      <div class="col-lg-3 col-sm-6 col-xs-12">
-        <div class="content">
-          <div class="icon-dis">&nbsp;</div>
-          <span><strong class="orange">5% discount</strong> on order over $199</span></div>
-      </div>
-    </div>
-  </div>
-</div> --}}
-<!-- end header service --> 
-
-<!-- offer banner section -->
-{{!-- <div class="offer-banner-section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 col-xs-12 col-md-4 col-sm-4 wow"><a href="#"><img alt="offer banner1" src="/images/promo-banner1.jpg"></a></div>
-      <div class="col-lg-4 col-xs-12 col-md-4 col-sm-4 wow"><a href="#"><img alt="offer banner1" src="/images/promo-banner2.jpg"></a></div>
-      <div class="col-lg-4 col-xs-12 col-md-4 col-sm-4 wow"><a href="#"><img alt="offer banner1" src="/images/promo-banner3.jpg"></a></div>
-    </div>
-  </div>
-</div> --}}
-<!-- end offer banner section --> 
-
 <!-- main container -->
 <section class="main-container col1-layout home-content-container">
   <div class="container">
@@ -77,9 +36,14 @@
             <div id="best-seller-slider" class="product-flexslider hidden-buttons">
               <div class="slider-items slider-width-col4"> 
 
-                {{#each list}}
+                {{#each listBestSellerProduct}}
                   <div class="item">  
                   <div class="col-item">
+                    {{#if discount}}
+                    <div class="sale-label sale-top-right">Sale</div>
+                    {{else}} {{#if (isNewProduct _id)}}
+                    <div class="new-label new-top-right">New</div>
+                    {{/if}} {{/if}}
                     <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                       <div class="actions">
                         <div class="actions-inner">
@@ -105,10 +69,17 @@
                           </div>
                           <!-- price -->
                           <div class="price-box">
-                            <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
+                            {{#if discount}}
+                            <p class="special-price"> <span class="price"> {{discountPrice price discount}}đ </span> </p>
+                            <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{price}}đ </span> </p>
+                            {{else}}
+                            <span class="regular-price"> <span class="price">{{price}}đ</span> </span>
+                            {{/if}}
+
+                            {{!-- <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
                             {{#if discount}}
                             <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
-                            {{/if}}
+                            {{/if}} --}}
                           </div>
                         </div>
                         <!--item-content--> 
@@ -134,9 +105,10 @@
               <div class="slider-items slider-width-col4"> 
                 <!-- Item -->
 
-                {{#each list}}
+                {{#each listLatestProduct}}
                   <div class="item">  
                   <div class="col-item">
+                    <div class="new-label new-top-right">New</div>
                     <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                       <div class="actions">
                         <div class="actions-inner">
@@ -159,10 +131,16 @@
                             </div>
                           </div>
                           <div class="price-box">
-                            <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
+                            {{#if discount}}
+                            <p class="special-price"> <span class="price"> {{discountPrice price discount}}đ </span> </p>
+                            <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{price}}đ </span> </p>
+                            {{else}}
+                            <span class="regular-price"> <span class="price">{{price}}đ</span> </span>
+                            {{/if}}
+                            {{!-- <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
                             {{#if discount}}
                             <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
-                            {{/if}}
+                            {{/if}} --}}
                           </div>
                         </div>
                         <!--item-content--> 
@@ -188,19 +166,20 @@
 </section>
 <!-- End main container --> 
 
-<!-- recommend slider -->
+<!-- sale slider -->
 <section class="recommend container">
   <div class="new-pro-slider small-pr-slider" style="overflow:visible">
     <div class="slider-items-products">
       <div class="new_title center">
-        <h2>GỢI Ý</h2>
+        <h2>KHUYỄN MÃI</h2>
       </div>
       <div id="recommend-slider" class="product-flexslider hidden-buttons">
         <div class="slider-items slider-width-col3"> 
          
-          {{#each list}}
+          {{#each listSaleProduct}}
             <div class="item">  
               <div class="col-item">
+                <div class="sale-label sale-top-right">Sale</div>
                 <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                   <div class="actions">
                     <div class="actions-inner">
@@ -223,10 +202,16 @@
                         </div>
                       </div>
                       <div class="price-box">
-                        <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
+                        {{#if discount}}
+                        <p class="special-price"> <span class="price"> {{discountPrice price discount}}đ </span> </p>
+                        <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{price}}đ </span> </p>
+                        {{else}}
+                        <span class="regular-price"> <span class="price">{{price}}đ</span> </span>
+                        {{/if}}
+                        {{!-- <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
                         {{#if discount}}
                         <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
-                        {{/if}}
+                        {{/if}} --}}
                       </div>
                     </div>
                     <!--item-content--> 
@@ -260,9 +245,14 @@
         <div id="featured-slider" class="product-flexslider hidden-buttons">
           <div class="slider-items slider-width-col4"> 
             
-            {{#each list}}
+            {{#each listFeaturedProduct}}
               <div class="item">  
               <div class="col-item">
+                {{#if discount}}
+                <div class="sale-label sale-top-right">Sale</div>
+                {{else}} {{#if (isNewProduct _id)}}
+                <div class="new-label new-top-right">New</div>
+                {{/if}} {{/if}}
                 <div class="images-container"> <a class="product-image" title="{{name}}" href="/product/detail/{{_id}}"> <img src="{{images_sources.[0].url}}" class="img-responsive" alt="a" /> </a>
                   <div class="actions">
                     <div class="actions-inner">
@@ -286,10 +276,16 @@
                         </div>
                       </div>
                       <div class="price-box">
-                        <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
+                        {{#if discount}}
+                        <p class="special-price"> <span class="price"> {{discountPrice price discount}}đ </span> </p>
+                        <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{price}}đ </span> </p>
+                        {{else}}
+                        <span class="regular-price"> <span class="price">{{price}}đ</span> </span>
+                        {{/if}}
+                        {{!-- <p class="special-price"> <span class="price"> {{price}}đ </span> </p>
                         {{#if discount}}
                         <p class="old-price"> <span class="price-sep">-</span> <span class="price"> {{old_price}}đ </span> </p>
-                        {{/if}}
+                        {{/if}} --}}
                       </div>
                     </div>
                     <!--item-content--> 

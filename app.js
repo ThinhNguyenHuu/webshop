@@ -13,6 +13,7 @@ const hbs = require('hbs');
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
 const userRouter = require('./routes/user');
+const { ObjectId } = require('mongodb');
 
 const app = express();
 
@@ -22,7 +23,6 @@ app.engine('hbs', exphbs({
   extname: '.hbs',
   helpers: {
     // get rating from reviews
-    
     rating: function (reviews) { 
       let rating = 0;
 
@@ -35,10 +35,16 @@ app.engine('hbs', exphbs({
       return rating / (reviews.length * 3);
     },
     // date to string
-    dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); }
-    
+    dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); },
+    discountPrice: function (price, discount) { return price - price * discount / 100.0 },
+    isNewProduct: function (id) { 
+      const insertDate = Date.parse(id.getTimestamp());
+      const diffTime = Date.now - insertDate;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays < 15;
+    }
   }
-}))
+}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
