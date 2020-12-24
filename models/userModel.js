@@ -1,53 +1,98 @@
-const {db} = require('../db');
-const cloudinary = require('../cloudinary');
 const fs = require('fs');
 const ObjectId = require('mongodb').ObjectID;
+const bcrypt = require('bcrypt');
 
+const {db} = require('../db');
+const cloudinary = require('../cloudinary');
 
-module.exports.info = async () =>
+const saltRounds = 10;
+
+module.exports.addUser = async (body) =>
 {
-    const info = await db().collection('user').find().toArray();
-    return info[0];
-}
-
-module.exports.change = async (body, file, id) => {
-    const user = await db().collection('user').find({_id: ObjectId(id)}).toArray();
-
     let fullname;
-    let avatar;
+    let username;
     let email;
     let password;
+    let confirmPass;
  
-    if(body.fullname !== "")
+    if(body.fullname)
         fullname = body.fullname;
     else
-        fullname = user[0].fullname;
+        return false;
 
-    
-    if(body.email !== "")
+    if(body.email)
         email = body.email;
     else
-        email = user[0].email;
+        return false;
 
-    if(body.password !== "")
+    if(body.username)
+        username = body.username;
+    else
+        return false;
+
+    if(body.password)
         password = body.password;
     else
-        password = user[0].password;
+        return false;
 
+    if(body.confirm)
+        confirmPass = body.confirm;
+    else
+        return false;
+    
+    if(password !== confirmPass)
+        return false;
+    
+    await bcrypt.hash(password, saltRounds, async function(err, hash) {
+        await db().collection('user').insertOne( {
+            fullname: fullname, 
+            email: email,
+            username: username, 
+            password: hash,
+            ban: false, 
+            avatar: null,
+        })
+    });
+
+    return true;
+    
+}
+
+module.exports.updateInfoUser = async (body, file, user) => {
+
+    let fullname;
+    let username;
+    let email;
+ 
+    if(body.fullname)
+        fullname = body.fullname;
+    else
+        fullname = user.fullname;
+
+    
+    if(body.email)
+        email = body.email;
+    else
+        email = user.email;
+
+    if(body.username)
+        username = body.username;
+    else
+        username = user.username;
        
     let source = null;
     if (file) {
-        const destroyPromise = destroyFiles(user[0].avatar);
+        const destroyPromise = destroyFiles(user.avatar);
         const new_source = await uploadFiles(file);
         await destroyPromise;
         source = new_source;
     }
 
-    await db().collection('user').updateOne( {_id: ObjectId(id)} ,{$set: {
+    await db().collection('user').updateOne( {_id: ObjectId(user._id)} ,{$set: {
         fullname: fullname, 
         email: email,
-        avatar: source ? source : user[0].avatar, 
-        password: password, 
+        avatar: source ? source : user.avatar, 
+        username: username, 
     }}, null);
 }
 
@@ -58,10 +103,32 @@ const uploadFiles = async (file) => {
     source = uploaded;
     fs.unlinkSync(file.tempFilePath);
     
-
     return source;
 }
 
 const destroyFiles = async (source) => {
-    cloudinary.destroy(source.id);
+    if(source)
+        cloudinary.destroy(source.id);
+}
+
+
+module.exports.checkUser = async (username, password) =>
+{
+    const user = await db().collection('user').findOne({username: username});
+    if(user)
+    {
+        const match = await bcrypt.compare(password, user.password);
+        if(match)
+            return user;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+module.exports.findUser = async (id) =>
+{
+    const user = await db().collection('user').findOne({_id: ObjectId(id)});
+    return user;
 }

@@ -1,0 +1,46 @@
+<section class="main-container col1-layout">
+  <div class="main container">
+    <div class="account-login">
+      <div class="page-title">
+        <h2>Cập nhật thông tin</h2>
+      </div>
+      <fieldset class="col2-set">
+        <form class="form-list" action="/user/info/updateinfo" method="POST" enctype="multipart/form-data">
+            <div class="col-1 new-users">
+                <img src="{{user.avatar.url}}" alt = "avatar"  style="max-width: 100%; max-height: 80%"/>
+                <br>
+                <label for="image">Chọn ảnh và click nút "Cập nhật" để cập nhật ảnh đại diện:</label>
+                <input type="file" name="image" id="image" accept="image/*" value=""/>
+            </div>
+            <div class="col-2 registered-users">
+                <div class="content">
+                    <label for="fullname">Họ và tên</label>
+                    <br>
+                    <input type="text" title="Full Name" class="input-text required-entry" id="fullname" value="{{user.fullname}}" name="fullname" >
+                    <br>
+
+                    <label for="email">Địa chỉ email</label>
+                    <br>
+                    <input type="text" title="Email Address" class="input-text required-entry" id="email" value="{{user.email}}" name="email">
+                    <br>
+
+                    <label for="username">Tên đăng nhập</label>
+                    <br>
+                    <input type="text" title="Username" class="input-text required-entry" id="username" value="{{user.username}}" name="username">
+                    <br>
+
+                    <div class="buttons-set">
+                        <input id="send2" name="send" type="submit" class="button login" value="Cập nhật">
+                    </div>
+            </div>
+        </div>
+        </form>
+      </fieldset>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+</section>
