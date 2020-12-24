@@ -53,10 +53,12 @@
                 {{!-- <p class="availability in-stock"><span>In Stock</span></p> --}}
                 <div class="price-block">
                   <div class="price-box">
-                    {{#if product.discount}}
-                    <p class="old-price"> <span class="price-label">Giá bình thường:</span> <span class="price">{{product.old_price}}đ</span> </p>
-                    {{/if}}
-                    <p class="special-price"> <span class="price-label">Giá ưu đãi:</span> <span class="price">{{product.price}}đ</span> </p>
+                     {{#if product.discount}}
+                      <p class="special-price"> <span class="price"> {{discountPrice product.price product.discount}}đ </span> </p>
+                      <p class="old-price"> <span class="price"></span> <span class="price"> {{product.price}}đ </span> </p>
+                      {{else}}
+                      <span class="regular-price"> <span class="price">{{product.price}}đ</span> </span>
+                      {{/if}}
                     
                   </div>
                 </div>
@@ -304,9 +306,11 @@
                                       </div>
                                     </div>
                                     <div class="price-box">
-                                      <p class="special-price"> <span class="price"> ${{price}} </span> </p>
                                       {{#if discount}}
-                                      <p class="old-price"> <span class="price-sep">-</span> <span class="price"> ${{old_price}} </span> </p>
+                                      <p class="special-price"> <span class="price"> {{discountPrice price discount}}đ </span> </p>
+                                      <p class="old-price"> <span class="price"></span> <span class="price"> {{price}}đ </span> </p>
+                                      {{else}}
+                                      <span class="regular-price"> <span class="price">{{price}}đ</span> </span>
                                       {{/if}}
                                     </div>
                                   </div>
