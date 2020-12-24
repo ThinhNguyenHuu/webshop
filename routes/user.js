@@ -20,4 +20,8 @@ router.get('/info', userController.info);
 router.get('/info/updateinfo', userController.getUpdateInfo);
 router.post('/info/updateinfo', userController.postUpdateInfo);
 
+
+router.get('/info/updatepassword', userController.getUpdatePassword);
+router.post('/info/updatepassword', userController.postUpdatePassword);
+
 module.exports = router;

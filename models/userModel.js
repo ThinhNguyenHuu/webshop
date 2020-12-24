@@ -96,6 +96,45 @@ module.exports.updateInfoUser = async (body, file, user) => {
     }}, null);
 }
 
+module.exports.updatePassword = async (body, user) => {
+
+    let oldpassword;
+    let newpassword;
+    let confirm;
+ 
+    if(body.oldpassword)
+        oldpassword = body.oldpassword;
+    else
+        return false;
+
+    const match = await bcrypt.compare(oldpassword, user.password);
+    
+    if(!match)
+        return false;
+    
+    if(body.newpassword)
+        newpassword = body.newpassword;
+    else
+        return false;
+
+    if(body.confirm)
+        confirm = body.confirm;
+    else
+        return false;
+    
+    if(newpassword !== confirm)
+        return false;
+
+       
+    await bcrypt.hash(newpassword, saltRounds, async function(err, hash) {
+        await db().collection('user').updateOne( {_id: ObjectId(user._id)} ,{$set: {
+            password: hash
+        }}, null);
+    });
+    
+    return true;
+}
+
 const uploadFiles = async (file) => {
     let source;
     

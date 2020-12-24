@@ -68,3 +68,28 @@ module.exports.postUpdateInfo = async (req, res, next) => {
   }
 
 }
+
+module.exports.getUpdatePassword = async (req, res, next) => {
+  
+  const listCategory_brand = await productModel.listCategory_brand();
+  res.render('updatePassword', {
+    title: 'Đổi mật khẩu',
+    listCategory_brand: listCategory_brand
+   });
+
+}
+
+module.exports.postUpdatePassword = async (req, res, next) => {
+  if(req.user)
+  {
+    const resultUpdate =  await userModel.updatePassword(req.body, req.user);
+    if(resultUpdate)
+      res.redirect("/user/info");
+    else
+      res.redirect("/user/info/updatepassword");
+  }
+  else {
+    next();
+  }
+
+}
