@@ -5,7 +5,8 @@ module.exports.getLogin = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
   res.render('login', {
     title: 'Đăng nhập',
-    listCategory_brand: listCategory_brand
+    listCategory_brand: listCategory_brand,
+    error: req.flash('error')
    });
 } 
 

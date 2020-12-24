@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="col-2 registered-users">
-          <strong>Đăng nhập</strong>
+          <strong>Đăng nhập</strong>  
           <div class="content">
             <p>Nếu bạn đã có tài khoản, hãy đăng nhập bên dưới.</p>
             <form class="form-list" action="/user/login" method="POST">
@@ -32,9 +32,13 @@
               <p class="required">* Bắt buộc</p>
               <div class="buttons-set">
                 <input id="send2" name="send" type="submit" class="button login" value="Đăng nhập">
-              </div>
-                            
+              </div>           
             </form> 
+              {{#if error}}   
+              <div class="alert alert-error">
+                <p style="color: red;">{{error}} </p>
+              </div>   
+              {{/if}}
           </div>
         </div>
       </fieldset>

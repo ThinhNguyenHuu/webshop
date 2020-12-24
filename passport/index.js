@@ -10,7 +10,7 @@ passport.use(new LocalStrategy(
     if(user)
         return done(null, user);
     else
-        return done(null, false,  req.flash('Incorrect username or password.') );
+        return done(null, false,  {message: 'Tên đăng nhập hoặc mật khẩu không đúng.'} );
   }
 ));
 
