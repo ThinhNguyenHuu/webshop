@@ -7,23 +7,14 @@ module.exports.index = async (req, res, next) => {
     const cart = req.session.cart;
     if(cart)
     {
-        let products = [];
-        let totalPriceAll = 0;
-        for(let i = 0; i < cart.length; i++)
-        {
-            const product = await productModel.findProduct(cart[i].id);
-            const totalPrice = (product.price - product.price * product.discount / 100.0) * cart[i].qty;
-            totalPriceAll += totalPrice; 
-            products.push({product: product, qty: cart[i].qty, totalPrice: totalPrice});
-        }
-
-        console.log(products);
+        const products = await cartModel.getProductsInCart(cart);
 
         res.render('cart', {
         title: 'Giỏ hàng',
         listCategory_brand: listCategory_brand,
-        products: products,
-        totalPriceAll: totalPriceAll,
+        products: products.products,
+        productsInCart: products.products,
+        totalPriceAll: products.totalPriceAll,
         referer: req.headers['referer']
         });
     }
@@ -33,7 +24,7 @@ module.exports.index = async (req, res, next) => {
             title: 'Giỏ hàng',
             listCategory_brand: listCategory_brand,
             referer: req.headers['referer']
-            });
+        });
     }
 }
 

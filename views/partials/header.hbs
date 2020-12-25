@@ -43,30 +43,24 @@
         <div class="top-cart-contain">
           <div class="mini-cart">
             <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="/cart"> <i class="icon-cart"></i>
-              <div class="cart-box"><span class="title">Giỏ hàng</span><span id="cart-total"> 2 </span></div>
+              <div class="cart-box"><span class="title">Giỏ hàng</span><span id="cart-total"> {{productsInCart.length}} </span></div>
               </a></div>
             <div>
               <div class="top-cart-content arrow_box">
-                <div class="block-subtitle">Sản phẩm thêm vào gần đây</div>
+                <div class="block-subtitle">Giỏ hàng của bạn</div>
                 <ul id="cart-sidebar" class="mini-products-list">
-                  <li class="item even"> <a class="product-image" href="#" title="Downloadable Product "><img alt="Downloadable Product " src="/images/products/product1.jpg" width="80"></a>
+                  {{#each productsInCart}}
+                  <li class="item even"> <a class="product-image" href="/product/detail/{{product._id}}" title="{{product.name}}"><img alt="{{product.name}}" src="{{product.images_sources.[0].url}}" width="80"></a>
                     <div class="detail-item">
                       <div class="product-details"> <a href="#" title="Remove This Item" onClick="" class="glyphicon glyphicon-remove">&nbsp;</a> <a class="glyphicon glyphicon-pencil" title="Edit item" href="#">&nbsp;</a>
-                        <p class="product-name"> <a href="#" title="Downloadable Product">Downloadable Product </a> </p>
+                        <p class="product-name"> <a href="#" title="{{product.name}}">{{product.name}}</a> </p>
                       </div>
-                      <div class="product-details-bottom"> <span class="price">$100.00</span> <span class="title-desc">Qty:</span> <strong>1</strong> </div>
+                      <div class="product-details-bottom"> <span class="price">{{discountPrice product.price product.discount}}đ </span> <span class="title-desc">Số lượng:</span> <strong>{{qty}}</strong> </div>
                     </div>
                   </li>
-                  <li class="item last odd"> <a class="product-image" href="#" title="  Sample Product "><img alt="  Sample Product " src="/images/products/product11.jpg" width="80"></a>
-                    <div class="detail-item">
-                      <div class="product-details"> <a href="#" title="Remove This Item" onClick="" class="glyphicon glyphicon-remove">&nbsp;</a> <a class="glyphicon glyphicon-pencil" title="Edit item" href="#">&nbsp;</a>
-                        <p class="product-name"> <a href="#" title="  Sample Product "> Sample Product </a> </p>
-                      </div>
-                      <div class="product-details-bottom"> <span class="price">$320.00</span> <span class="title-desc">Qty:</span> <strong>2</strong> </div>
-                    </div>
-                  </li>
+                  {{/each}}
                 </ul>
-                <div class="top-subtotal">Tổng cộng: <span class="price">$420.00</span></div>
+                <div class="top-subtotal">Tổng cộng: <span class="price">{{totalPriceAll}}đ</span></div>
                 <div class="actions">
                   <button class="btn-checkout" type="button"><span>Thanh toán</span></button>
                   <button onclick="window.location.href='/cart'" class="view-cart" type="button"><span>Xem giỏ hàng</span></button>

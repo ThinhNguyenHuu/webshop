@@ -1,6 +1,7 @@
 const express = require('express');
 const productModel = require('../models/productModel');
 const reviewModel = require('../models/reviewModel');
+const cartModel = require('../models/cartModel');
 
 
 module.exports.getList = async (req, res, next) => {
@@ -12,19 +13,42 @@ module.exports.getList = async (req, res, next) => {
   const url = (req.originalUrl).split("?", 1)[0] + "?";
   
   const numProduct = +req.query.numProduct || 9;
+
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
   
-  res.render('listProduct', {
-    title: 'Sản phẩm',
-    list: pagination.list,
-    currentPage: pagination.currentPage,
-    nextPage: pagination.nextPage,
-    afterNextPage: pagination.afterNextPage,
-    prePage: pagination.prePage,
-    beforePrePage: pagination.beforePrePage,
-    listCategory_brand: listCategory_brand,
-    url: url,
-    numProduct: numProduct
-  });
+    res.render('listProduct', {
+      title: 'Sản phẩm',
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll
+    });
+  }
+  else
+  {
+    res.render('listProduct', {
+      title: 'Sản phẩm',
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct
+    });
+  }
 } 
 
 module.exports.getListFilteredProduct = async (req, res, next) =>{
@@ -37,19 +61,41 @@ module.exports.getListFilteredProduct = async (req, res, next) =>{
 
   const numProduct = +req.query.numProduct || 9;
 
-  
-  res.render('listProduct', {
-    title: req.params.category_brand,
-    list: pagination.list,
-    currentPage: pagination.currentPage,
-    nextPage: pagination.nextPage,
-    afterNextPage: pagination.afterNextPage,
-    prePage: pagination.prePage,
-    beforePrePage: pagination.beforePrePage,
-    listCategory_brand: listCategory_brand,
-    url: url,
-    numProduct: numProduct
-  });
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('listProduct', {
+      title: req.params.category_brand,
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll
+    });
+  }
+  else
+  {
+    res.render('listProduct', {
+      title: req.params.category_brand,
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct
+    });
+  }
 }
 
 module.exports.getListSearchedProduct = async (req, res, next) => {
@@ -64,18 +110,41 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
 
   const title = "Kết quả tìm kiếm " + req.query.search;
   
-  res.render('listProduct', {
-    title: title,
-    list: pagination.list,
-    currentPage: pagination.currentPage,
-    nextPage: pagination.nextPage,
-    afterNextPage: pagination.afterNextPage,
-    prePage: pagination.prePage,
-    beforePrePage: pagination.beforePrePage,
-    listCategory_brand: listCategory_brand,
-    url: url,
-    numProduct: numProduct
-  });
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('listProduct', {
+      title: title,
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll
+    });
+  }
+  else
+  {
+    res.render('listProduct', {
+      title: title,
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct
+    });
+  }
 }
 
 const REVIEW_PER_PAGE = 5;
@@ -90,21 +159,47 @@ exports.productDetails = async (req, res, next) => {
     lastPage 
   } = await reviewModel.list(req.query.reviewPage, REVIEW_PER_PAGE, req.params.productId);
 
-  res.render('productDetails', {
-    title: product.name,
-    product,
-    brand,
-    category,
-    relatedList, 
-    listCategory_brand,
-    listReview,
-    page,
-    lastPage,
-    nextPage: page + 1,
-    previousPage: page - 1,
-    haveNextPage: page < lastPage,
-    havePreviousPage: page > 1
-  })
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('productDetails', {
+      title: product.name,
+      product,
+      brand,
+      category,
+      relatedList, 
+      listCategory_brand,
+      listReview,
+      page,
+      lastPage,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      haveNextPage: page < lastPage,
+      havePreviousPage: page > 1,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll
+    })
+  }
+  else
+  {
+    res.render('productDetails', {
+      title: product.name,
+      product,
+      brand,
+      category,
+      relatedList, 
+      listCategory_brand,
+      listReview,
+      page,
+      lastPage,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      haveNextPage: page < lastPage,
+      havePreviousPage: page > 1
+    })
+  }
 }
 
 module.exports.addReview = async (req, res, next) => {
