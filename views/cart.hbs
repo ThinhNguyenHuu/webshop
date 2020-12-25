@@ -41,13 +41,13 @@
                   <tbody>
                     {{#each products}}
                     <tr class="first odd">
-                      <td class="image"><a class="product-image"  href="/product/detail/{{_id}}"><img width="75" alt="Sample Product" src="{{product.images_sources.[0].url}}"></a></td>
-                      <td><h2 class="product-name"> <a href="/product/detail/{{_id}}">{{product.name}}</a> </h2></td>
-                      <td class="a-center"><a title="Edit item parameters" class="edit-bnt" href="/product/detail/{{_id}}"></a></td>
+                      <td class="image"><a class="product-image"  href="/product/detail/{{product._id}}"><img width="75" alt="Sample Product" src="{{product.images_sources.[0].url}}"></a></td>
+                      <td><h2 class="product-name"> <a href="/product/detail/{{product._id}}">{{product.name}}</a> </h2></td>
+                      <td class="a-center"><!--a title="Edit item parameters" class="edit-bnt" href="/product/detail/{{_id}}"></a--></td>
                       <td class="a-right"><span class="cart-price"> <span class="price"> {{discountPrice product.price product.discount}}đ </span> </span></td>
                       <td class="a-center movewishlist"><input maxlength="12" class="input-text qty" title="Qty" size="4" value="{{qty}}" name="cart[15945][qty]"></td>
                       <td class="a-right movewishlist"><span class="cart-price"> <span class="price">{{totalPrice}}đ</span> </span></td>
-                      <td class="a-center last"><a class="button remove-item" title="Remove item" href="#"><span><span>Xóa khỏi giỏ</span></span></a></td>
+                      <td class="a-center last"><a class="button remove-item" title="Xóa khỏi giỏ hàng" href="/cart/removeproduct/{{product._id}}"><span><span>Xóa khỏi giỏ</span></span></a></td>
                     </tr>
                     {{/each}}
                   </tbody>

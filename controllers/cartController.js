@@ -29,7 +29,6 @@ module.exports.index = async (req, res, next) => {
 }
 
 module.exports.addProduct = async (req, res, next) => {
-    const listCategory_brand = await productModel.listCategory_brand();
     
     let cart = [];
     const quantity = +req.query.qty || 1;
@@ -41,5 +40,33 @@ module.exports.addProduct = async (req, res, next) => {
     req.session.cart = cart;
     
     res.redirect(req.headers['referer']);
+}
+
+module.exports.removeProduct = async (req, res, next) =>{
+    
+    let cart = [];
+
+    if(req.session.cart)
+    {
+        cart = req.session.cart;
+    
+        let pos = 0;
+
+        for(let i = 0; i < cart.length; i++)
+        {
+            if(cart[i].id == req.params.id)
+            {
+                cart.splice(i, 1);
+                break;
+            }
+        }
+        req.session.cart = cart;
+        
+        res.redirect(req.headers['referer']);
+    }
+    else
+    {
+        next();
+    }
 }
 
