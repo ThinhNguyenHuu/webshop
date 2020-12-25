@@ -46,9 +46,10 @@
                 <!-- rating -->
                 <div class="ratings">
                   <div class="rating-box">
-                    <div style="width:{{!--rating product.reviews--}}%" class="rating"></div>
+
+                    <div style="width:{{rating listReview}}%" class="rating"></div>
                   </div>
-                  <p class="rating-links"> <a onclick="getToReview()" href="#product-detail-tab"> {{!--product.reviews.length--}} Đánh giá</a> <span class="separator">Thêm đánh giá của bạn</span><a onclick="getToReview()" href="#product-detail-tab"></a></p> 
+                  <p class="rating-links"> <a onclick="gotoUserReview()" href="#reviews_tabs"> {{#if listReview}}{{listReview.length}}{{else}}0{{/if}} Đánh giá</a> <a onclick="gotoAddReviewBox()" href="#product-detail-tab"><span class="separator">Thêm đánh giá của bạn</span></a></p> 
                 </div>
                 {{!-- <p class="availability in-stock"><span>In Stock</span></p> --}}
                 <div class="price-block">
@@ -96,9 +97,9 @@
             <!-- Tabs -->
             <div class="col-sm-12 wow">
               <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                <li class="active"> <a href="#product_tabs_description" data-toggle="tab">Mô tả </a> </li>
-                <li><a href="#product_tabs_tags" data-toggle="tab">Nhãn </a></li>
-                <li> <a href="#reviews_tabs" data-toggle="tab" id="reviews_tabs_nav">Đánh giá</a> </li>
+                <li class="active" id="description_tabs_label"> <a href="#product_tabs_description" data-toggle="tab">Mô tả </a> </li>
+                <li id="tag_tabs_label"><a href="#product_tabs_tags" data-toggle="tab">Nhãn </a></li>
+                <li id="reviews_tabs_label"> <a href="#reviews_tabs" data-toggle="tab" id="reviews_tabs_nav">Đánh giá</a> </li>
               </ul>
 
               <div id="productTabContent" class="tab-content">
@@ -133,7 +134,7 @@
                     <div class="box-reviews1">
                       <div class="form-add">
                         <!-- Review form -->
-                        <form id="review-form" method="post" action="#">
+                        <form id="review-form" method="post" action="/product/review/{{product._id}}">
                           <h3>Viết đánh giá của bạn</h3>
                           <fieldset>
                             <h4>Bạn đánh giá sản phẩm này như thế nào? <em class="required">*</em></h4>
@@ -160,27 +161,27 @@
                               <tbody>
                                 <tr class="first odd">
                                   <th>Giá cả</th>
-                                  <td class="value"><input type="radio" class="radio" value="11" id="Price_1" name="ratings[3]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="12" id="Price_2" name="ratings[3]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="13" id="Price_3" name="ratings[3]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="14" id="Price_4" name="ratings[3]"></td>
-                                  <td class="value last"><input type="radio" class="radio" value="15" id="Price_5" name="ratings[3]"></td>
+                                  <td class="value"><input type="radio" class="radio" value="20" id="Price_1" name="price" required></td>
+                                  <td class="value"><input type="radio" class="radio" value="40" id="Price_2" name="price"></td>
+                                  <td class="value"><input type="radio" class="radio" value="60" id="Price_3" name="price"></td>
+                                  <td class="value"><input type="radio" class="radio" value="80" id="Price_4" name="price"></td>
+                                  <td class="value last"><input type="radio" class="radio" value="100" id="Price_5" name="price"></td>
                                 </tr>
                                 <tr class="even">
                                   <th>Giá trị</th>
-                                  <td class="value"><input type="radio" class="radio" value="6" id="Value_1" name="ratings[2]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="7" id="Value_2" name="ratings[2]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="8" id="Value_3" name="ratings[2]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="9" id="Value_4" name="ratings[2]"></td>
-                                  <td class="value last"><input type="radio" class="radio" value="10" id="Value_5" name="ratings[2]"></td>
+                                  <td class="value"><input type="radio" class="radio" value="20" id="Value_1" name="value" required></td>
+                                  <td class="value"><input type="radio" class="radio" value="40" id="Value_2" name="value"></td>
+                                  <td class="value"><input type="radio" class="radio" value="60" id="Value_3" name="value"></td>
+                                  <td class="value"><input type="radio" class="radio" value="80" id="Value_4" name="value"></td>
+                                  <td class="value last"><input type="radio" class="radio" value="100" id="Value_5" name="value"></td>
                                 </tr>
                                 <tr class="last odd">
                                   <th>Chất lượng</th>
-                                  <td class="value"><input type="radio" class="radio" value="1" id="Quality_1" name="ratings[1]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="2" id="Quality_2" name="ratings[1]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="3" id="Quality_3" name="ratings[1]"></td>
-                                  <td class="value"><input type="radio" class="radio" value="4" id="Quality_4" name="ratings[1]"></td>
-                                  <td class="value last"><input type="radio" class="radio" value="5" id="Quality_5" name="ratings[1]"></td>
+                                  <td class="value"><input type="radio" class="radio" value="20" id="Quality_1" name="quality" required></td>
+                                  <td class="value"><input type="radio" class="radio" value="40" id="Quality_2" name="quality"></td>
+                                  <td class="value"><input type="radio" class="radio" value="60" id="Quality_3" name="quality"></td>
+                                  <td class="value"><input type="radio" class="radio" value="80" id="Quality_4" name="quality"></td>
+                                  <td class="value last"><input type="radio" class="radio" value="100" id="Quality_5" name="quality"></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -188,15 +189,18 @@
                             <div class="review1">
                               <ul class="form-list">
                                 <li>
+                                  {{#if user}}
+                                  {{else}}
                                   <label class="required" for="nickname_field">Tên của bạn<em>*</em></label>
                                   <div class="input-box">
-                                    <input type="text" class="input-text required-entry" id="nickname_field" name="nickname">
+                                    <input type="text" class="input-text required-entry" id="nickname_field" name="name" required>
                                   </div>
+                                  {{/if}}
                                 </li>
                                 <li>
                                   <label class="required" for="summary_field">Tóm tắt<em>*</em></label>
                                   <div class="input-box">
-                                    <input type="text" class="input-text required-entry" id="summary_field" name="title">
+                                    <input type="text" class="input-text required-entry" id="summary_field" name="summary" required>
                                   </div>
                                 </li>
                               </ul>
@@ -206,7 +210,7 @@
                                 <li>
                                   <label class="required label-wide" for="review_field">Đánh giá<em>*</em></label>
                                   <div class="input-box">
-                                    <textarea class="required-entry" rows="3" cols="5" id="review_field" name="detail"></textarea>
+                                    <textarea class="required-entry" rows="3" cols="5" id="review_field" name="detail" required></textarea>
                                   </div>
                                 </li>
                               </ul>
@@ -218,11 +222,11 @@
                         </form>
                       </div>
                     </div>
-                    <div class="box-reviews2">
+                    <div id="user-reviews" class="box-reviews2">
                       <h3>Các đánh giá của khách hàng</h3>
                       <div class="box visible">
                         <ul>
-                          {{#each product.reviews}}
+                          {{#each listReview}}
                           <li>
                             <table class="ratings-table">
                               <colgroup>
@@ -255,14 +259,28 @@
                             </table>
                             <div class="review">
                               <h6>{{summary}}</h6>
-                              <small>Viết bởi <strong>{{name}}</strong> vào ngày {{dateToString date}} </small>
-                              <div class="review-txt">{{review}}</div>
+                              <small>Viết bởi <strong>{{name}}</strong> vào ngày {{reviewDate _id}} </small>
+                              <div class="review-txt">{{detail}}</div>
                             </div>
                           </li>
                           {{/each}}
                         </ul>
                       </div>
-                      <div class="actions"> <a class="button view-all" id="revies-button"><span><span>Xem tất cả</span></span></a> </div>
+                      <div class="actions"> 
+                        <u class="pagination">
+                          {{#if page}}
+                            {{#if havePreviousPage}}
+                            <li><a href="/product/detail/{{product._id}}?reviewPage=1#reviews_tabs">&laquo;</a></li>
+                            <li><a href="/product/detail/{{product._id}}?reviewPage={{previousPage}}#reviews_tabs">{{previousPage}}</a></li>
+                            {{/if}}
+                            <li class="active"><a href="#reviews_tabs">{{page}}</a></li>
+                            {{#if haveNextPage}}
+                            <li><a href="/product/detail/{{product._id}}?reviewPage={{nextPage}}#reviews_tabs">{{nextPage}}</a></li>
+                            <li><a href="/product/detail/{{product._id}}?reviewPage={{lastPage}}#reviews_tabs">&raquo;</a></li>
+                            {{/if}}
+                          {{/if}}
+                        </u>
+                      </div>
                     </div>
                     <div class="clear"></div>
                   </div>
