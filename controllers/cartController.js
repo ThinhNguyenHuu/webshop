@@ -70,3 +70,18 @@ module.exports.removeProduct = async (req, res, next) =>{
     }
 }
 
+module.exports.removeAll = async (req, res, next) =>{
+    
+    let cart = [];
+
+    if(req.session.cart)
+    {
+        req.session.cart = cart;
+        res.redirect(req.headers['referer']);
+    }
+    else
+    {
+        next();
+    }
+}
+
