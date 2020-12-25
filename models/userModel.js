@@ -30,6 +30,11 @@ module.exports.addUser = async (body) =>
     else
         return false;
 
+    const checkuser = await db().collection('user').findOne({username: username});
+
+    if(checkuser)
+        return false;
+    
     if(body.password)
         password = body.password;
     else
@@ -42,20 +47,22 @@ module.exports.addUser = async (body) =>
     
     if(password !== confirmPass)
         return false;
+
+    const resultInsert = await db().collection('user').insertOne( {
+        fullname: fullname, 
+        email: email,
+        username: username, 
+        ban: false, 
+        avatar: null,
+    });
     
-    await bcrypt.hash(password, saltRounds, async function(err, hash) {
-        await db().collection('user').insertOne( {
-            fullname: fullname, 
-            email: email,
-            username: username, 
-            password: hash,
-            ban: false, 
-            avatar: null,
-        })
+    bcrypt.hash(password, saltRounds, async function(rr, hash) {
+        await db().collection('user').updateOne( {_id: ObjectId(resultInsert.insertedId)} ,{$set: {
+            password: hash
+        }}, null);
     });
 
-    return true;
-    
+    return resultInsert;
 }
 
 module.exports.updateInfoUser = async (body, file, user) => {
@@ -169,5 +176,11 @@ module.exports.checkUser = async (username, password) =>
 module.exports.findUser = async (id) =>
 {
     const user = await db().collection('user').findOne({_id: ObjectId(id)});
+    return user;
+}
+
+module.exports.findUserByUsername = async (username) =>
+{
+    const user = await db().collection('user').findOne({username: username});
     return user;
 }

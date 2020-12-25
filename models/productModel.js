@@ -25,11 +25,6 @@ module.exports.list = async (pageIndex, product_per_page) =>
   }
     catch { list = [];}
   
-
-  
-  for(let i = 0; i < list.length; i++)
-    list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
-
   const nextPage = (page + 1) > totalPage ? 0 : page + 1;
   const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
 
@@ -86,9 +81,6 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     let list;
     try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
     catch{ list = []}
-    
-    for(let i = 0; i < list.length; i++)
-      list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
 
     const nextPage = (page + 1) > totalPage ? 0 : page + 1;
     const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
@@ -124,10 +116,6 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
     catch{ list = []}
     
-    
-    for(let i = 0; i < list.length; i++)
-      list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
-
     const nextPage = (page + 1) > totalPage ? 0 : page + 1;
     const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
 
@@ -167,9 +155,6 @@ module.exports.listSearchedProduct = async (pageIndex, product_per_page, search)
   }
   catch { list = [];}
 
-  
-  for(let i = 0; i < list.length; i++)
-    list[i].old_price = (list[i].discount != 0) ? Math.ceil((list[i].price * 100) / (100 - list[i].discount)): list[i].price;
 
   const nextPage = (page + 1) > totalPage ? 0 : page + 1;
   const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
@@ -200,7 +185,6 @@ module.exports.listFeaturedProduct = async () => {
 module.exports.details = async (productId) => {
   const product = await db().collection('product').findOne({_id: ObjectId(productId)});
 
-  product.old_price = (product.discount != 0) ? Math.ceil((product.price * 100) / (100 - product.discount)): product.price;
   
   const brandPromise = db().collection('brand').findOne({_id: ObjectId(product.brand)});
   const categoryPromise = db().collection('category').findOne({_id: ObjectId(product.category)});
@@ -209,9 +193,6 @@ module.exports.details = async (productId) => {
   const brand = await brandPromise;
   const category = await categoryPromise;
   const relatedList = await relatedListPromise;
-
-  for(let i = 0; i < relatedList.length; i++)
-      relatedList[i].old_price = (relatedList[i].discount != 0) ? Math.ceil((relatedList[i].price * 100) / (100 - relatedList[i].discount)): relatedList[i].price;
   
   return { product, brand, category, relatedList };
 }
