@@ -20,7 +20,7 @@
       <div class="row">
         <div class="product-view wow">
           <div class="product-essential">
-            <form action="#" method="post" id="product_addtocart_form">
+            <form action="/cart/addproduct/{{product._id}}" method="get" id="product_addtocart_form">
 
               <!-- start: more-images -->
               <div class="product-img-box col-lg-6 col-sm-6 col-xs-12">
@@ -46,9 +46,9 @@
                 <!-- rating -->
                 <div class="ratings">
                   <div class="rating-box">
-                    <div style="width:{{rating product.reviews}}%" class="rating"></div>
+                    <div style="width:{{!--rating product.reviews--}}%" class="rating"></div>
                   </div>
-                  <p class="rating-links"> <a onclick="getToReview()" href="#product-detail-tab"> {{product.reviews.length}} Đánh giá</a> <span class="separator">Thêm đánh giá của bạn</span><a onclick="getToReview()" href="#product-detail-tab"></a></p> 
+                  <p class="rating-links"> <a onclick="getToReview()" href="#product-detail-tab"> {{!--product.reviews.length--}} Đánh giá</a> <span class="separator">Thêm đánh giá của bạn</span><a onclick="getToReview()" href="#product-detail-tab"></a></p> 
                 </div>
                 {{!-- <p class="availability in-stock"><span>In Stock</span></p> --}}
                 <div class="price-block">
@@ -78,7 +78,7 @@
                         <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
                       </div>
                     </div>
-                    <button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Thêm vào giỏ hàng" type="button"><span><i class="icon-basket"></i> Thêm vào giỏ</span></button>
+                    <button  class="button btn-cart" title="Thêm vào giỏ hàng" type="submit"><span><i class="icon-basket"></i> Thêm vào giỏ</span></button>
                   </div>
                   {{!-- <div class="email-addto-box">
                     <ul class="add-to-links">

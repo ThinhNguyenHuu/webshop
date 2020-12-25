@@ -16,6 +16,7 @@ const passport = require('./passport');
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/product');
 const userRouter = require('./routes/user');
+const cartRouter = require('./routes/cart');
 const { ObjectId } = require('mongodb');
 
 const app = express();
@@ -26,8 +27,9 @@ app.engine('hbs', exphbs({
   extname: '.hbs',
   helpers: {
     // get rating from reviews
+    
     rating: function (reviews) { 
-      let rating = 0;
+      /*let rating = 0;
 
       if(reviews.length) {
         for (review of reviews) { 
@@ -35,7 +37,7 @@ app.engine('hbs', exphbs({
         }
       }
       
-      return rating / (reviews.length * 3);
+      return rating / (reviews.length * 3);*/
     },
     // date to string
     dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); },
@@ -77,6 +79,7 @@ app.use(function(req, res, next){
 app.use('/', indexRouter);
 app.use('/product', productRouter);
 app.use('/user', userRouter);
+app.use('/cart', cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

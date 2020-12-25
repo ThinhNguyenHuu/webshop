@@ -196,3 +196,9 @@ module.exports.details = async (productId) => {
   
   return { product, brand, category, relatedList };
 }
+
+module.exports.findProduct = async (productId) =>{
+  const product = await db().collection('product').findOne({_id: ObjectId(productId)});
+
+  return product;
+}
