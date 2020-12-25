@@ -1,5 +1,6 @@
 const express = require('express');
 const productModel = require('../models/productModel');
+const reviewModel = require('../models/reviewModel');
 
 
 module.exports.getList = async (req, res, next) => {
@@ -77,10 +78,17 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
   });
 }
 
+const REVIEW_PER_PAGE = 5;
 
 exports.productDetails = async (req, res, next) => {
   const { product, brand, category, relatedList } = await productModel.details(req.params.productId);
   const listCategory_brand = await productModel.listCategory_brand();
+  
+  const { 
+    listReview, 
+    page, 
+    lastPage 
+  } = await reviewModel.list(req.query.reviewPage, REVIEW_PER_PAGE, req.params.productId);
 
   res.render('productDetails', {
     title: product.name,
@@ -88,6 +96,21 @@ exports.productDetails = async (req, res, next) => {
     brand,
     category,
     relatedList, 
-    listCategory_brand
+    listCategory_brand,
+    listReview,
+    page,
+    lastPage,
+    nextPage: page + 1,
+    previousPage: page - 1,
+    haveNextPage: page < lastPage,
+    havePreviousPage: page > 1
   })
+}
+
+module.exports.addReview = async (req, res, next) => {
+  if (res.locals.user)
+    req.body.name = res.locals.user.fullname;
+  
+  await reviewModel.addReview(req.body, req.params.productId);
+  res.redirect('/product/detail/' + req.params.productId + '#reviews_tabs');
 }

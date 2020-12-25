@@ -9,7 +9,8 @@ router.get('/search', controller.getListSearchedProduct)
 
 router.get('/:category_brand', controller.getListFilteredProduct)
 
-
 router.get('/detail/:productId', controller.productDetails);
+
+router.post('/review/:productId', controller.addReview);
 
 module.exports = router;

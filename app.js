@@ -27,18 +27,21 @@ app.engine('hbs', exphbs({
   helpers: {
     // get rating from reviews
     rating: function (reviews) { 
-      let rating = 0;
+      if (!reviews)
+        return 0;
 
-      if(reviews.length) {
-        for (review of reviews) { 
-          rating += (review.value + review.quality + review.price); 
-        }
-      }
+      let rating = 0;
+      reviews.forEach(review => {
+        rating += (review.value + review.quality + review.price);
+      })
       
       return rating / (reviews.length * 3);
     },
-    // date to string
-    dateToString: function (date) { return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); },
+    // get review's created date and convert to string
+    reviewDate: function (id) { 
+      const date = new Date(id.getTimestamp());
+      return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); 
+    },
     discountPrice: function (price, discount) { return price - price * discount / 100.0 },
     isNewProduct: function (id) { 
       const insertDate = Date.parse(id.getTimestamp());
