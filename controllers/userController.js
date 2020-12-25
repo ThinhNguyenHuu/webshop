@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
 const productModel = require('../models/productModel');
+const cartModel = require('../models/cartModel');
 
 module.exports.getLogin = async (req, res, next) => {
   const listCategory_brand = await productModel.listCategory_brand();
@@ -20,8 +21,12 @@ module.exports.getRegister = async (req, res, next) => {
 
 module.exports.postRegister = async (req, res, next) => {
   const resultAddUser = await userModel.addUser(req.body);
+
   if(resultAddUser)
+  {
+    await cartModel.addCart(resultAddUser.insertedId);
     res.redirect('/user/login');
+  }
   else
     res.redirect('/user/register');
 }
