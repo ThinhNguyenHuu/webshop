@@ -49,8 +49,6 @@ module.exports.removeProduct = async (req, res, next) =>{
     if(req.session.cart)
     {
         cart = req.session.cart;
-    
-        let pos = 0;
 
         for(let i = 0; i < cart.length; i++)
         {
@@ -84,4 +82,33 @@ module.exports.removeAll = async (req, res, next) =>{
         next();
     }
 }
+
+module.exports.updateProduct = async (req, res, next) =>{
+    
+    let cart = [];
+
+    if(req.session.cart)
+    {
+        cart = req.session.cart;
+    
+        const quantity = +req.query.qty || 1;
+
+        for(let i = 0; i < cart.length; i++)
+        {
+            if(cart[i].id == req.params.id)
+            {
+                cart[i].qty = quantity;
+                break;
+            }
+        }
+        req.session.cart = cart;
+        
+        res.redirect(req.headers['referer']);
+    }
+    else
+    {
+        next();
+    }
+}
+
 

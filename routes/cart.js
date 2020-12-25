@@ -10,4 +10,6 @@ router.get('/removeproduct/:id', controller.removeProduct);
 
 router.get('/removeall', controller.removeAll);
 
+router.get('/updateproduct/:id', controller.updateProduct);
+
 module.exports = router;
