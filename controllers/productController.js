@@ -7,13 +7,15 @@ const commentModel = require('../models/commentModel');
 
 module.exports.getList = async (req, res, next) => {
   
-  const  pagination = await productModel.list(req.query.page, req.query.numProduct);
+  const  pagination = await productModel.list(req.query.page, req.query.numProduct, req.query.sort);
 
   const listCategory_brand = await productModel.listCategory_brand();
   
   const url = (req.originalUrl).split("?", 1)[0] + "?";
   
   const numProduct = +req.query.numProduct || 9;
+
+  const sortby = req.query.sort ? req.query.sort : "Vị trí";
 
   let productsInCart;
   if(req.session.cart)
@@ -31,6 +33,7 @@ module.exports.getList = async (req, res, next) => {
       listCategory_brand: listCategory_brand,
       url: url,
       numProduct: numProduct,
+      sortby: sortby,
       productsInCart: productsInCart.products,
       totalPriceAll: productsInCart.totalPriceAll
     });
@@ -47,20 +50,23 @@ module.exports.getList = async (req, res, next) => {
       beforePrePage: pagination.beforePrePage,
       listCategory_brand: listCategory_brand,
       url: url,
-      numProduct: numProduct
+      numProduct: numProduct,
+      sortby: sortby
     });
   }
 } 
 
-module.exports.getListFilteredProduct = async (req, res, next) =>{
+module.exports.getListClassifiedProduct = async (req, res, next) =>{
   
-  const  pagination = await productModel.listFilteredProduct(req.params.category_brand,req.query.page, req.query.numProduct);
+  const  pagination = await productModel.listClassifiedProduct(req.params.category_brand, req.query.page, req.query.numProduct, req.query.sort);
 
   const listCategory_brand = await productModel.listCategory_brand();
 
   const url = (req.originalUrl).split("?", 1)[0] + "?";
 
   const numProduct = +req.query.numProduct || 9;
+
+  const sortby = req.query.sort ? req.query.sort : "Vị trí";
 
   let productsInCart;
   if(req.session.cart)
@@ -78,6 +84,7 @@ module.exports.getListFilteredProduct = async (req, res, next) =>{
       listCategory_brand: listCategory_brand,
       url: url,
       numProduct: numProduct,
+      sortby: sortby,
       productsInCart: productsInCart.products,
       totalPriceAll: productsInCart.totalPriceAll
     });
@@ -94,14 +101,15 @@ module.exports.getListFilteredProduct = async (req, res, next) =>{
       beforePrePage: pagination.beforePrePage,
       listCategory_brand: listCategory_brand,
       url: url,
-      numProduct: numProduct
+      numProduct: numProduct,
+      sortby: sortby
     });
   }
 }
 
 module.exports.getListSearchedProduct = async (req, res, next) => {
   
-  const  pagination = await productModel.listSearchedProduct(req.query.page, req.query.numProduct, req.query.search);
+  const  pagination = await productModel.listSearchedProduct(req.query.page, req.query.numProduct, req.query.search, req.query.sort);
 
   const listCategory_brand = await productModel.listCategory_brand();
   
@@ -110,6 +118,8 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
   const numProduct = +req.query.numProduct || 9;
 
   const title = "Kết quả tìm kiếm " + req.query.search;
+
+  const sortby = req.query.sort ? req.query.sort : "Vị trí";
   
   let productsInCart;
   if(req.session.cart)
@@ -127,6 +137,7 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
       listCategory_brand: listCategory_brand,
       url: url,
       numProduct: numProduct,
+      sortby: sortby,
       productsInCart: productsInCart.products,
       totalPriceAll: productsInCart.totalPriceAll
     });
@@ -143,7 +154,8 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
       beforePrePage: pagination.beforePrePage,
       listCategory_brand: listCategory_brand,
       url: url,
-      numProduct: numProduct
+      numProduct: numProduct,
+      sortby: sortby
     });
   }
 }

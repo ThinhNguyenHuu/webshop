@@ -2,10 +2,12 @@ const { ObjectId } = require('mongodb');
 const {db} = require('../db');
 
 
-module.exports.list = async (pageIndex, product_per_page) =>  
+module.exports.list = async (pageIndex, product_per_page, sort) =>  
 {
   let page = +pageIndex || 1;
   const numProduct = +product_per_page || 9;
+
+  const sortby = sort ? sort : "Vị trí";
 
   let count;
   try{
@@ -20,11 +22,28 @@ module.exports.list = async (pageIndex, product_per_page) =>
 
   let list;
  
-  try{
-    list = await db().collection('product').find().limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+  if(sortby === "Vị trí")
+  {
+    try{
+      list = await db().collection('product').find().limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+    }
+      catch { list = [];}
   }
-    catch { list = [];}
-  
+  else if (sortby == "Tên")
+  {
+    try{
+      list = await db().collection('product').find().sort({name: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+    }
+      catch { list = [];}
+  }
+  else if(sortby == "Giá")
+  {
+    try{
+      list = await db().collection('product').find().sort({price: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+    }
+      catch { list = [];}
+  }
+
   const nextPage = (page + 1) > totalPage ? 0 : page + 1;
   const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
 
@@ -54,10 +73,13 @@ module.exports.listCategory_brand = async () =>
   return category_brand;
 }
 
-module.exports.listFilteredProduct = async (category_brand, pageIndex, product_per_page) =>
+
+module.exports.listClassifiedProduct = async (category_brand, pageIndex, product_per_page, sort) =>
 {
   let category = "";
   let brand = "";
+
+  const sortby = sort ? sort : "Vị trí";
 
   const temp = category_brand.indexOf("_");
   if(temp === -1)
@@ -79,8 +101,21 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     page = (page > totalPage) ? totalPage : page;
     
     let list;
-    try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
-    catch{ list = []}
+    if(sortby === "Vị trí")
+    {
+      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+      catch{ list = []}
+    }
+    else if(sortby === "Tên")
+    {
+      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).sort({name: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+      catch{ list = []}
+    }
+    else if(sortby === "Giá")
+    {
+      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id)}).sort({price: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+      catch{ list = []}
+    }
 
     const nextPage = (page + 1) > totalPage ? 0 : page + 1;
     const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
@@ -113,9 +148,22 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
     page = (page > totalPage) ? totalPage : page;
 
     let list;
-    try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
-    catch{ list = []}
-    
+
+    if(sortby === "Vị trí")
+    {
+      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+      catch{ list = []}
+    }
+    else if(sortby === "Tên")
+    {
+      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).sort({name: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+      catch{ list = []}
+    }
+    else if(sortby === "Giá")
+    {
+      try{ list = await db().collection('product').find({category: ObjectId(listCategory[0]._id), brand: ObjectId(listBrand[0]._id)}).sort({price: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray();}
+      catch{ list = []}
+    }
     const nextPage = (page + 1) > totalPage ? 0 : page + 1;
     const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
 
@@ -126,10 +174,12 @@ module.exports.listFilteredProduct = async (category_brand, pageIndex, product_p
   }
 }
 
-module.exports.listSearchedProduct = async (pageIndex, product_per_page, search) =>  
+module.exports.listSearchedProduct = async (pageIndex, product_per_page, search, sort) =>  
 {
   let page = +pageIndex || 1;
   const numProduct = +product_per_page || 9;
+
+  const sortby = sort ? sort : "Vị trí";
 
   let count;
   try{
@@ -147,13 +197,36 @@ module.exports.listSearchedProduct = async (pageIndex, product_per_page, search)
 
   let list;
  
-  try{
-    list = await db().collection('product').find({$or:[
-                                                  { $text: { $search: search } },
-                                                  { name: { $regex: search, $options: 'i' } }
-                                                ]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+  if(sortby === "Vị trí")
+  {
+    try{
+      list = await db().collection('product').find({$or:[
+                                                    { $text: { $search: search } },
+                                                    { name: { $regex: search, $options: 'i' } }
+                                                  ]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+    }
+    catch { list = [];}
   }
-  catch { list = [];}
+  else if(sortby === "Tên")
+  {
+    try{
+      list = await db().collection('product').find({$or:[
+                                                    { $text: { $search: search } },
+                                                    { name: { $regex: search, $options: 'i' } }
+                                                  ]}).sort({name: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+    }
+    catch { list = [];}
+  }
+  else if(sortby === "Giá")
+  {
+    try{
+      list = await db().collection('product').find({$or:[
+                                                    { $text: { $search: search } },
+                                                    { name: { $regex: search, $options: 'i' } }
+                                                  ]}).sort({price: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+    }
+    catch { list = [];}
+  }
 
 
   const nextPage = (page + 1) > totalPage ? 0 : page + 1;
