@@ -21,8 +21,8 @@ module.exports.list = async (pageIndex, reviewPerPage, productId) => {
 
   return {
     listReview,
-    page,
-    lastPage
+    reviewPage: page,
+    reviewLastPage: lastPage
   };
 }
 

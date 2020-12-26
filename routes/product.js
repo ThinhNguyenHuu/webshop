@@ -11,6 +11,10 @@ router.get('/:category_brand', controller.getListFilteredProduct)
 
 router.get('/detail/:productId', controller.productDetails);
 
-router.post('/review/:productId', controller.addReview);
+router.post('/:productId/review', controller.addReview);
+
+router.post('/:productId/comment', controller.addComment);
+
+router.post('/:productId/reply-comment/:commentId', controller.addComment);
 
 module.exports = router;

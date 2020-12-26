@@ -2,6 +2,7 @@ const express = require('express');
 const productModel = require('../models/productModel');
 const reviewModel = require('../models/reviewModel');
 const cartModel = require('../models/cartModel');
+const commentModel = require('../models/commentModel');
 
 
 module.exports.getList = async (req, res, next) => {
@@ -148,16 +149,21 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
 }
 
 const REVIEW_PER_PAGE = 5;
+const COMMENT_PER_PAGE = 5;
 
 exports.productDetails = async (req, res, next) => {
-  const { product, brand, category, relatedList } = await productModel.details(req.params.productId);
-  const listCategory_brand = await productModel.listCategory_brand();
   
-  const { 
-    listReview, 
-    page, 
-    lastPage 
-  } = await reviewModel.list(req.query.reviewPage, REVIEW_PER_PAGE, req.params.productId);
+  const result = await Promise.all([
+    productModel.details(req.params.productId),
+    productModel.listCategory_brand(),
+    reviewModel.list(req.query.reviewPage, REVIEW_PER_PAGE, req.params.productId),
+    commentModel.list(req.query.commentPage, COMMENT_PER_PAGE, req.params.productId)
+  ]);
+
+  const { product, brand, category, relatedList } = result[0];
+  const listCategory_brand = result[1];
+  const { listReview, reviewPage, reviewLastPage } = result[2];
+  const { listComment, commentPage, commentLastPage, countComment } = result[3];
 
   let productsInCart;
   if(req.session.cart)
@@ -172,14 +178,22 @@ exports.productDetails = async (req, res, next) => {
       relatedList, 
       listCategory_brand,
       listReview,
-      page,
-      lastPage,
-      nextPage: page + 1,
-      previousPage: page - 1,
-      haveNextPage: page < lastPage,
-      havePreviousPage: page > 1,
+      reviewPage,
+      reviewLastPage,
+      reviewNextPage: reviewPage + 1,
+      reviewPreviousPage: reviewPage - 1,
+      haveReviewNextPage: reviewPage < reviewLastPage,
+      haveReviewPreviousPage: reviewPage > 1,
       productsInCart: productsInCart.products,
-      totalPriceAll: productsInCart.totalPriceAll
+      totalPriceAll: productsInCart.totalPriceAll,
+      listComment,
+      commentPage,
+      commentLastPage,
+      commentNextPage: commentPage + 1,
+      commentPreviousPage: commentPage - 1,
+      haveCommentNextPage: commentPage < commentLastPage,
+      haveCommentPreviousPage: commentPage > 1,
+      countComment
     })
   }
   else
@@ -192,12 +206,20 @@ exports.productDetails = async (req, res, next) => {
       relatedList, 
       listCategory_brand,
       listReview,
-      page,
-      lastPage,
-      nextPage: page + 1,
-      previousPage: page - 1,
-      haveNextPage: page < lastPage,
-      havePreviousPage: page > 1
+      reviewPage,
+      reviewLastPage,
+      reviewNextPage: reviewPage + 1,
+      reviewPreviousPage: reviewPage - 1,
+      haveReviewNextPage: reviewPage < reviewLastPage,
+      haveReviewPreviousPage: reviewPage > 1,
+      listComment,
+      commentPage,
+      commentLastPage,
+      commentNextPage: commentPage + 1,
+      commentPreviousPage: commentPage - 1,
+      haveCommentNextPage: commentPage < commentLastPage,
+      haveCommentPreviousPage: commentPage > 1,
+      countComment
     })
   }
 }
@@ -208,4 +230,14 @@ module.exports.addReview = async (req, res, next) => {
   
   await reviewModel.addReview(req.body, req.params.productId);
   res.redirect('/product/detail/' + req.params.productId + '#reviews_tabs');
+}
+
+module.exports.addComment = async (req, res, next) => {
+  if (res.locals.user)
+    req.body.name = res.locals.user.fullname;
+
+  const commentPage = req.query.commentPage || 1;
+
+  await commentModel.addComment(req.body, req.params.commentId, req.params.productId);
+  res.redirect('/product/detail/' + req.params.productId + '/?commentPage=' + commentPage + '#comments_tabs');
 }
