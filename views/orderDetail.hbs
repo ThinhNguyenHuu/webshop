@@ -1,0 +1,83 @@
+<section class="main-container col1-layout">
+    <div class="main container">
+      <div class="col-main">
+        <div class="cart wow">
+          <div class="page-title">
+            <h2>Đơn hàng {{order._id}}</h2>
+          </div>
+            <div class="table-responsive">
+              <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
+              <fieldset>
+                <table class="data-table cart-table" id="shopping-cart-table">
+                  <colgroup>
+                  <col width="1">
+                  <col>
+                  <col width="1">
+                  <col width="1">
+                  <col width="1">
+                  <col width="1">
+                  <col width="1">
+                  </colgroup>
+                  <thead>
+                    <tr class="first last">
+                      <th rowspan="1">&nbsp;</th>
+                      <th rowspan="1"><span class="nobr">Tên sản phấm</span></th>
+                      <th colspan="1" class="a-center"><span class="nobr">Giá</span></th>
+                      <th class="a-center" rowspan="1">Số lượng</th>
+                      <th colspan="1" class="a-center">Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each listProduct}}
+                    <tr class="first odd">
+                        <td class="image"><a class="product-image"  href="/product/detail/{{product._id}}"><img width="75" alt="{{product.name}}" src="{{product.images_sources.[0].url}}"></a></td>
+                        <td><h2 class="product-name"> <a href="/product/detail/{{product._id}}">{{product.name}}</a> </h2></td>
+                        <td class="a-right"><span class="cart-price"> <span class="price"> {{price}}đ </span> </span></td>
+                        <td class="a-center movewishlist"><input maxlength="12" class="input-text qty" title="Số lượng" size="4" value="{{quantity}}" name="qty" id="qty" readonly></td>
+                        <td class="a-right movewishlist"><span class="cart-price"> <span class="price">{{total_price}}đ</span> </span></td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+        
+         <div class="col-sm-4">
+            <div class="shipping">
+                <h5>Địa chỉ nhận hàng</h5>
+                <p style="color: red;">{{order.address}}</p>
+                <h5>Số điện thoại</h5>
+                <p style="color: red;">{{order.phonenum}}</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="shipping">
+                <h5>Ngày đặt hàng</h5>
+                <p style="color: red;">{{order.date}}</p>
+                <h5>Trạng thái</h5>
+                <p style="color: red;">{{order.status}}</p>
+            </div>
+        </div>
+        <div class="totals col-sm-4">
+              <div class="inner">
+                <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                  <colgroup>
+                  <col>
+                  <col width="1">
+                  </colgroup>
+                  <tfoot>
+                    <tr>
+                      <td colspan="1" class="a-left" style=""><h5>Tổng tiền</h5></td>
+                      <td class="a-right" style=""><strong><span class="price">{{order.total_price_all}}đ</span></strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              
+        </div>
+           
+        </div>
+      </div>
+    </div>
+  </section>
+ 
