@@ -98,8 +98,8 @@
             <div class="col-sm-12 wow">
               <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
                 <li class="active" id="description_tabs_label"> <a href="#product_tabs_description" data-toggle="tab">Mô tả </a> </li>
-                <li id="tag_tabs_label"><a href="#product_tabs_tags" data-toggle="tab">Nhãn </a></li>
                 <li id="reviews_tabs_label"> <a href="#reviews_tabs" data-toggle="tab" id="reviews_tabs_nav">Đánh giá</a> </li>
+                <li id="comments_tabs_label"> <a href="#comments_tabs" data-toggle="tab">Bình luận</a> </li>
               </ul>
 
               <div id="productTabContent" class="tab-content">
@@ -109,32 +109,13 @@
                     <p>{{product.description}}</p>
                   </div>
                 </div>
-                <!-- Tab tag -->
-                <div class="tab-pane fade" id="product_tabs_tags">
-                  <div class="box-collateral box-tags">
-                    <div class="tags">
-                      <form id="addTagForm" action="#" method="get">
-                        <div class="form-add-tags">
-                          <label for="productTagName">Thêm nhãn:</label>
-                          <div class="input-box">
-                            <input class="input-text required-entry" name="productTagName" id="productTagName" type="text" style="width:35%;">
-                            <button type="button" title="Add Tags" class=" button btn-add" onClick="submitTagForm()"> <span>Thêm nhãn</span> </button>
-                          </div>
-                          <!--input-box--> 
-                        </div>
-                      </form>
-                    </div>
-                    <!--tags-->
-                    <p class="note">Dùng dấu cách để phân tách giữa các nhãn. Dùng dấu nháy đơn (') cho các cụm từ.</p>
-                  </div>
-                </div>
                 <!-- Tab review -->
                 <div class="tab-pane fade" id="reviews_tabs">
                   <div class="box-collateral box-reviews" id="customer-reviews">
                     <div class="box-reviews1">
                       <div class="form-add">
                         <!-- Review form -->
-                        <form id="review-form" method="post" action="/product/review/{{product._id}}">
+                        <form id="review-form" method="post" action="/product/{{product._id}}/review">
                           <h3>Viết đánh giá của bạn</h3>
                           <fieldset>
                             <h4>Bạn đánh giá sản phẩm này như thế nào? <em class="required">*</em></h4>
@@ -259,7 +240,7 @@
                             </table>
                             <div class="review">
                               <h6>{{summary}}</h6>
-                              <small>Viết bởi <strong>{{name}}</strong> vào ngày {{reviewDate _id}} </small>
+                              <small>Viết bởi <strong>{{name}}</strong> vào ngày {{getDateFromId _id}} </small>
                               <div class="review-txt">{{detail}}</div>
                             </div>
                           </li>
@@ -268,21 +249,102 @@
                       </div>
                       <div class="actions"> 
                         <u class="pagination">
-                          {{#if page}}
-                            {{#if havePreviousPage}}
+                          {{#if reviewPage}}
+                            {{#if haveReviewPreviousPage}}
                             <li><a href="/product/detail/{{product._id}}?reviewPage=1#reviews_tabs">&laquo;</a></li>
-                            <li><a href="/product/detail/{{product._id}}?reviewPage={{previousPage}}#reviews_tabs">{{previousPage}}</a></li>
+                            <li><a href="/product/detail/{{product._id}}?reviewPage={{reviewPreviousPage}}#reviews_tabs">{{reviewPreviousPage}}</a></li>
                             {{/if}}
                             <li class="active"><a href="#reviews_tabs">{{page}}</a></li>
-                            {{#if haveNextPage}}
-                            <li><a href="/product/detail/{{product._id}}?reviewPage={{nextPage}}#reviews_tabs">{{nextPage}}</a></li>
-                            <li><a href="/product/detail/{{product._id}}?reviewPage={{lastPage}}#reviews_tabs">&raquo;</a></li>
+                            {{#if haveReviewNextPage}}
+                            <li><a href="/product/detail/{{product._id}}?reviewPage={{reviewNextPage}}#reviews_tabs">{{reviewNextPage}}</a></li>
+                            <li><a href="/product/detail/{{product._id}}?reviewPage={{reviewLastPage}}#reviews_tabs">&raquo;</a></li>
                             {{/if}}
                           {{/if}}
                         </u>
                       </div>
                     </div>
                     <div class="clear"></div>
+                  </div>
+                </div>
+                <!-- Tab comment -->
+                <div class="tab-pane face" id="comments_tabs">
+                  <div class="box-collateral">
+                    <div class="comments-tab-container">
+                      <div class="comment-box-title">Hỏi và đáp <span class="badge amount-of-comment">{{countComment}}</span></div>
+
+                      <!-- Question form -->
+                      <form action="/product/{{product._id}}/comment" method="POST" class="comment-question-form">
+                        {{#if user}}
+                        {{else}}
+                        <div class="input-box">
+                          <input type="text" class="input-text comment-input-name" id="nickname_field" name="name" placeholder="Tên của bạn" required>
+                        </div>  
+                        {{/if}}
+                        <div class="input-box">
+                          <textarea class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết bình luận của bạn" required></textarea>
+                        </div>
+                        <div class="buttons-set">
+                          <button class="button submit" title="Submit Review" type="submit"><span>Gửi câu hỏi</span></button>
+                        </div>
+                      </form>
+
+                      {{#each listComment}}
+                      <div class="user-comment-container" id="user-comment">
+                        <div class="comment-box">
+                          <div class="comment-name">{{name}}<div class="comment-time">{{getDateFromId _id}}</div></div>
+                          <div class="comment-text">{{text}}</div>
+                          <div class="comment-reply"><a href="#{{_id}}" data-toggle="collapse" role="button" aria-expanded="false">Trả lời</a></div>
+                        </div>
+
+                        {{#each reply}}
+                        <div class="comment-box level2">
+                          <div class="comment-name">{{name}}<div class="comment-time">{{dateToString create_at}}</div></div>
+                          <div class="comment-text">{{text}}</div>
+                        </div>
+                        {{/each}}
+
+                        <!-- Reply form -->
+                        <div class="collapse" id="{{_id}}">
+                          <form action="/product/{{../product._id}}/reply-comment/{{_id}}?commentPage={{../commentPage}}" method="POST" class="comment-question-form level2">
+                            {{#if ../user}}
+                            {{else}}
+                            <div class="input-box">
+                              <input type="text" class="input-text comment-input-name" id="nickname_field" name="name" placeholder="Tên của bạn" required>
+                            </div>  
+                            {{/if}}
+                            <div class="input-box">
+                              <textarea class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết bình luận của bạn" required></textarea>
+                            </div>
+                            <div class="buttons-set">
+                              <button class="button submit" title="Submit Review" type="submit"><span>Trả lời</span></button>
+                            </div>
+                          </form>
+                        </div>   
+
+                      </div>
+                      {{/each}}
+                  
+                    <div class="actions comment-pagination-container"> 
+                      <u class="pagination">
+                        {{#if commentPage}}
+                          {{#if haveCommentPreviousPage}}
+                          <li><a href="/product/detail/{{product._id}}?commentPage=1#comments_tabs">&laquo;</a></li>
+                          <li><a href="/product/detail/{{product._id}}?commentPage={{commentPreviousPage}}#comments_tabs">{{commentPreviousPage}}</a></li>
+                          {{/if}}
+                          <li class="active"><a href="#comments_tabs">{{commentPage}}</a></li>
+                          {{#if haveCommentNextPage}}
+                          <li><a href="/product/detail/{{product._id}}?commentPage={{commentNextPage}}#comments_tabs">{{commentNextPage}}</a></li>
+                          <li><a href="/product/detail/{{product._id}}?commentPage={{commentLastPage}}#comments_tabs">&raquo;</a></li>
+                          {{/if}}
+                        {{/if}}
+                      </u>
+                    </div>
+
+                    </div>
+                    
+                    
+                  
+
                   </div>
                 </div>
               </div>

@@ -40,9 +40,12 @@ app.engine('hbs', exphbs({
       
       return rating / (reviews.length * 3);
     },
-    // get review's created date and convert to string
-    reviewDate: function (id) { 
+    // get created date and convert to string
+    getDateFromId: function (id) { 
       const date = new Date(id.getTimestamp());
+      return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); 
+    },
+    dateToString: function (date) {
       return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); 
     },
     discountPrice: function (price, discount) { return price - price * discount / 100.0 },
