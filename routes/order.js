@@ -4,4 +4,7 @@ const controller = require('../controllers/orderController');
 
 router.post('/addorder', controller.addOrder);
 
+router.get('/listorder', controller.listOrder);
+
+
 module.exports = router;

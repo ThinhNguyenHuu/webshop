@@ -40,3 +40,8 @@ module.exports.addOrder = async (cart, user, address, phonenum) =>
         })
     }
 }
+
+module.exports.listOrder = async (user) =>
+{
+    return await db().collection('order').find({user: ObjectId(user._id)}).toArray();
+}
