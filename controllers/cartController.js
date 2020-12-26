@@ -58,7 +58,10 @@ module.exports.removeProduct = async (req, res, next) =>{
                 break;
             }
         }
-        req.session.cart = cart;
+        if(cart.length !== 0)
+            req.session.cart = cart;
+        else
+            req.session.cart = null;
         
         res.redirect(req.headers['referer']);
     }
@@ -69,12 +72,10 @@ module.exports.removeProduct = async (req, res, next) =>{
 }
 
 module.exports.removeAll = async (req, res, next) =>{
-    
-    let cart = [];
 
     if(req.session.cart)
     {
-        req.session.cart = cart;
+        req.session.cart = null;
         res.redirect(req.headers['referer']);
     }
     else
