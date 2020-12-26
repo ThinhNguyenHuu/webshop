@@ -15,7 +15,8 @@ module.exports.getLogin = async (req, res, next) => {
       listCategory_brand: listCategory_brand,
       error: req.flash('error'),
       productsInCart: productsInCart.products,
-      totalPriceAll: productsInCart.totalPriceAll
+      totalPriceAll: productsInCart.totalPriceAll,
+      referer: req.headers['referer']
      });
   }
   else
@@ -23,7 +24,8 @@ module.exports.getLogin = async (req, res, next) => {
     res.render('login', {
       title: 'Đăng nhập',
       listCategory_brand: listCategory_brand,
-      error: req.flash('error')
+      error: req.flash('error'),
+      referer: req.headers['referer']
     });
   }
 } 

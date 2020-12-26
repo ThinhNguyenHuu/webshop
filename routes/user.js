@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
@@ -6,9 +7,19 @@ const passport = require('../passport');
 
 router.get('/login', userController.getLogin);
 router.post('/login', passport.authenticate('local',
-                        { successRedirect: '/',
+                        { //successRedirect: '/',
                         failureRedirect: '/user/login',
-                        failureFlash: true }));
+                        failureFlash: true }), (req, res) => 
+                        {
+                            if (req.body.referer &&  (req.body.referer).indexOf("/user/login") < 0)
+                            {
+                                res.redirect(req.body.referer);
+                            }
+                            else 
+                            {
+                                res.redirect("/");
+                            }
+                        });
 
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
