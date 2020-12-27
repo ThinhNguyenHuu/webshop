@@ -4,4 +4,9 @@ const controller = require('../controllers/orderController');
 
 router.post('/addorder', controller.addOrder);
 
+router.get('/listorder', controller.listOrder);
+
+router.get('/detail/:id', controller.detail);
+
+
 module.exports = router;

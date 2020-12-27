@@ -39,3 +39,44 @@ module.exports.addOrder = async (req, res, next) =>
         }
     }
 }
+
+module.exports.listOrder = async (req, res, next) =>
+{
+    const listCategory_brand = await productModel.listCategory_brand();
+
+    if(req.user)
+    {
+        const list = await orderModel.listOrder(req.user);
+        res.render('listOrder',{
+        title: "Danh sách đơn hàng",
+        listCategory_brand: listCategory_brand,
+        listOrder: list
+        });
+    }
+    else
+    {
+        next();
+    }
+}
+
+module.exports.detail = async (req, res, next) =>
+{
+    const listCategory_brand = await productModel.listCategory_brand();
+
+    if(req.user)
+    {
+        const order = await orderModel.findOrder(req.params.id);
+        const list = await orderModel.getProductsInOrder(req.params.id);
+        res.render('orderDetail',{
+        title: "Đơn hàng " + req.params.id,
+        listCategory_brand: listCategory_brand,
+        listProduct: list,
+        order: order
+        });
+    }
+    else
+    {
+        next();
+    }
+}
+

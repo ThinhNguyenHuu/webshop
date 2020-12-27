@@ -40,3 +40,25 @@ module.exports.addOrder = async (cart, user, address, phonenum) =>
         })
     }
 }
+
+module.exports.listOrder = async (user) =>
+{
+    return await db().collection('order').find({user: ObjectId(user._id)}).toArray();
+}
+
+module.exports.getProductsInOrder = async (id) =>
+{
+    const list =  await db().collection('order_product').find({order: ObjectId(id)}).toArray();
+
+    for(let i = 0; i < list.length; i++)
+    {
+        list[i].product = await productModel.findProduct(list[i].product);
+    }
+
+    return list;
+}
+
+module.exports.findOrder = async (id) =>
+{
+    return await db().collection('order').findOne({_id: ObjectId(id)});
+}

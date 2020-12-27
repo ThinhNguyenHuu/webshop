@@ -1,0 +1,54 @@
+<div class="main-container col2-right-layout">
+    <div class="main container">
+      <div class="row">
+        <section class="col-main col-sm-12 wow">
+          <div class="my-account">
+            <div class="page-title">
+              <h2>Danh sách đơn đặt hàng</h2>
+            </div>
+            <div class="dashboard">
+              <div class="welcome-msg"> <strong>Xin chào {{user.fullname}},</strong>
+                <p>Dưới đây là thông tin các đơn đặt hàng của bạn</p>
+              </div>
+              <div class="recent-orders">
+                <div class="title-buttons"><strong>Danh sách đơn hàng</strong> <br><!--a href="#">View All </a--> </div>
+                <div class="table-responsive">
+                  <table class="data-table" id="my-orders-table">
+                    <col>
+                    <col>
+                    <col>
+                    <col width="1">
+                    <col width="2">
+                    <col width="1">
+                    <thead>
+                      <tr class="first last">
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Địa chỉ giao hàng</th>
+                        <th><span class="nobr">Tổng tiền</span></th>
+                        <th>Trạng thái</th>
+                        <th>&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {{#each listOrder}}
+                      <tr class="first odd">
+                        <td>{{_id}}</td>
+                        <td>{{date}}</td>
+                        <td>{{address}}</td>
+                        <td><span class="price">{{total_price_all}}đ</span></td>
+                        <td><em>{{status}}</em></td>
+                        <td class="a-center last"><span class="nobr"> <a href="/order/detail/{{_id}}">Chi tiết</a> <!--span class="separator">|</span> <a href="#">Reorder</a--> </span></td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>

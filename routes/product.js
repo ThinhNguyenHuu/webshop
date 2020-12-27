@@ -7,7 +7,7 @@ router.get('/', controller.getList);
 
 router.get('/search', controller.getListSearchedProduct)
 
-router.get('/:category_brand', controller.getListFilteredProduct)
+router.get('/:category_brand', controller.getListClassifiedProduct)
 
 router.get('/detail/:productId', controller.productDetails);
 
