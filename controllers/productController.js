@@ -157,13 +157,15 @@ exports.productDetails = async (req, res, next) => {
     productModel.details(req.params.productId),
     productModel.listCategory_brand(),
     reviewModel.list(req.query.reviewPage, REVIEW_PER_PAGE, req.params.productId),
-    commentModel.list(req.query.commentPage, COMMENT_PER_PAGE, req.params.productId)
+    commentModel.list(req.query.commentPage, COMMENT_PER_PAGE, req.params.productId),
+    productModel.updateViewCount(req.params.productId)
   ]);
 
   const { product, brand, category, relatedList } = result[0];
   const listCategory_brand = result[1];
   const { listReview, reviewPage, reviewLastPage } = result[2];
   const { listComment, commentPage, commentLastPage, countComment } = result[3];
+
 
   let productsInCart;
   if(req.session.cart)
@@ -229,7 +231,7 @@ module.exports.addReview = async (req, res, next) => {
     req.body.name = res.locals.user.fullname;
   
   await reviewModel.addReview(req.body, req.params.productId);
-  res.redirect('/product/detail/' + req.params.productId + '#reviews_tabs');
+  res.redirect(req.get('referer') + '#reviews_tabs');
 }
 
 module.exports.addComment = async (req, res, next) => {
@@ -239,5 +241,5 @@ module.exports.addComment = async (req, res, next) => {
   const commentPage = req.query.commentPage || 1;
 
   await commentModel.addComment(req.body, req.params.commentId, req.params.productId);
-  res.redirect('/product/detail/' + req.params.productId + '/?commentPage=' + commentPage + '#comments_tabs');
+  res.redirect(req.get('referer') + '/?commentPage=' + commentPage + '#comments_tabs');
 }

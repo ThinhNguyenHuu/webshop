@@ -27,20 +27,6 @@ app.engine('hbs', exphbs({
   defaultLayout: 'layout',
   extname: '.hbs',
   helpers: {
-    // get rating from reviews
-    
-    rating: function (reviews) { 
-
-      if (!reviews)
-        return 0;
-
-      let rating = 0;
-      reviews.forEach(review => {
-        rating += (review.value + review.quality + review.price);
-      })
-      
-      return rating / (reviews.length * 3);
-    },
     // get created date and convert to string
     getDateFromId: function (id) { 
       const date = new Date(id.getTimestamp());

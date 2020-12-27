@@ -47,7 +47,7 @@
                 <div class="ratings">
                   <div class="rating-box">
 
-                    <div style="width:{{rating listReview}}%" class="rating"></div>
+                    <div style="width:{{product.rating}}%" class="rating"></div>
                   </div>
                   <p class="rating-links"> <a onclick="gotoUserReview()" href="#reviews_tabs"> {{#if listReview}}{{listReview.length}}{{else}}0{{/if}} Đánh giá</a> <a onclick="gotoAddReviewBox()" href="#product-detail-tab"><span class="separator">Thêm đánh giá của bạn</span></a></p> 
                 </div>
@@ -247,19 +247,17 @@
                           {{/each}}
                         </ul>
                       </div>
-                      <div class="actions"> 
+                      <div class="actions">
                         <u class="pagination">
-                          {{#if reviewPage}}
                             {{#if haveReviewPreviousPage}}
                             <li><a href="/product/detail/{{product._id}}?reviewPage=1#reviews_tabs">&laquo;</a></li>
                             <li><a href="/product/detail/{{product._id}}?reviewPage={{reviewPreviousPage}}#reviews_tabs">{{reviewPreviousPage}}</a></li>
                             {{/if}}
-                            <li class="active"><a href="#reviews_tabs">{{page}}</a></li>
+                            <li class="active"><a href="#reviews_tabs">{{reviewPage}}</a></li>
                             {{#if haveReviewNextPage}}
                             <li><a href="/product/detail/{{product._id}}?reviewPage={{reviewNextPage}}#reviews_tabs">{{reviewNextPage}}</a></li>
                             <li><a href="/product/detail/{{product._id}}?reviewPage={{reviewLastPage}}#reviews_tabs">&raquo;</a></li>
                             {{/if}}
-                          {{/if}}
                         </u>
                       </div>
                     </div>
@@ -382,7 +380,7 @@
                                   <div class="item-content">
                                     <div class="ratings">
                                       <div class="rating-box">
-                                        <div style="width:{{rating reviews}}%" class="rating"></div>
+                                        <div style="width:{{rating}}%" class="rating"></div>
                                       </div>
                                     </div>
                                     <div class="price-box">

@@ -185,10 +185,9 @@ module.exports.listFeaturedProduct = async () => {
 module.exports.details = async (productId) => {
   const product = await db().collection('product').findOne({_id: ObjectId(productId)});
 
-  
   const brandPromise = db().collection('brand').findOne({_id: ObjectId(product.brand)});
   const categoryPromise = db().collection('category').findOne({_id: ObjectId(product.category)});
-  const relatedListPromise = db().collection('product').find({_id: {$ne: ObjectId(productId)}, category: ObjectId(product.category)}).limit(7).toArray();
+  const relatedListPromise = this.listRelatedProduct(productId, product.category);
 
   const brand = await brandPromise;
   const category = await categoryPromise;
@@ -201,4 +200,55 @@ module.exports.findProduct = async (productId) =>{
   const product = await db().collection('product').findOne({_id: ObjectId(productId)});
 
   return product;
+}
+
+module.exports.listRelatedProduct = async (productId, categoryId) => {
+  const listOrderProduct = await db().collection('order_product').find({product: ObjectId(productId)}).toArray();
+  const listOrderId = listOrderProduct.map(item => item.order);
+
+  const listRelatedOrderProduct = await db().collection('order_product').aggregate([
+    {
+      $match: { order: { $in: listOrderId }, product: { $ne: ObjectId(productId) }}
+    },
+    {
+      $group: {
+        _id: '$product',
+        total_quantity: { $sum: '$quantity' }
+      }
+    },
+    {
+      $sort: { total_quantity: 1 }
+    },
+    {
+      $lookup: {
+        from: 'product',
+        localField: 'product',
+        foreignField: '_id',
+        as: 'object_product'
+      }
+    }
+  ]).toArray();
+
+  const listRelatedProduct = listRelatedOrderProduct.map(product => product.object_product[0]);
+
+  if (listRelatedProduct.length < 7) {
+    const remainingProduct = await db().collection('product').aggregate([
+        {
+          $match: { category: ObjectId(categoryId) }
+        },
+        {
+          $sample: { size: 7 - listRelatedProduct }
+        }
+      ]).toArray();
+
+    return [...listRelatedProduct, ...remainingProduct];
+  }
+
+  return listRelatedProduct;
+}
+
+module.exports.updateViewCount = async (productId) => {
+  await db().collection('product').updateOne({_id: ObjectId(productId)}, {
+    $inc: { view_count: 1 }
+  });
 }
