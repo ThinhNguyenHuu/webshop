@@ -7,7 +7,7 @@ const commentModel = require('../models/commentModel');
 
 module.exports.getList = async (req, res, next) => {
   
-  const  pagination = await productModel.list(req.query.page, req.query.numProduct, req.query.sort);
+  const  pagination = await productModel.list(req.query.page, req.query.numProduct, req.query.sort, req.query.filter);
 
   const listCategory_brand = await productModel.listCategory_brand();
   
@@ -34,6 +34,7 @@ module.exports.getList = async (req, res, next) => {
       url: url,
       numProduct: numProduct,
       sortby: sortby,
+      filter: req.query.filter,
       productsInCart: productsInCart.products,
       totalPriceAll: productsInCart.totalPriceAll
     });
@@ -51,14 +52,15 @@ module.exports.getList = async (req, res, next) => {
       listCategory_brand: listCategory_brand,
       url: url,
       numProduct: numProduct,
-      sortby: sortby
+      sortby: sortby,
+      filter: req.query.filter
     });
   }
 } 
 
 module.exports.getListClassifiedProduct = async (req, res, next) =>{
   
-  const  pagination = await productModel.listClassifiedProduct(req.params.category_brand, req.query.page, req.query.numProduct, req.query.sort);
+  const  pagination = await productModel.listClassifiedProduct(req.params.category_brand, req.query.page, req.query.numProduct, req.query.sort, req.query.filter);
 
   const listCategory_brand = await productModel.listCategory_brand();
 
@@ -85,6 +87,7 @@ module.exports.getListClassifiedProduct = async (req, res, next) =>{
       url: url,
       numProduct: numProduct,
       sortby: sortby,
+      filter: req.query.filter,
       productsInCart: productsInCart.products,
       totalPriceAll: productsInCart.totalPriceAll
     });
@@ -102,14 +105,15 @@ module.exports.getListClassifiedProduct = async (req, res, next) =>{
       listCategory_brand: listCategory_brand,
       url: url,
       numProduct: numProduct,
-      sortby: sortby
+      sortby: sortby,
+      filter: req.query.filter
     });
   }
 }
 
 module.exports.getListSearchedProduct = async (req, res, next) => {
   
-  const  pagination = await productModel.listSearchedProduct(req.query.page, req.query.numProduct, req.query.search, req.query.sort);
+  const  pagination = await productModel.listSearchedProduct(req.query.page, req.query.numProduct, req.query.search, req.query.sort, req.query.filter);
 
   const listCategory_brand = await productModel.listCategory_brand();
   
@@ -138,6 +142,7 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
       url: url,
       numProduct: numProduct,
       sortby: sortby,
+      filter: req.query.filter,
       productsInCart: productsInCart.products,
       totalPriceAll: productsInCart.totalPriceAll
     });
@@ -155,7 +160,8 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
       listCategory_brand: listCategory_brand,
       url: url,
       numProduct: numProduct,
-      sortby: sortby
+      sortby: sortby,
+      filter: req.query.filter
     });
   }
 }

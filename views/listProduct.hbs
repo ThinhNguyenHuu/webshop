@@ -38,31 +38,60 @@
                  <div class="pages">
                   <label>Trang:</label>
                   <ul class="pagination">
-                    <li></li>
-                    {{#if prePage}}
-                    <li><a href="{{url}}page={{prePage}}&numProduct={{numProduct}}&sort={{sortby}}">&laquo;</a></li>
-                    {{/if}}
+                    {{#if filter}}
+                      <li></li>
+                      {{#if prePage}}
+                      <li><a href="{{url}}filter={{filter}}&page={{prePage}}&numProduct={{numProduct}}&sort={{sortby}}">&laquo;</a></li>
+                      {{/if}}
 
-                    {{#if beforePrePage}}
-                    <li><a href="{{url}}page={{beforePrePage}}&numProduct={{numProduct}}&sort={{sortby}}">{{beforePrePage}}</a> </li>
-                    {{/if}}
+                      {{#if beforePrePage}}
+                      <li><a href="{{url}}filter={{filter}}&page={{beforePrePage}}&numProduct={{numProduct}}&sort={{sortby}}">{{beforePrePage}}</a> </li>
+                      {{/if}}
 
-                    {{#if prePage}}
-                    <li><a href="{{url}}page={{prePage}}&numProduct={{numProduct}}&sort={{sortby}}">{{prePage}}</a> </li>
-                    {{/if}}
+                      {{#if prePage}}
+                      <li><a href="{{url}}filter={{filter}}&page={{prePage}}&numProduct={{numProduct}}&sort={{sortby}}">{{prePage}}</a> </li>
+                      {{/if}}
 
-                    <li class="active"><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{currentPage}}</a></li>
+                      <li class="active"><a href="{{url}}filter={{filter}}&page={{currentPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{currentPage}}</a></li>
 
-                    {{#if nextPage}}
-                    <li><a href="{{url}}page={{nextPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{nextPage}}</a> </li>
-                    {{/if}}
+                      {{#if nextPage}}
+                      <li><a href="{{url}}filter={{filter}}&page={{nextPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{nextPage}}</a> </li>
+                      {{/if}}
 
-                    {{#if afterNextPage}}
-                    <li><a href="{{url}}page={{afterNextPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{afterNextPage}}</a> </li>
-                    {{/if}}
+                      {{#if afterNextPage}}
+                      <li><a href="{{url}}filter={{filter}}&page={{afterNextPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{afterNextPage}}</a> </li>
+                      {{/if}}
 
-                    {{#if nextPage}}
-                    <li><a href="{{url}}page={{nextPage}}&numProduct={{numProduct}}&sort={{sortby}}">&raquo;</a></li>
+                      {{#if nextPage}}
+                      <li><a href="{{url}}filter={{filter}}&page={{nextPage}}&numProduct={{numProduct}}&sort={{sortby}}">&raquo;</a></li>
+                      {{/if}}
+                    {{else}}
+                      <li></li>
+                      {{#if prePage}}
+                      <li><a href="{{url}}page={{prePage}}&numProduct={{numProduct}}&sort={{sortby}}">&laquo;</a></li>
+                      {{/if}}
+
+                      {{#if beforePrePage}}
+                      <li><a href="{{url}}page={{beforePrePage}}&numProduct={{numProduct}}&sort={{sortby}}">{{beforePrePage}}</a> </li>
+                      {{/if}}
+
+                      {{#if prePage}}
+                      <li><a href="{{url}}page={{prePage}}&numProduct={{numProduct}}&sort={{sortby}}">{{prePage}}</a> </li>
+                      {{/if}}
+
+                      <li class="active"><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{currentPage}}</a></li>
+
+                      {{#if nextPage}}
+                      <li><a href="{{url}}page={{nextPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{nextPage}}</a> </li>
+                      {{/if}}
+
+                      {{#if afterNextPage}}
+                      <li><a href="{{url}}page={{afterNextPage}}&numProduct={{numProduct}}&sort={{sortby}}">{{afterNextPage}}</a> </li>
+                      {{/if}}
+
+                      {{#if nextPage}}
+                      <li><a href="{{url}}page={{nextPage}}&numProduct={{numProduct}}&sort={{sortby}}">&raquo;</a></li>
+                      {{/if}}
                     {{/if}}
                   </ul>
                 </div>
@@ -72,13 +101,23 @@
               <div id="sort-by">
                 <label class="left">Sắp xếp theo: </label>
                 <ul>
-                  <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort={{sortby}}"><span class="right-arrow">{{sortby}}</span></a>
-                    <ul>
-                      <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort=Tên">Tên</a></li>
-                      <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort=Giá">Giá</a></li>
-                      <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort=Vị trí">Vị trí</a></li>
-                    </ul>
-                  </li>
+                  {{#if filter}}
+                    <li><a href="{{url}}filter={{filter}}&page={{currentPage}}&numProduct={{numProduct}}&sort={{sortby}}"><span class="right-arrow">{{sortby}}</span></a>
+                      <ul>
+                        <li><a href="{{url}}filter={{filter}}&page={{currentPage}}&numProduct={{numProduct}}&sort=Tên">Tên</a></li>
+                        <li><a href="{{url}}filter={{filter}}&page={{currentPage}}&numProduct={{numProduct}}&sort=Giá">Giá</a></li>
+                        <li><a href="{{url}}filter={{filter}}&page={{currentPage}}&numProduct={{numProduct}}&sort=Vị trí">Vị trí</a></li>
+                      </ul>
+                    </li>
+                  {{else}}
+                    <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort={{sortby}}"><span class="right-arrow">{{sortby}}</span></a>
+                      <ul>
+                        <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort=Tên">Tên</a></li>
+                        <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort=Giá">Giá</a></li>
+                        <li><a href="{{url}}page={{currentPage}}&numProduct={{numProduct}}&sort=Vị trí">Vị trí</a></li>
+                      </ul>
+                    </li>
+                  {{/if}}
                 </ul>
 
                 <a class="button-asc left" href="#" title="Set Descending Direction"><span style="color:#999;font-size:11px;" class="glyphicon glyphicon-arrow-up"></span></a>
@@ -88,13 +127,23 @@
                 <div id="limiter">
                   <label>Số sản phẩm trên trang: </label>
                   <ul>
-                    <li><a href="{{url}}numProduct={{numProduct}}">{{numProduct}}<span class="right-arrow"></span></a>
-                      <ul>
-                        <li><a href="{{url}}numProduct=9&sort={{sortby}}">9</a></li>
-                        <li><a href="{{url}}numProduct=12&sort={{sortby}}">12</a></li>
-                        <li><a href="{{url}}numProduct=15&sort={{sortby}}">15</a></li>
-                      </ul>
-                    </li>
+                    {{#if filter}}
+                      <li><a href="{{url}}filter={{filter}}&numProduct={{numProduct}}">{{numProduct}}<span class="right-arrow"></span></a>
+                        <ul>
+                          <li><a href="{{url}}filter={{filter}}&numProduct=9&sort={{sortby}}">9</a></li>
+                          <li><a href="{{url}}filter={{filter}}&numProduct=12&sort={{sortby}}">12</a></li>
+                          <li><a href="{{url}}filter={{filter}}&numProduct=15&sort={{sortby}}">15</a></li>
+                        </ul>
+                      </li>
+                    {{else}}
+                      <li><a href="{{url}}filter={{filter}}&numProduct={{numProduct}}">{{numProduct}}<span class="right-arrow"></span></a>
+                        <ul>
+                          <li><a href="{{url}}numProduct=9&sort={{sortby}}">9</a></li>
+                          <li><a href="{{url}}numProduct=12&sort={{sortby}}">12</a></li>
+                          <li><a href="{{url}}numProduct=15&sort={{sortby}}">15</a></li>
+                        </ul>
+                      </li>
+                    {{/if}}
                   </ul>
                 </div>
               </div>
@@ -185,16 +234,16 @@
                 <dt class="odd">Giá cả</dt>
                 <dd class="odd">
                   <ol>
-                    <li> <a href="#"><span class="price">0</span> - <span class="price">5.000.000 đ</span></a> (6) </li>
-                    <li> <a href="#"><span class="price">5.000.000 đ</span> trở lên</a> (6) </li>
+                    <li> <a href="{{url}}filter=1"><span class="price">0</span> - <span class="price">5.000.000 đ</span></a></li>
+                    <li> <a href="{{url}}filter=2"><span class="price">5.000.000 đ</span> trở lên</a></li>
                   </ol>
                 </dd>
                 <dt class="even">Khuyến mãi</dt>
                 <dd class="even">
                   <ol>
-                    <li> <a href="#">0 - 10 %</a> (9) </li>
-                    <li> <a href="#">10 - 20 %</a> (4) </li>
-                    <li> <a href="#">Trên 20%</a> (1) </li>
+                    <li> <a href="{{url}}filter=3">0 - 10 %</a></li>
+                    <li> <a href="{{url}}filter=4">10 - 20 %</a></li>
+                    <li> <a href="{{url}}filter=5">Trên 20%</a></li>
                   </ol>
                 </dd>
                 <!--dt class="odd">Color</dt>
