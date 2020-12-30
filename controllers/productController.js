@@ -172,7 +172,7 @@ module.exports.getAdvancedSearch = async (req, res, next) =>
   const listCategory = await productModel.listCategory();
   const listBrand = await productModel.listBrand();
 
-  res.render('advancedsearch',{
+  res.render('advancedSearch',{
     listCategory_brand: listCategory_brand,
     listCategory: listCategory,
     listBrand: listBrand
