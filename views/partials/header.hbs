@@ -14,8 +14,9 @@
               <!--div class="myaccount"><a title="My Account" href="/user/info"><span class="hidden-xs">Tài khoản</span></a></div-->
               <!--div class="wishlist"><a title="My Wishlist" href="#"><span class="hidden-xs">Wishlist</span></a></div-->
               {{#if user}}
-              <div class="check"><a title="Danh sách đơn hàng" href="/order/listorder"><span class="hidden-xs">Danh sách đơn hàng</span></a></div>
+              <div class="check"><a title="Danh sách đơn hàng" href="/order/listorder"><span>Danh sách đơn hàng</span></a></div>
               {{/if}}
+              <div class="check"><a title="Tìm kiếm nâng cao" href="/product/advancedsearch"><span>Tìm kiếm nâng cao</span></a></div>
             </div>
           </div>
           <!-- End Header Top Links --> 
@@ -32,12 +33,16 @@
       </div>
       <div class="col-lg-7 col-sm-4 col-md-6 col-xs-12"> 
         <!-- Search-col -->
+         
         <div class="search-box">
+         
           <form action="/product/search" method="GET" id="search_mini_form" name="Categories">
             <input type="text" placeholder="Nhập tên sản phẩm cần tìm..." value="" maxlength="70" class="" name="search" id="search">
             <button id="submit-button" class="search-btn-bg" style="width: 36%"><span>Tìm kiếm</span></button>
           </form>
+         
         </div>
+        
         <!-- End Search-col --> 
       </div>
       <!-- Top Cart -->
@@ -88,6 +93,7 @@
             <input class="title_shopping_cart" value="Go to shopping cart" type="hidden">
           </div>
         </div>
+        
         {{#if user}}
         <div class="signup"><a title="Đăng xuất" href="/user/logout"><span>Đăng xuất</span></a></div>
         {{else}}

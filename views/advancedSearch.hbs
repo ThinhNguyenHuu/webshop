@@ -1,0 +1,66 @@
+<section class="main-container col1-layout">
+    <div class="main container">
+      <div class="col-main">
+        <div class="cart wow">
+          <div class="page-title">
+            <h2>Tìm kiếm nâng cao</h2>
+          </div>
+
+          <div class="cart-collaterals row">
+            <form id="shipping-zip-form" method="GET" action="/product/advancedsearch/result">
+            <ul class="form-list">
+                <li>
+                     <div class="col-sm-5">
+                        <label for="name">Tên sản phẩm</label>
+                        <div class="input-box">
+                            <input type="text" id="name" name="name" class="input-text" required/>
+                        </div>
+
+                        <br>
+
+                        <label for="price">Giá</label>
+                        <div class="input-box">
+                          <select title="Giá" class="validate-select" id="price" name="price" required>
+                            <option value="1">0 - 5.000.000 đ </option>
+                            <option value="2">Trên 5.000.000 đ </option>
+                          </select>
+                        </div>
+                        
+                    </div>
+                </li>
+                <li>
+                     <div class="col-sm-5"> 
+                        <label for="category">Loại sản phẩm</label>
+                        <div class="input-box">
+                          <select title="Loại sản phẩm" class="validate-select" id="category" name="category" required>
+                            {{#each listCategory}}
+                            <option value="{{_id}}">{{name}}</option>
+                            {{/each}}
+                          </select>
+                        </div>
+                        
+                        <br>
+
+                        <label for="brand">Thương hiệu</label>
+                        <div class="input-box">
+                          <select title="Thương hiệu" class="validate-select" id="brand" name="brand" required>
+                            {{#each listBrand}}
+                            <option value="{{_id}}">{{name}} </option>
+                            {{/each}}
+                          </select>
+                        </div>
+                    </div>
+                </li>
+                 <li>
+                    <br> <br>
+                    <div class="col-sm-2"> 
+                        <button class="button" title="Tìm kiếm" type="submit"><span>Tìm kiếm</span></button>
+                    </div>
+                </li>
+                </ul>
+            </form>
+        </div>
+        </div>
+      </div>
+    </div>
+</section>

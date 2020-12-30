@@ -166,6 +166,88 @@ module.exports.getListSearchedProduct = async (req, res, next) => {
   }
 }
 
+module.exports.getAdvancedSearch = async (req, res, next) =>
+{
+  const listCategory_brand = await productModel.listCategory_brand();
+  const listCategory = await productModel.listCategory();
+  const listBrand = await productModel.listBrand();
+
+  res.render('advancedsearch',{
+    listCategory_brand: listCategory_brand,
+    listCategory: listCategory,
+    listBrand: listBrand
+  })
+}
+
+module.exports.getResultAdvancedSearch = async (req, res, next) =>
+{
+  const  pagination = await productModel.listAdvancedSearchedProduct(req.query.page, req.query.numProduct, req.query.sort, req.query.name, req.query.category, req.query.brand, req.query.price);
+
+  const listCategory_brand = await productModel.listCategory_brand();
+  
+  const splitUrl = (req.originalUrl).split("&");
+  let url = "";
+  if(splitUrl.length > 4)
+  {
+    for(let i = 0; i < 4; i++)
+      url = url + splitUrl[i] + "&";
+  }
+  else
+  {
+    url = req.originalUrl + "&";
+  }
+
+  const numProduct = +req.query.numProduct || 9;
+
+  let title;
+  if(req.query.price == "1")
+    title = "Kết quả tìm kiếm " + req.query.name + " " + req.query.category + " " + req.query.brand + " " + "0 - 5.000.000đ";
+  else
+    title = "Kết quả tìm kiếm " + req.query.name + " " + req.query.category + " " + req.query.brand + " " + "Trên 5.000.000đ";
+
+  const sortby = req.query.sort ? req.query.sort : "Vị trí";
+  
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('listProduct', {
+      title: title,
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct,
+      sortby: sortby,
+      advancedSearch: true,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll
+    });
+  }
+  else
+  {
+    res.render('listProduct', {
+      title: title,
+      list: pagination.list,
+      currentPage: pagination.currentPage,
+      nextPage: pagination.nextPage,
+      afterNextPage: pagination.afterNextPage,
+      prePage: pagination.prePage,
+      beforePrePage: pagination.beforePrePage,
+      listCategory_brand: listCategory_brand,
+      url: url,
+      numProduct: numProduct,
+      sortby: sortby,
+      advancedSearch: true
+    });
+  }
+}
+
 const REVIEW_PER_PAGE = 5;
 const COMMENT_PER_PAGE = 5;
 

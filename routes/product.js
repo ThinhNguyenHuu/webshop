@@ -5,9 +5,13 @@ const controller = require('../controllers/productController');
 
 router.get('/', controller.getList);
 
-router.get('/search', controller.getListSearchedProduct)
+router.get('/search', controller.getListSearchedProduct);
 
-router.get('/:category_brand', controller.getListClassifiedProduct)
+router.get('/advancedsearch', controller.getAdvancedSearch);
+
+router.get('/advancedsearch/result', controller.getResultAdvancedSearch);
+
+router.get('/:category_brand', controller.getListClassifiedProduct);
 
 router.get('/detail/:productId', controller.productDetails);
 

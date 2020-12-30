@@ -350,25 +350,7 @@ module.exports.list = async (pageIndex, product_per_page, sort, filter) =>
   return {list: list, currentPage: page, nextPage: nextPage, afterNextPage: afterNextPage, prePage: prePage, beforePrePage: beforePrePage};
 }
 
-module.exports.listCategory_brand = async () =>
-{
-  const category = await db().collection('category').find().toArray();
-  const brand = await db().collection('brand').find().toArray();
-  let category_brand = [];
-  for(let i = 0; i < category.length; i++)
-  {
-    let suitableBrand = [];
-    for(let j = 0; j < brand.length; j++)
-    {
-      for(let k = 0; k < brand[j].category.length; k++)
-       
-        if((category[i]._id).equals(brand[j].category[k]))
-          suitableBrand.push({_id: brand[j]._id, name: brand[j].name, cate_brand: category[i].name + "_" + brand[j].name});
-    }
-    category_brand.push({category: category[i], brand: suitableBrand});
-  }
-  return category_brand;
-}
+
 
 
 module.exports.listClassifiedProduct = async (category_brand, pageIndex, product_per_page, sort, filter) =>
@@ -1089,7 +1071,7 @@ module.exports.listSearchedProduct = async (pageIndex, product_per_page, search,
   const sortby = sort ? sort : "Vị trí";
 
   let count;
-  let totalPage
+  let totalPage;
 
   let list;
  
@@ -1538,6 +1520,241 @@ module.exports.listSearchedProduct = async (pageIndex, product_per_page, search,
   return {list: list, currentPage: page, nextPage: nextPage, afterNextPage: afterNextPage, prePage: prePage, beforePrePage: beforePrePage};
 }
 
+module.exports.listAdvancedSearchedProduct = async (pageIndex, product_per_page, sort, name, category, brand, price) =>  
+{
+  
+  let page = +pageIndex || 1;
+  const numProduct = +product_per_page || 9;
+
+  const sortby = sort ? sort : "Vị trí";
+
+  let count;
+  let totalPage;
+
+  let list;
+ 
+  if(sortby === "Vị trí")
+  {
+    switch(price)
+    {
+      case "1":
+      {
+        try{
+          count = await db().collection('product').find({$and: [{$or:[
+                                                                      { $text: { $search: name } },
+                                                                      { name: { $regex: name, $options: 'i' } }
+                                                                    ]}, 
+                                                                    {price: {$lte: 5000000}},
+                                                                    {category: ObjectId(category),brand: ObjectId(brand)}]}).count();
+        }
+        catch{count =  0;}
+      
+        totalPage = Math.ceil(count / numProduct);
+      
+        page = (page <= 0) ? 1 : page;
+        page = (page > totalPage) ? totalPage : page;
+      
+        try{
+          list = await db().collection('product').find({$and: [{$or:[
+                                                                      { $text: { $search: name } },
+                                                                      { name: { $regex: name, $options: 'i' } }
+                                                                    ]}, 
+                                                                    {price: {$lte: 5000000}},
+                                                                    {category: ObjectId(category),brand: ObjectId(brand)}]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+        }
+        catch { list = [];}
+      }
+      break;
+      case "2":
+      {
+        try{
+          count = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]},
+                                                              {price: {$gt: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).count();
+        }
+        catch{count =  0;}
+      
+        totalPage = Math.ceil(count / numProduct);
+      
+        page = (page <= 0) ? 1 : page;
+        page = (page > totalPage) ? totalPage : page;
+        try{
+          list = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]}, 
+                                                              {price: {$gt: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+        }
+          catch { list = [];}
+      }
+      break;
+    }
+  }
+  else if(sortby === "Tên")
+  {
+    switch(price)
+    {
+      case "1":
+      {
+        try{
+          count = await db().collection('product').find({$and: [{$or:[
+                                                                      { $text: { $search: name } },
+                                                                      { name: { $regex: name, $options: 'i' } }
+                                                                    ]}, 
+                                                                    {price: {$lte: 5000000}},
+                                                                    {category: ObjectId(category), brand: ObjectId(brand)}]}).count();
+        }
+        catch{count =  0;}
+      
+        totalPage = Math.ceil(count / numProduct);
+      
+        page = (page <= 0) ? 1 : page;
+        page = (page > totalPage) ? totalPage : page;
+      
+        try{
+          list = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]}, 
+                                                              {price: {$lte: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).sort({name: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+        }
+        catch { list = [];}
+      }
+      break;
+      case "2":
+      {
+        try{
+          count = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]},
+                                                              {price: {$gt: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).count();
+        }
+        catch{count =  0;}
+      
+        totalPage = Math.ceil(count / numProduct);
+      
+        page = (page <= 0) ? 1 : page;
+        page = (page > totalPage) ? totalPage : page;
+        try{
+          list = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]}, 
+                                                              {price: {$gt: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).sort({name: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+        }
+          catch { list = [];}
+      }
+      break;
+    }
+  }
+  else if(sortby === "Giá")
+  {
+    switch(price)
+    {
+      case "1":
+      {
+        try{
+          count = await db().collection('product').find({$and: [{$or:[
+                                                                      { $text: { $search: name } },
+                                                                      { name: { $regex: name, $options: 'i' } }
+                                                                    ]}, 
+                                                                    {price: {$lte: 5000000}},
+                                                                    {category: ObjectId(category), brand: ObjectId(brand)}]}).count();
+        }
+        catch{count =  0;}
+      
+        totalPage = Math.ceil(count / numProduct);
+      
+        page = (page <= 0) ? 1 : page;
+        page = (page > totalPage) ? totalPage : page;
+      
+        try{
+          list = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]}, 
+                                                              {price: {$lte: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).sort({price: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+        }
+        catch { list = [];}
+      }
+      break;
+      case "2":
+      {
+        try{
+          count = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]},
+                                                              {price: {$gt: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).count();
+        }
+        catch{count =  0;}
+      
+        totalPage = Math.ceil(count / numProduct);
+      
+        page = (page <= 0) ? 1 : page;
+        page = (page > totalPage) ? totalPage : page;
+        try{
+          list = await db().collection('product').find({$and: [{$or:[
+                                                                { $text: { $search: name } },
+                                                                { name: { $regex: name, $options: 'i' } }
+                                                              ]}, 
+                                                              {price: {$gt: 5000000}},
+                                                              {category: ObjectId(category), brand: ObjectId(brand)}]}).sort({price: 1, _id: 1}).limit(Number(numProduct)).skip((page - 1) * numProduct).toArray() ;
+        }
+          catch { list = [];}
+      }
+      break;
+    }
+  }
+
+  const nextPage = (page + 1) > totalPage ? 0 : page + 1;
+  const afterNextPage = (page + 2) > totalPage ? 0 : page + 2;
+
+  const prePage = (page - 1) <= 0 ? 0 : page - 1;
+  const beforePrePage = (page - 2) <= 0  ? 0 : page - 2;
+
+  return {list: list, currentPage: page, nextPage: nextPage, afterNextPage: afterNextPage, prePage: prePage, beforePrePage: beforePrePage};
+}
+
+module.exports.listCategory_brand = async () =>
+{
+  const category = await db().collection('category').find().toArray();
+  const brand = await db().collection('brand').find().toArray();
+  let category_brand = [];
+  for(let i = 0; i < category.length; i++)
+  {
+    let suitableBrand = [];
+    for(let j = 0; j < brand.length; j++)
+    {
+      for(let k = 0; k < brand[j].category.length; k++)
+       
+        if((category[i]._id).equals(brand[j].category[k]))
+          suitableBrand.push({_id: brand[j]._id, name: brand[j].name, cate_brand: category[i].name + "_" + brand[j].name});
+    }
+    category_brand.push({category: category[i], brand: suitableBrand});
+  }
+  return category_brand;
+}
+
+module.exports.listCategory = async () =>
+{
+  return await db().collection('category').find().toArray();
+}
+
+module.exports.listBrand = async () =>
+{
+  return await await db().collection('brand').find().toArray();
+}
 
 module.exports.listBestSellerProduct = async () => {
   return await db().collection('product').find({}).sort({sell_count: -1}).limit(7).toArray();
