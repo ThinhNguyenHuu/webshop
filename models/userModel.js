@@ -163,14 +163,17 @@ module.exports.checkUser = async (username, password) =>
     const user = await db().collection('user').findOne({username: username});
     if(user)
     {
+        if(user.ban)
+            return {user: false, error: "Tài khoản đã bị khóa."};
+
         const match = await bcrypt.compare(password, user.password);
         if(match)
-            return user;
+            return {user: user, error: ""} ;
         else
-            return false;
+            return {user: false, error: "Mật khẩu không đúng."};
     }
     else
-        return false;
+        return {user: false, error: "Người dùng không tồn tại."};
 }
 
 module.exports.findUser = async (id) =>

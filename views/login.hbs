@@ -16,18 +16,21 @@
           </div>
         </div>
         <div class="col-2 registered-users">
-          <strong>Đăng nhập</strong>  
+          <strong>Đăng nhập</strong>
           <div class="content">
+            {{#if error}}   
+              <p style="color: red;">{{error}} </p>
+            {{/if}}  
             <p>Nếu bạn đã có tài khoản, hãy đăng nhập bên dưới.</p>
             <form class="form-list" action="/user/login" method="POST">
               <label for="username">Tên đăng nhập <span class="required">*</span></label>
               <br>
-              <input type="text" title="User Name" class="input-text required-entry" id="username" value="" name="username">
+              <input type="text" title="User Name" class="input-text required-entry" id="username" value="" name="username" required>
               <br>
                             
               <label for="password">Mật khẩu <span class="required">*</span></label>
               <br>
-              <input type="password" title="Password" id="password" class="input-text required-entry validate-password" name="password">
+              <input type="password" title="Password" id="password" class="input-text required-entry validate-password" name="password" required> 
               <br>
               <input type="hidden" name="referer" value= "{{referer}}" >
               <p class="required">* Bắt buộc</p>
@@ -35,11 +38,6 @@
                 <input id="send2" name="send" type="submit" class="button login" value="Đăng nhập">
               </div>           
             </form> 
-              {{#if error}}   
-              <div class="alert alert-error">
-                <p style="color: red;">{{error}} </p>
-              </div>   
-              {{/if}}
           </div>
         </div>
       </fieldset>

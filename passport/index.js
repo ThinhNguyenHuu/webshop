@@ -5,12 +5,12 @@ const userModel = require('../models/userModel');
 
 passport.use(new LocalStrategy(
   async function(username, password, done) {
-    const user = await userModel.checkUser(username, password);
+    const {user, error} = await userModel.checkUser(username, password);
     
     if(user)
         return done(null, user);
     else
-        return done(null, false,  {message: 'Tên đăng nhập hoặc mật khẩu không đúng.'} );
+        return done(null, false,  {message: error} );
   }
 ));
 
