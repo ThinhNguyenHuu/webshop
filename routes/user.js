@@ -21,6 +21,16 @@ router.post('/login', passport.authenticate('local',
                             }
                         });
 
+router.get('/login/google',
+  passport.authenticate('google', { scope: ['email','profile'] }));
+
+
+router.get('/login/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/user/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
 

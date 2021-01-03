@@ -65,6 +65,23 @@ module.exports.addUser = async (body) =>
     return resultInsert;
 }
 
+module.exports.addGoogleUser = async (googleId, fullname, email, image) =>
+{
+    const avatar = {url: image};
+    return await db().collection('user').insertOne( {
+        googleId: googleId,
+        fullname: fullname, 
+        email: email, 
+        ban: false, 
+        avatar: avatar,
+    });
+}
+
+module.exports.findGoogleUser = async (googleId) =>
+{
+    return await db().collection('user').findOne({googleId: googleId});
+}
+
 module.exports.updateInfoUser = async (body, file, user) => {
 
     let fullname;
