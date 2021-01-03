@@ -138,6 +138,23 @@ module.exports.postUpdateInfo = async (req, res, next) => {
 
 }
 
+module.exports.postUpdateInfoGoogle = async (req, res, next) => {
+  
+  if(req.user) {
+    let file = null;
+    if (req.files != null && req.files.image != null) {
+      file = req.files.image;
+    }
+    
+    await userModel.updateInfoGoogleUser(file, req.user);
+    res.redirect("/user/info");
+  } else {
+    next();
+  }
+
+}
+
+
 module.exports.getUpdatePassword = async (req, res, next) => {
   
   const listCategory_brand = await productModel.listCategory_brand();

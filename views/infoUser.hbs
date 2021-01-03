@@ -15,14 +15,21 @@
 
                     <h5>Địa chỉ email: {{user.email}}</h5>
                     <br>
-              
+                    {{#if user.googleId}}
+                    {{else}}
                     <h5>Tên đăng nhập: {{user.username}}</h5>
+                    {{/if}}
                     <br>
               
                     <div class="buttons-set">
+                        {{#if user.googleId}}
+                        <button class="button login"> <a href="/user/info/updateinfo" >Cập nhật ảnh đại diện</a></button>
+                        {{else}}
                         <button class="button login"> <a href="/user/info/updateinfo" >Cập nhật thông tin</a></button>
                         <button class="button login"> <a href="/user/info/updatepassword">Đổi mật khẩu</a></button>
+                        {{/if}}
                     </div>
+                    
             </div>
         </div>
         </form>

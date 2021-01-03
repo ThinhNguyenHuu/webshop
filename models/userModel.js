@@ -120,6 +120,22 @@ module.exports.updateInfoUser = async (body, file, user) => {
     }}, null);
 }
 
+module.exports.updateInfoGoogleUser = async (file, user) => {
+       
+    let source = null;
+    if (file) {
+        const destroyPromise = destroyFiles(user.avatar);
+        const new_source = await uploadFiles(file);
+        await destroyPromise;
+        source = new_source;
+    }
+
+    await db().collection('user').updateOne( {_id: ObjectId(user._id)} ,{$set: {
+
+        avatar: source ? source : user.avatar, 
+    }}, null);
+}
+
 module.exports.updatePassword = async (body, user) => {
 
     let oldpassword;
