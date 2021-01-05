@@ -1792,46 +1792,39 @@ module.exports.findProduct = async (productId) =>{
   return product;
 }
 
-module.exports.listRelatedProduct = async (productId, categoryId) => {
-  const listOrderProduct = await db().collection('order_product').find({product: ObjectId(productId)}).toArray();
-  const listOrderId = listOrderProduct.map(item => item.order);
+const RELATED_PRODUCTS_SIZE = 7;
 
-  const listRelatedOrderProduct = await db().collection('order_product').aggregate([
-    {
-      $match: { order: { $in: listOrderId }, product: { $ne: ObjectId(productId) }}
-    },
-    {
-      $group: {
+module.exports.listRelatedProduct = async (productId, categoryId) => {
+  const listOrderId = await db().collection('order_product').distinct('order', { product: ObjectId(productId) });
+
+  const listRelatedProduct = await db().collection('order_product').aggregate([
+    { $match: { order: { $in: listOrderId }, product: { $ne: ObjectId(productId) }}},
+    { $group: {
         _id: '$product',
         total_quantity: { $sum: '$quantity' }
-      }
-    },
-    {
-      $sort: { total_quantity: 1 }
-    },
-    {
-      $lookup: {
+      }},
+    { $lookup: {
         from: 'product',
-        localField: 'product',
+        localField: '_id',
         foreignField: '_id',
-        as: 'object_product'
-      }
-    }
+        as: 'product'
+      }},
+    { $unwind: { path: '$product' }},
+    { $match: { 'product.category': ObjectId(categoryId) }},
+    { $sort: { total_quantity: -1 }},
+    { $limit: RELATED_PRODUCTS_SIZE}
   ]).toArray();
 
-  const listRelatedProduct = listRelatedOrderProduct.map(product => product.object_product[0]);
-
-  if (listRelatedProduct.length < 7) {
+  if (listRelatedProduct.length < RELATED_PRODUCTS_SIZE) {
+    const listRelatedProductId = listRelatedProduct.map(product => product.product._id);
+    listRelatedProductId.push(ObjectId(productId));
+    
     const remainingProduct = await db().collection('product').aggregate([
-        {
-          $match: { category: ObjectId(categoryId) }
-        },
-        {
-          $sample: { size: 7 - listRelatedProduct }
-        }
+        { $match: { category: ObjectId(categoryId), _id: { $nin: listRelatedProductId } }},
+        { $sample: { size: RELATED_PRODUCTS_SIZE - listRelatedProduct.length }}
       ]).toArray();
-
-    return [...listRelatedProduct, ...remainingProduct];
+      
+    return [...listRelatedProduct.map(item => item.product), ...remainingProduct];
   }
 
   return listRelatedProduct;
