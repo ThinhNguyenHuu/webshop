@@ -7,8 +7,7 @@ const productModel = require('../models/productModel');
 module.exports.addOrder = async (cart, user, address, phonenum) =>
 {
     const today = new Date();
-    const date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
-
+    //const date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
     let totalPriceAll = 0;
     for(let i = 0; i < cart.length; i++)
     {
@@ -22,7 +21,7 @@ module.exports.addOrder = async (cart, user, address, phonenum) =>
 
     const resultInsertOrder = await db().collection('order').insertOne({
         user: ObjectId(user._id),
-        date: date,
+        date: today,
         phonenum: phonenum,
         address: address,
         total_price_all: totalPriceAll,

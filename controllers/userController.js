@@ -58,11 +58,48 @@ module.exports.postRegister = async (req, res, next) => {
   const resultAddUser = await userModel.addUser(req.body);
 
   if(resultAddUser)
-    res.redirect('/user/login');
+    res.redirect('/user/register/verify/'+ resultAddUser);
   else
     res.redirect('/user/register');
 }
 
+module.exports.getRegisterVerify = async (req, res, next) =>{
+  const listCategory_brand = await productModel.listCategory_brand();
+
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('verify', { 
+      title: 'Xác thực',
+      listCategory_brand: listCategory_brand,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll,
+      url: "/user/register/verify",
+      id: req.params.id
+    });
+  }
+  else
+  {
+    res.render('verify', { 
+      title: 'Xác thực',
+      listCategory_brand: listCategory_brand,
+      url: "/user/register/verify",
+      id: req.params.id
+    });
+  }
+}
+
+module.exports.postRegisterVerify = async (req, res, next) => {
+  const result = await userModel.registerVerify(req.body);
+
+  if(result)
+    res.redirect('/user/login');
+  else
+    res.redirect('/user/register/verify/'+ req.body.iduser);
+
+}
 module.exports.logout = (req, res, next) => {
 
     req.logout();

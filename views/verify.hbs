@@ -1,0 +1,34 @@
+
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="account-login">
+            <div class="page-title">
+                <h2>Mã xác thực</h2>
+            </div>
+            <fieldset class="col1-set">
+            
+                <div class="col-1 registered-users">
+                    <div class="content">
+                        <form class="form-list" action="{{url}}" method="POST">
+                            <input type="text" value="{{id}}" id="iduser" name="iduser" hidden>
+                            <label for="code">Mã xác thực <span class="required">*</span></label>
+                            <br>
+                            <input type="text" title="Mã xác thực" class="input-text required-entry" id="code" value="" name="code" required>
+                            <br>
+
+                            <p class="required">* Bắt buộc</p>
+                            <div class="buttons-set">
+                              <input id="send2" name="send" type="submit" class="button login" value="Xác thực">
+                            </div>   
+                        </form> 
+                    </div>
+                </div>
+            </fieldset>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+  </section>

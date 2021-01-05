@@ -1,6 +1,7 @@
 const fs = require('fs');
 const ObjectId = require('mongodb').ObjectID;
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 const {db} = require('../db');
 const cloudinary = require('../cloudinary');
@@ -25,6 +26,9 @@ module.exports.addUser = async (body) =>
     else
         return false;
 
+    const checkEmailUser =  await db().collection('user').findOne({email: email});
+
+    
     if(body.username)
         username = body.username;
     else
@@ -34,7 +38,7 @@ module.exports.addUser = async (body) =>
 
     if(checkuser)
         return false;
-    
+
     if(body.password)
         password = body.password;
     else
@@ -44,25 +48,99 @@ module.exports.addUser = async (body) =>
         confirmPass = body.confirm;
     else
         return false;
-    
+        
     if(password !== confirmPass)
         return false;
 
-    const resultInsert = await db().collection('user').insertOne( {
-        fullname: fullname, 
-        email: email,
-        username: username, 
-        ban: false, 
-        avatar: null,
-    });
-    
-    bcrypt.hash(password, saltRounds, async function(rr, hash) {
-        await db().collection('user').updateOne( {_id: ObjectId(resultInsert.insertedId)} ,{$set: {
-            password: hash
-        }}, null);
-    });
+    if(!checkEmailUser)
+    {
+        const resultInsert = await db().collection('user').insertOne( {
+            fullname: fullname, 
+            email: email,
+            username: username, 
+            ban: false, 
+            avatar: null,
+            active: false,
 
-    return resultInsert;
+        });
+        
+        await bcrypt.hash(password, saltRounds, async function(rr, hash) {
+            await db().collection('user').updateOne( {_id: ObjectId(resultInsert.insertedId)} ,{$set: {
+                password: hash
+            }}, null);
+        });
+        
+        await bcrypt.hash(Math.floor(Math.random() * 101).toString(), saltRounds, async function(rr, hash) {
+            await db().collection('user').updateOne( {_id: ObjectId(resultInsert.insertedId)} ,{$set: {
+                verification: hash
+            }}, null);
+
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                  user: "inspirewebshop@gmail.com",
+                  pass: "1234-abcd",
+                },
+              });
+              
+            const mailOptions = {
+                from: "inspirewebshop@gmail.com", 
+                to: email, 
+                subject: "Mã xác nhận tài khoản",
+                text: "Mã xác nhận:" + hash,
+              };
+              
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+        });
+        return resultInsert.insertedId;
+    }
+
+    else if(checkEmailUser.active)
+    {
+        return false;
+    }
+    else
+    {
+        await bcrypt.hash(password, saltRounds, async function(rr, hash) {
+            await db().collection('user').updateOne( {_id: ObjectId(checkEmailUser._id)} ,{$set: {
+                fullname: fullname, 
+                username: username, 
+                ban: false, 
+                avatar: null,
+                password: hash
+            }}, null);
+        });
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "inspirewebshop@gmail.com",
+              pass: "1234-abcd",
+            },
+          });
+          
+        const mailOptions = {
+            from: "inspirewebshop@gmail.com", 
+            to: checkEmailUser.email, 
+            subject: "Mã xác nhận tài khoản",
+            text: "Mã xác nhận:" + checkEmailUser.verification,
+          };
+          
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+        return checkEmailUser._id;
+    }
 }
 
 module.exports.addGoogleUser = async (googleId, fullname, email, image) =>
@@ -77,6 +155,26 @@ module.exports.addGoogleUser = async (googleId, fullname, email, image) =>
     });
 }
 
+module.exports.registerVerify = async (body) => {
+
+    const user = await db().collection('user').findOne({_id: ObjectId(body.iduser)});
+    if(user)
+    {
+        if(user.verification == body.code)
+        {
+            await bcrypt.hash(Math.floor(Math.random() * 101).toString(), saltRounds, async function(rr, hash) {
+                await db().collection('user').updateOne( {_id: ObjectId(body.iduser)} ,{$set: {
+                    verification: hash,
+                    active: true,
+                }}, null);
+            });  
+            return true;
+        }
+    }
+    else
+        return false;
+
+}
 module.exports.findGoogleUser = async (googleId) =>
 {
     return await db().collection('user').findOne({googleId: googleId});

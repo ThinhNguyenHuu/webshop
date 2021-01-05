@@ -18,8 +18,8 @@ passport.use(new LocalStrategy(
 ));
 
 passport.use(new GoogleStrategy({
-    clientID: "207348781871-7u8nfg5oq0se1bpd9poru5gueu81q6g6.apps.googleusercontent.com",
-    clientSecret: "ocVvP5IVmCJj4WP2pfx2CHO9",
+    clientID: "74157313222-l1rui4o9m815pe41f1tg277d6bicnknk.apps.googleusercontent.com",
+    clientSecret: "PPG1nL403w4ytmkdy12anBRO",
     callbackURL: "/user/login/google/callback"
   },
   async function(accessToken, refreshToken, profile, done) {

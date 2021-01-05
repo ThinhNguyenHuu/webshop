@@ -11,7 +11,8 @@ router.post('/login', passport.authenticate('local',
                         failureRedirect: '/user/login',
                         failureFlash: true }), (req, res) => 
                         {
-                            if (req.body.referer &&  (req.body.referer).indexOf("/user/login") < 0)
+                            if (req.body.referer &&  (req.body.referer).indexOf("/user/login") < 0 &&
+                            (req.body.referer).indexOf("/user/register") < 0)
                             {
                                 res.redirect(req.body.referer);
                             }
@@ -33,6 +34,9 @@ router.get('/login/google/callback',
 
 router.get('/register', userController.getRegister);
 router.post('/register', userController.postRegister);
+
+router.get('/register/verify/:id', userController.getRegisterVerify);
+router.post('/register/verify', userController.postRegisterVerify);
 
 router.get('/logout', userController.logout);
 
