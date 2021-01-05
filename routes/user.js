@@ -12,7 +12,7 @@ router.post('/login', passport.authenticate('local',
                         failureFlash: true }), (req, res) => 
                         {
                             if (req.body.referer &&  (req.body.referer).indexOf("/user/login") < 0 &&
-                            (req.body.referer).indexOf("/user/register") < 0)
+                            (req.body.referer).indexOf("/user/register") < 0 &&  (req.body.referer).indexOf("/user/forgetpassword") < 0)
                             {
                                 res.redirect(req.body.referer);
                             }
@@ -50,5 +50,14 @@ router.post('/info/updateinfo/google', userController.postUpdateInfoGoogle)
 
 router.get('/info/updatepassword', userController.getUpdatePassword);
 router.post('/info/updatepassword', userController.postUpdatePassword);
+
+router.get('/forgetpassword', userController.getForgetPassword);
+router.post('/forgetpassword', userController.postForgetPassword);
+
+router.get('/forgetpassword/verify/:id', userController.getForgetPasswordVerify);
+router.post('/forgetpassword/verify', userController.postForgetPasswordVerify);
+
+router.get('/forgetpassword/update/:id', userController.getUpdateForgetPassword);
+router.post('/forgetpassword/update/:id', userController.postUpdateForgetPassword);
 
 module.exports = router;

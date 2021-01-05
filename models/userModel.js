@@ -170,11 +170,14 @@ module.exports.registerVerify = async (body) => {
             });  
             return true;
         }
+        else
+            return false;
     }
     else
         return false;
 
 }
+
 module.exports.findGoogleUser = async (googleId) =>
 {
     return await db().collection('user').findOne({googleId: googleId});
@@ -321,4 +324,97 @@ module.exports.findUserByUsername = async (username) =>
 {
     const user = await db().collection('user').findOne({username: username});
     return user;
+}
+
+module.exports.sendVerifyMailUser = async (email) =>{
+    const user = await db().collection('user').findOne({email: email});
+
+    if(user)
+    {
+        if(user.googleId)
+            return false;
+        else
+        {
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                user: "inspirewebshop@gmail.com",
+                pass: "1234-abcd",
+                },
+            });
+            
+            const mailOptions = {
+                from: "inspirewebshop@gmail.com", 
+                to: user.email, 
+                subject: "Mã xác nhận tài khoản",
+                text: "Mã xác nhận:" + user.verification,
+            };
+            
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                console.log(error);
+                } else {
+                console.log('Email sent: ' + info.response);
+                }
+            });
+
+            return user._id;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+module.exports.forgetPasswordVerify = async (body) => {
+    const user = await db().collection('user').findOne({_id: ObjectId(body.iduser)});
+    if(user)
+    {
+        if(user.verification == body.code)
+        {
+            await bcrypt.hash(Math.floor(Math.random() * 101).toString(), saltRounds, async function(rr, hash) {
+                await db().collection('user').updateOne( {_id: ObjectId(body.iduser)} ,{$set: {
+                    verification: hash
+                }}, null);
+            });  
+            return true;
+        }
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+module.exports.updateForgetPassword = async (iduser, body) => {
+
+    const user = await db().collection('user').findOne({_id: ObjectId(iduser)});
+
+    if(!user)
+        return false;
+
+    let newpassword;
+    let confirm;
+    
+    if(body.newpassword)
+        newpassword = body.newpassword;
+    else
+        return false;
+
+    if(body.confirm)
+        confirm = body.confirm;
+    else
+        return false;
+    
+    if(newpassword !== confirm)
+        return false;
+
+    await bcrypt.hash(newpassword, saltRounds, async function(err, hash) {
+        await db().collection('user').updateOne( {_id: ObjectId(user._id)} ,{$set: {
+            password: hash
+        }}, null);
+    });
+    
+    return true;
 }

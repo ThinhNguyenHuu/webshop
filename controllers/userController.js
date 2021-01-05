@@ -100,12 +100,12 @@ module.exports.postRegisterVerify = async (req, res, next) => {
     res.redirect('/user/register/verify/'+ req.body.iduser);
 
 }
+
 module.exports.logout = (req, res, next) => {
 
     req.logout();
     res.redirect('/');
 }
-
 
 module.exports.info = async (req, res, next) => {
 
@@ -131,7 +131,6 @@ module.exports.info = async (req, res, next) => {
     });
   }
 } 
-
 
 module.exports.getUpdateInfo = async (req, res, next) => {
   
@@ -191,7 +190,6 @@ module.exports.postUpdateInfoGoogle = async (req, res, next) => {
 
 }
 
-
 module.exports.getUpdatePassword = async (req, res, next) => {
   
   const listCategory_brand = await productModel.listCategory_brand();
@@ -205,14 +203,16 @@ module.exports.getUpdatePassword = async (req, res, next) => {
       title: 'Đổi mật khẩu',
       listCategory_brand: listCategory_brand,
       productsInCart: productsInCart.products,
-      totalPriceAll: productsInCart.totalPriceAll
+      totalPriceAll: productsInCart.totalPriceAll,
+      url: '/user/info/updatepassword'
      });
   }
   else
   {
     res.render('updatePassword', {
       title: 'Đổi mật khẩu',
-      listCategory_brand: listCategory_brand
+      listCategory_brand: listCategory_brand,
+      url: '/user/info/updatepassword'
     });
   }
 }
@@ -230,4 +230,114 @@ module.exports.postUpdatePassword = async (req, res, next) => {
     next();
   }
 
+}
+
+module.exports.getForgetPassword = async (req, res, next) => {
+
+  const listCategory_brand = await productModel.listCategory_brand();
+
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('forgetPassword', { 
+      title: 'Quên mật khẩu',
+      listCategory_brand: listCategory_brand,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll,
+    });
+  }
+  else
+  {
+    res.render('forgetPassword', { 
+      title: 'Quên mật khẩu',
+      listCategory_brand: listCategory_brand,
+    });
+  }
+}
+
+module.exports.postForgetPassword = async (req, res, next) =>{
+
+  const result = await userModel.sendVerifyMailUser(req.body.email);
+  if(result)
+  {
+    res.redirect('/user/forgetpassword/verify/' + result);
+  }
+  else
+    res.redirect('/user/forgetpassword');
+}
+
+module.exports.getForgetPasswordVerify = async (req, res, next) => {
+  const listCategory_brand = await productModel.listCategory_brand();
+
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('verify', { 
+      title: 'Xác thực',
+      listCategory_brand: listCategory_brand,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll,
+      url: "/user/forgetpassword/verify",
+      id: req.params.id
+    });
+  }
+  else
+  {
+    res.render('verify', { 
+      title: 'Xác thực',
+      listCategory_brand: listCategory_brand,
+      url: "/user/forgetpassword/verify",
+      id: req.params.id
+    });
+  }
+}
+
+module.exports.postForgetPasswordVerify = async (req, res, next) => {
+  const result = await userModel.forgetPasswordVerify(req.body);
+
+  if(result)
+    res.redirect('/user/forgetpassword/update/' + req.body.iduser);
+  else
+    res.redirect('/user/forgetpassword/verify/'+ req.body.iduser);
+}
+
+module.exports.getUpdateForgetPassword = async (req, res, next) => {
+  const listCategory_brand = await productModel.listCategory_brand();
+
+  let productsInCart;
+  if(req.session.cart)
+  {
+    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+
+    res.render('updatePassword', {
+      title: 'Đổi mật khẩu',
+      listCategory_brand: listCategory_brand,
+      productsInCart: productsInCart.products,
+      totalPriceAll: productsInCart.totalPriceAll,
+      forgetpassword: true,
+      url: '/user/forgetpassword/update/' + req.params.id
+     });
+  }
+  else
+  {
+    res.render('updatePassword', {
+      title: 'Đổi mật khẩu',
+      listCategory_brand: listCategory_brand,
+      forgetpassword: true,
+      url: '/user/forgetpassword/update/' + req.params.id
+    });
+  }
+}
+
+module.exports.postUpdateForgetPassword = async (req, res, next) => {
+
+  const resultUpdate =  await userModel.updateForgetPassword(req.params.id, req.body);
+  if(resultUpdate)
+    res.redirect("/user/login");
+  else
+    res.redirect("/user/forgetpassword/update/" + req.params.id);
 }
