@@ -296,6 +296,10 @@ module.exports.checkUser = async (username, password) =>
     {
         if(user.ban)
             return {user: false, error: "Tài khoản đã bị khóa."};
+        
+        if(user.active == false)
+            return {user: false, error: "Người dùng không tồn tại"};
+        
 
         const match = await bcrypt.compare(password, user.password);
         if(match)
