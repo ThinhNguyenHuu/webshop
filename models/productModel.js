@@ -1835,3 +1835,9 @@ module.exports.updateViewCount = async (productId) => {
     $inc: { view_count: 1 }
   });
 }
+
+module.exports.updateSellCount = async (productId) => {
+  await db().collection('product').updateOne({_id: ObjectId(productId)}, {
+    $inc: { sell_count: 1 }
+  });
+}

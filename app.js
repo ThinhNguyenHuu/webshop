@@ -30,10 +30,12 @@ app.engine('hbs', exphbs({
     // get created date and convert to string
     getDateFromId: function (id) { 
       const date = new Date(id.getTimestamp());
-      return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); 
+      return [("0" + date.getDate()).slice(-2), ("0" + (date.getMonth() + 1)).slice(-2), date.getFullYear()].join('/') + ' - ' 
+    + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
     },
     dateToString: function (date) {
-      return [date.getDate(), date.getMonth(), date.getYear() + 1900].join('/'); 
+      return [("0" + date.getDate()).slice(-2), ("0" + (date.getMonth() + 1)).slice(-2), date.getFullYear()].join('/') + ' - ' 
+    + ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
     },
     discountPrice: function (price, discount) { return price - price * discount / 100.0 },
     isNewProduct: function (id) { 
@@ -41,6 +43,12 @@ app.engine('hbs', exphbs({
       const diffTime = Date.now - insertDate;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return diffDays < 15;
+    },
+    getCommentImgContent: function (name) {
+      const arr = (name.toUpperCase()).split(' ');
+      let content = '';
+      arr.forEach(item => { content += item[0]; });
+      return content;
     }
   }
 }));

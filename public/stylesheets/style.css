@@ -10917,6 +10917,9 @@ ol#compare-items li a.product-name {
 }
 }
 
+.user-comment-container {
+	margin-top: 20px;
+}
 .comments-tab-container {
 	width: 70%;
 	margin: 0 auto;
@@ -10943,6 +10946,8 @@ ol#compare-items li a.product-name {
 .comment-box {
 	padding: 10px;
 	border-bottom: 1px solid #000;
+	display: inline-block;
+	width: 80%;
 }
 .comment-box .comment-name {
 	font-size: 18px;
@@ -10964,7 +10969,8 @@ ol#compare-items li a.product-name {
 	color: blue;
 }
 .comment-box.level2 {
-	margin-left: 10%;
+	width: 70%;
+	display: inline-block;
 }
 .comment-question-form.level2 {
 	margin-left: 10%;
@@ -10975,4 +10981,36 @@ ol#compare-items li a.product-name {
 .badge.amount-of-comment {
 	background-color: #de3545;
 	color: #fff;
+}
+.comment-img-box {
+	height: 80px;
+	width: 80px;
+	display: inline-block;
+	background-color: #ad0800;
+	margin-right: 15px;
+	line-height: 80px;
+	vertical-align: text-bottom;
+	text-align: center;
+	font-size: 18px;
+	color: #fff;
+	font-weight: 700;
+}
+.comment-img-box2 {
+	height: 80px;
+	width: 80px;
+	display: inline-block;
+	background-color: #ad0800;
+	margin-left: 10%;
+	margin-right: 15px;
+	margin-top: 15px;
+	line-height: 80px;
+	vertical-align: bottom;
+	text-align: center;
+	font-size: 18px;
+	color: #fff;
+	font-weight: 700;
+}
+.view-count, .sell-count {
+	margin-top: 15px;
+	font-weight: 400;
 }

@@ -43,6 +43,8 @@
                 <div class="product-name">
                   <h1>{{product.name}}</h1>
                 </div>
+                <div class="view-count">Số lượt xem: <strong>{{product.view_count}}</strong></div>
+                <div class="sell-count">Đã bán: <strong>{{product.sell_count}}</strong></div>
                 <!-- rating -->
                 <div class="ratings">
                   <div class="rating-box">
@@ -288,18 +290,12 @@
 
                       {{#each listComment}}
                       <div class="user-comment-container" id="user-comment">
+                        <div class="comment-img-box">{{getCommentImgContent name}}</div>
                         <div class="comment-box">
                           <div class="comment-name">{{name}}<div class="comment-time">{{getDateFromId _id}}</div></div>
                           <div class="comment-text">{{text}}</div>
                           <div class="comment-reply"><a href="#{{_id}}" data-toggle="collapse" role="button" aria-expanded="false">Trả lời</a></div>
                         </div>
-
-                        {{#each reply}}
-                        <div class="comment-box level2">
-                          <div class="comment-name">{{name}}<div class="comment-time">{{dateToString create_at}}</div></div>
-                          <div class="comment-text">{{text}}</div>
-                        </div>
-                        {{/each}}
 
                         <!-- Reply form -->
                         <div class="collapse" id="{{_id}}">
@@ -318,6 +314,14 @@
                             </div>
                           </form>
                         </div>   
+
+                        {{#each reply}}
+                        <div class="comment-img-box2">{{getCommentImgContent name}}</div>
+                        <div class="comment-box level2">
+                          <div class="comment-name">{{name}}<div class="comment-time">{{dateToString create_at}}</div></div>
+                          <div class="comment-text">{{text}}</div>
+                        </div>
+                        {{/each}}
 
                       </div>
                       {{/each}}
