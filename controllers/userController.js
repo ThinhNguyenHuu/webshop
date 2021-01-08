@@ -111,24 +111,27 @@ module.exports.info = async (req, res, next) => {
 
   const listCategory_brand = await productModel.listCategory_brand();
 
-  let productsInCart;
-  if(req.session.cart)
+  if(req.user)
   {
-    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+    let productsInCart;
+    if(req.session.cart)
+    {
+      productsInCart = await cartModel.getProductsInCart(req.session.cart);
 
-    res.render('infoUser', {
-      title: 'Tài khoản',
-      listCategory_brand: listCategory_brand,
-      productsInCart: productsInCart.products,
-      totalPriceAll: productsInCart.totalPriceAll
-     });
-  }
-  else
-  {
-    res.render('infoUser', {
-      title: 'Tài khoản',
-      listCategory_brand: listCategory_brand
-    });
+      res.render('infoUser', {
+        title: 'Tài khoản',
+        listCategory_brand: listCategory_brand,
+        productsInCart: productsInCart.products,
+        totalPriceAll: productsInCart.totalPriceAll
+      });
+    }
+    else
+    {
+      res.render('infoUser', {
+        title: 'Tài khoản',
+        listCategory_brand: listCategory_brand
+      });
+    }
   }
 } 
 
@@ -136,25 +139,35 @@ module.exports.getUpdateInfo = async (req, res, next) => {
   
   const listCategory_brand = await productModel.listCategory_brand();
 
-  let productsInCart;
-  if(req.session.cart)
+  if(req.user)
   {
-    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+    if(req.user.is_admin)
+      next();
+    else
+    {
+      let productsInCart;
+      if(req.session.cart)
+      {
+        productsInCart = await cartModel.getProductsInCart(req.session.cart);
 
-    res.render('updateInfoUser', {
-      title: 'Cập nhật thông tin',
-      listCategory_brand: listCategory_brand,
-      productsInCart: productsInCart.products,
-      totalPriceAll: productsInCart.totalPriceAll
-     });
+        res.render('updateInfoUser', {
+          title: 'Cập nhật thông tin',
+          listCategory_brand: listCategory_brand,
+          productsInCart: productsInCart.products,
+          totalPriceAll: productsInCart.totalPriceAll
+        });
+      }
+      else
+      {
+        res.render('updateInfoUser', {
+          title: 'Cập nhật thông tin',
+          listCategory_brand: listCategory_brand
+        });
+      }
+    }
   }
   else
-  {
-    res.render('updateInfoUser', {
-      title: 'Cập nhật thông tin',
-      listCategory_brand: listCategory_brand
-    });
-  }
+    next();
 
 }
 
@@ -194,27 +207,38 @@ module.exports.getUpdatePassword = async (req, res, next) => {
   
   const listCategory_brand = await productModel.listCategory_brand();
 
-  let productsInCart;
-  if(req.session.cart)
+  if(req.user)
   {
-    productsInCart = await cartModel.getProductsInCart(req.session.cart);
+    if(req.user.is_admin)
+      next();
+    else
+    {
+  
+      let productsInCart;
+      if(req.session.cart)
+      {
+        productsInCart = await cartModel.getProductsInCart(req.session.cart);
 
-    res.render('updatePassword', {
-      title: 'Đổi mật khẩu',
-      listCategory_brand: listCategory_brand,
-      productsInCart: productsInCart.products,
-      totalPriceAll: productsInCart.totalPriceAll,
-      url: '/user/info/updatepassword'
-     });
+        res.render('updatePassword', {
+          title: 'Đổi mật khẩu',
+          listCategory_brand: listCategory_brand,
+          productsInCart: productsInCart.products,
+          totalPriceAll: productsInCart.totalPriceAll,
+          url: '/user/info/updatepassword'
+        });
+      }
+      else
+      {
+        res.render('updatePassword', {
+          title: 'Đổi mật khẩu',
+          listCategory_brand: listCategory_brand,
+          url: '/user/info/updatepassword'
+        });
+      }
+    }
   }
   else
-  {
-    res.render('updatePassword', {
-      title: 'Đổi mật khẩu',
-      listCategory_brand: listCategory_brand,
-      url: '/user/info/updatepassword'
-    });
-  }
+    next();
 }
 
 module.exports.postUpdatePassword = async (req, res, next) => {

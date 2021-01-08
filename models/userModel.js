@@ -143,6 +143,7 @@ module.exports.addUser = async (body) =>
     }
 }
 
+//Add user that login with google 
 module.exports.addGoogleUser = async (googleId, fullname, email, image) =>
 {
     const avatar = {url: image};
@@ -155,6 +156,7 @@ module.exports.addGoogleUser = async (googleId, fullname, email, image) =>
     });
 }
 
+//Verify when login
 module.exports.registerVerify = async (body) => {
 
     const user = await db().collection('user').findOne({_id: ObjectId(body.iduser)});
@@ -331,6 +333,9 @@ module.exports.sendVerifyMailUser = async (email) =>{
 
     if(user)
     {
+        if(user.is_admin)
+            return false;
+            
         if(user.googleId)
             return false;
         else
@@ -367,6 +372,7 @@ module.exports.sendVerifyMailUser = async (email) =>{
     }
 }
 
+//Verify when forget password
 module.exports.forgetPasswordVerify = async (body) => {
     const user = await db().collection('user').findOne({_id: ObjectId(body.iduser)});
     if(user)

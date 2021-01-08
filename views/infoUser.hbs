@@ -20,7 +20,9 @@
                     <h5>Tên đăng nhập: {{user.username}}</h5>
                     {{/if}}
                     <br>
-              
+
+                    {{#if user.is_admin}}
+                    {{else}}
                     <div class="buttons-set">
                         {{#if user.googleId}}
                         <button class="button login"> <a href="/user/info/updateinfo" >Cập nhật ảnh đại diện</a></button>
@@ -29,6 +31,7 @@
                         <button class="button login"> <a href="/user/info/updatepassword">Đổi mật khẩu</a></button>
                         {{/if}}
                     </div>
+                    {{/if}}
                     
             </div>
         </div>
