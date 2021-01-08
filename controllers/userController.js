@@ -179,8 +179,11 @@ module.exports.postUpdateInfo = async (req, res, next) => {
       file = req.files.image;
     }
     
-    await userModel.updateInfoUser(req.body, file, req.user);
-    res.redirect("/user/info");
+    const result = await userModel.updateInfoUser(req.body, file, req.user);
+    if(result)
+      res.redirect("/user/info");
+    else
+      res.redirect("/user/info/updateinfo")
   } else {
     next();
   }

@@ -196,16 +196,17 @@ module.exports.updateInfoUser = async (body, file, user) => {
     else
         fullname = user.fullname;
 
-    
-    if(body.email)
-        email = body.email;
-    else
-        email = user.email;
-
     if(body.username)
         username = body.username;
     else
         username = user.username;
+
+    const hasuser = await db().collection('user').findOne({username: username});
+
+    if(hasuser && hasuser._id != user._id)
+        return false;
+
+    
        
     let source = null;
     if (file) {
@@ -221,6 +222,8 @@ module.exports.updateInfoUser = async (body, file, user) => {
         avatar: source ? source : user.avatar, 
         username: username, 
     }}, null);
+
+    return true;
 }
 
 module.exports.updateInfoGoogleUser = async (file, user) => {
