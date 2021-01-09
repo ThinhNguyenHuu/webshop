@@ -2,7 +2,7 @@ var LRU = require("lru-cache")
   , options = { max: 100
               , maxAge: 1000 * 60 }
   , cache = new LRU(options);
-
+const axios = require('axios');
 
   module.exports.get = (key) => {
     return new Promise(resolve => {
@@ -23,6 +23,8 @@ var LRU = require("lru-cache")
   module.exports.clear = () => {
     return new Promise(resolve => {
       cache.reset();
-      resolve(true);
+      axios.get('http://inspiredigital-management.herokuapp.com/api/cache/clear')
+        .then(() => resolve(true))
+        .catch((e) => resolve(true));
     })
   }
