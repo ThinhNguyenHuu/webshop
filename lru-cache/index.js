@@ -23,7 +23,20 @@ const axios = require('axios');
   module.exports.clear = () => {
     return new Promise(resolve => {
       cache.reset();
-      axios.get('http://inspiredigital-management.herokuapp.com/api/cache/clear');
       resolve(true);
+    })
+  }
+
+  module.exports.clearManagementCache = () => {
+    return new Promise(resolve => {
+      axios.get('http://inspiredigital-management.herokuapp.com/api/cache/clear')
+      .then(() => {
+        console.log('Clear management cache');
+        resolve(true);
+      })
+      .catch((e) => {
+        console.log('Fail to clear management cache');
+        resolve(true);
+      });
     })
   }
