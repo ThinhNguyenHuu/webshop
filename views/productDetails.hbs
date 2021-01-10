@@ -117,6 +117,9 @@
                     <div class="box-reviews1">
                       <div class="form-add">
                         <!-- Review form -->
+                        {{#if user}}
+                        {{#if user.is_admin}}
+                        {{else}}
                         <form id="review-form" method="post" action="/product/{{product._id}}/review">
                           <h3>Viết đánh giá của bạn</h3>
                           <fieldset>
@@ -172,13 +175,10 @@
                             <div class="review1">
                               <ul class="form-list">
                                 <li>
-                                  {{#if user}}
-                                  {{else}}
                                   <label class="required" for="nickname_field">Tên của bạn<em>*</em></label>
                                   <div class="input-box">
                                     <input type="text" class="input-text required-entry" id="nickname_field" name="name" required>
                                   </div>
-                                  {{/if}}
                                 </li>
                                 <li>
                                   <label class="required" for="summary_field">Tóm tắt<em>*</em></label>
@@ -203,6 +203,8 @@
                             </div>
                           </fieldset>
                         </form>
+                        {{/if}}
+                        {{/if}}
                       </div>
                     </div>
                     <div id="user-reviews" class="box-reviews2">
@@ -273,13 +275,23 @@
                       <div class="comment-box-title">Hỏi và đáp <span class="badge amount-of-comment">{{countComment}}</span></div>
 
                       <!-- Question form -->
-                      <form action="/product/{{product._id}}/comment" method="POST" class="comment-question-form">
-                        {{#if user}}
+                      {{#if user}}
+                        {{#if user.is_admin}}
                         {{else}}
+                        <form action="/product/{{product._id}}/comment" method="POST" class="comment-question-form">
+                          <div class="input-box">
+                            <textarea class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết bình luận của bạn" required></textarea>
+                          </div>
+                          <div class="buttons-set">
+                            <button class="button submit" title="Submit Review" type="submit"><span>Gửi câu hỏi</span></button>
+                          </div>
+                        </form>
+                        {{/if}}
+                      {{else}}
+                      <form action="/product/{{product._id}}/comment" method="POST" class="comment-question-form">
                         <div class="input-box">
                           <input type="text" class="input-text comment-input-name" id="nickname_field" name="name" placeholder="Tên của bạn" required>
-                        </div>  
-                        {{/if}}
+                        </div>
                         <div class="input-box">
                           <textarea class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết bình luận của bạn" required></textarea>
                         </div>
@@ -287,12 +299,14 @@
                           <button class="button submit" title="Submit Review" type="submit"><span>Gửi câu hỏi</span></button>
                         </div>
                       </form>
+                      {{/if}}
 
                       {{#each listComment}}
                       <div class="user-comment-container" id="user-comment">
-                        <div class="comment-img-box">{{getCommentImgContent name}}</div>
+                        {{#if fromAdmin}}<div class="comment-img-box" style="background-color: #210904">Admin</div>
+                        {{else}}<div class="comment-img-box">{{getCommentImgContent name}}</div>{{/if}}
                         <div class="comment-box">
-                          <div class="comment-name">{{name}}<div class="comment-time">{{getDateFromId _id}}</div></div>
+                          <div class="comment-name">{{name}}{{#if fromAdmin}}<span class="badge badge-danger" style="margin-left: 10px;">Admin</span>{{/if}}<div class="comment-time">{{getDateFromId _id}}</div></div>
                           <div class="comment-text">{{text}}</div>
                           <div class="comment-reply"><a href="#{{_id}}" data-toggle="collapse" role="button" aria-expanded="false">Trả lời</a></div>
                         </div>
