@@ -336,10 +336,10 @@ module.exports.addReview = async (req, res, next) => {
 
 module.exports.addComment = async (req, res, next) => {
   if (res.locals.user)
-    req.body.name = res.locals.user.fullname;
-
-  const commentPage = req.query.commentPage || 1;
+    req.body.userId = res.locals.user._id;
+  else
+    req.body.userId = null;
 
   await commentModel.addComment(req.body, req.params.commentId, req.params.productId);
-  res.redirect(req.get('referer') + '/?commentPage=' + commentPage + '#comments_tabs');
+  res.redirect(req.get('referer') + '#comments_tabs');
 }
