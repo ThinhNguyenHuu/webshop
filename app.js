@@ -18,6 +18,7 @@ const productRouter = require('./routes/product');
 const userRouter = require('./routes/user');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
+const apiRouter = require('./api');
 const { ObjectId } = require('mongodb');
 
 const app = express();
@@ -84,6 +85,7 @@ app.use('/product', productRouter);
 app.use('/user', userRouter);
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
+app.use('/api', apiRouter);
 
 
 // catch 404 and forward to error handler
