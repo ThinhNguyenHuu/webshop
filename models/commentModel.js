@@ -15,6 +15,7 @@ module.exports.list = async (pageIndex, commentPerPage, productId) => {
 
   const listComment = await db().collection('comment').aggregate([
     { $match: { product_id: ObjectId(productId) ,  isReply: false }},
+    { $sort: { _id: -1 } },
     { $skip: commentPerPage * (page - 1) },
     { $limit:  commentPerPage},
     { $lookup: {
