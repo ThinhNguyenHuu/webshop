@@ -78,13 +78,13 @@ module.exports.addUser = async (body) =>
             const transporter = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
-                  user: "inspirewebshop@gmail.com",
-                  pass: "1234-abcd",
+                  user: process.env.SUPERADMIN_EMAIL_USER,
+                  pass: process.env.SUPERADMIN_EMAIL_PASS,
                 },
               });
               
             const mailOptions = {
-                from: "inspirewebshop@gmail.com", 
+                from: process.env.SUPERADMIN_EMAIL_USER, 
                 to: email, 
                 subject: "Mã xác nhận tài khoản",
                 text: "Mã xác nhận:" + hash,
@@ -120,13 +120,13 @@ module.exports.addUser = async (body) =>
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-              user: "inspirewebshop@gmail.com",
-              pass: "1234-abcd",
+              user: process.env.SUPERADMIN_EMAIL_USER,
+              pass: process.env.SUPERADMIN_EMAIL_PASS,
             },
           });
           
         const mailOptions = {
-            from: "inspirewebshop@gmail.com", 
+            from: process.env.SUPERADMIN_EMAIL_USER, 
             to: checkEmailUser.email, 
             subject: "Mã xác nhận tài khoản",
             text: "Mã xác nhận:" + checkEmailUser.verification,
@@ -345,13 +345,13 @@ module.exports.sendVerifyMailUser = async (email) =>{
             const transporter = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
-                user: "inspirewebshop@gmail.com",
-                pass: "1234-abcd",
+                user: process.env.SUPERADMIN_EMAIL_USER,
+                pass: process.env.SUPERADMIN_EMAIL_PASS,
                 },
             });
             
             const mailOptions = {
-                from: "inspirewebshop@gmail.com", 
+                from: process.env.SUPERADMIN_EMAIL_USER, 
                 to: user.email, 
                 subject: "Mã xác nhận tài khoản",
                 text: "Mã xác nhận:" + user.verification,
