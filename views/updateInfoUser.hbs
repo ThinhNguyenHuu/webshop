@@ -11,10 +11,12 @@
         <form class="form-list" action="/user/info/updateinfo" method="POST" enctype="multipart/form-data">
         {{/if}}
             <div class="col-1 new-users">
-                <img src="{{user.avatar.url}}" alt = "avatar"  style="max-width: 100%; max-height: 80%"/>
+                <img src="{{user.avatar.url}}" alt = "avatar"  style="width: 200px; height: 200px"/>
                 <br>
                 <label for="image">Chọn ảnh và click nút "Cập nhật" để cập nhật ảnh đại diện:</label>
+                <br>
                 <input type="file" name="image" id="image" accept="image/*" value=""/>
+                <br>
                 {{#if user.googleId}}
                 <div class="buttons-set">
                   <input id="send2" name="send" type="submit" class="button login" value="Cập nhật">
