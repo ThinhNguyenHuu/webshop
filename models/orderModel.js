@@ -18,7 +18,7 @@ module.exports.addOrder = async (cart, user, address, phonenum) =>
         cart[i].totalPrice = totalPrice;
         cart[i].price = price;
 
-        await productModel.updateSellCount(cart[i].id);
+        await productModel.updateSellCount(cart[i].id, cart[i].qty);
     }
 
     const resultInsertOrder = await db().collection('order').insertOne({

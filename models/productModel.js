@@ -1907,8 +1907,8 @@ module.exports.updateViewCount = async (productId) => {
   });
 }
 
-module.exports.updateSellCount = async (productId) => {
+module.exports.updateSellCount = async (productId, quantity) => {
   await db().collection('product').updateOne({_id: ObjectId(productId)}, {
-    $inc: { sell_count: 1 }
+    $inc: { sell_count: quantity }
   });
 }
