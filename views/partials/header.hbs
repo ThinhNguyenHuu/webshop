@@ -11,8 +11,7 @@
           <!-- Header Top Links -->
           <div class="toplinks">
             <div class="links">
-              <!--div class="myaccount"><a title="My Account" href="/user/info"><span class="hidden-xs">Tài khoản</span></a></div-->
-              <!--div class="wishlist"><a title="My Wishlist" href="#"><span class="hidden-xs">Wishlist</span></a></div-->
+             
               {{#if user}}
               <div class="check"><a title="Danh sách đơn hàng" href="/order/listorder"><span>Danh sách đơn hàng</span></a></div>
               {{/if}}
@@ -75,7 +74,7 @@
                 </ul>
                 <div class="top-subtotal">Tổng cộng: <span class="price">{{totalPriceAll}}đ</span></div>
                 <div class="actions">
-                  <!--button class="btn-checkout" type="button"><span>Thanh toán</span></button-->
+                  
                   <button onclick="window.location.href='/cart'" class="view-cart" type="button"><span>Xem giỏ hàng</span></button>
                 </div>
                 {{else}}
@@ -113,10 +112,48 @@
 <!-- end header --> 
 <!-- Navbar -->
 <nav>
+
+
   <div class="container">
     <div class="nav-inner"> 
+
+
+        <!-- mobile-menu -->
+        <div class="hidden-desktop" id="mobile-menu">
+          <ul class="navmenu">
+            <li>
+              <div class="menutop">
+                <div class="toggle"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></div>
+                <h2>Menu</h2>
+              </div>
+              <ul style="display:none;" class="submenu">
+                <li>
+                  <ul class="topnav">
+                    <li class="level0 nav-6 level-top first parent"> <a class="level-top" href="/index"> <span>Trang chủ</span> </a>
+                    </li>
+                    <li class="level0 nav-6 level-top first parent"> <a class="level-top" href="/product"> <span>Tất cả sản phẩm</span> </a>
+                    </li>
+                    {{#each listCategory_brand}}
+                    <li class="level0 nav-6 level-top"> <a class="level-top" href="/product/{{category.name}}"> <span>{{category.name}}</span> </a>
+                      <ul class="level0">
+                        {{#each brand}}
+                        <li class="level1 first"><a href="/product/{{cate_brand}}"><span>{{name}}</span></a></li>
+                        {{/each}}
+                      </ul>
+                    </li>
+                    {{/each}}
+                   
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!--navmenu--> 
+        </div>
+        <!--End mobile-menu --> 
+
       <a class="logo-small" title="Magento Commerce" href="/index"><img alt="Magento Commerce" src="/images/logo-small.png"></a>
-      <ul id="nav" ><!--class="hidden-xs"-->
+      <ul id="nav" class="hidden-xs">
         <li class="level0 parent drop-menu">
           <a href="/index" class="active">
             <span>Trang chủ</span>

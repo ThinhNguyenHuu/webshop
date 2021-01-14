@@ -33,7 +33,6 @@
                   <tfoot>
                     <tr class="first last">
                       <td class="a-right last" colspan="50"><button onclick="window.location.href='{{referer}}'" class="button btn-continue" title="Continue Shopping" type="button"><span><span>Tiếp tục mua sắm</span></span></button>
-                        <!--button class="button btn-update" title="Cập nhật giỏ hàng" value="update_qty" name="update_cart_action" type="submit"><span><span>Cập nhật</span></span></button-->
                         <button id="empty_cart_button" class="button btn-empty" title="Xóa tất cả khỏi giỏ" value="empty_cart" name="update_cart_action" type="button" onclick="window.location.href='/cart/removeall'"><span><span>Xóa tất cả</span></span></button></td>
                     </tr>
                   </tfoot>
@@ -90,29 +89,21 @@
                       <td class="a-right" style=""><strong><span class="price">{{totalPriceAll}}đ</span></strong></td>
                     </tr>
                   </tfoot>
-                  <!--tbody>
-                    <tr>
-                      <td colspan="1" class="a-left" style=""> Subtotal </td>
-                      <td class="a-right" style=""><span class="price">$77.38</span></td>
-                    </tr>
-                  </tbody-->
+                 
                 </table>
                 <ul class="checkout">
                   <li>
                     <button class="button btn-proceed-checkout" title="Đặt hàng" type="submit"><span>Đặt hàng</span></button>
                   </li>
                   <br>
-                  <!--li><a title="Checkout with Multiple Addresses" href="multiple_addresses.html">Checkout with Multiple Addresses</a> </li>
-                  <br-->
+                 
                 </ul>
               </div>
-              <!--inner--> 
               
             </div>
            
           </div>
-        </form>
-          <!--cart-collaterals--> 
+        </form> 
           {{else}}
           <h1>Không có sản phẩm nào trong giỏ hàng.</h1>
           <br>
