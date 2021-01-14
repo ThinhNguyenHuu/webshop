@@ -169,12 +169,6 @@
                             <div class="review1">
                               <ul class="form-list">
                                 <li>
-                                  <label class="required" for="nickname_field">Tên của bạn<em>*</em></label>
-                                  <div class="input-box">
-                                    <input type="text" class="input-text required-entry" id="nickname_field" name="name" required>
-                                  </div>
-                                </li>
-                                <li>
                                   <label class="required" for="summary_field">Tóm tắt<em>*</em></label>
                                   <div class="input-box">
                                     <input type="text" class="input-text required-entry" id="summary_field" name="summary" required>
@@ -274,7 +268,7 @@
                         {{else}}
                         <form action="/product/{{product._id}}/comment" method="POST" class="comment-question-form">
                           <div class="input-box">
-                            <textarea class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết câu hỏi của bạn" required></textarea>
+                            <textarea style="margin-left: 0px;" class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết câu hỏi của bạn" required></textarea>
                           </div>
                           <div class="buttons-set">
                             <button class="button submit" title="Submit Review" type="submit"><span>Gửi câu hỏi</span></button>
@@ -284,10 +278,10 @@
                       {{else}}
                       <form action="/product/{{product._id}}/comment" method="POST" class="comment-question-form">
                         <div class="input-box">
-                          <input type="text" class="input-text comment-input-name" id="nickname_field" name="name" placeholder="Tên của bạn" required>
+                          <input style="margin-left: 0px;" type="text" class="input-text comment-input-name" id="nickname_field" name="name" placeholder="Tên của bạn" required>
                         </div>
                         <div class="input-box">
-                          <textarea class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết câu hỏi của bạn" required></textarea>
+                          <textarea style="margin-left: 0px;" class="comment-input-text" rows="3" id="review_field" name="text" placeholder="Viết câu hỏi của bạn" required></textarea>
                         </div>
                         <div class="buttons-set">
                           <button class="button submit" title="Submit Review" type="submit"><span>Gửi câu hỏi</span></button>
@@ -299,7 +293,7 @@
                       <div class="user-comment-container" id="user-comment">
                         <div class="child-comment-container">
                           {{#if _id.user}}
-                          <div class="comment-img-box" {{#if _id.user.avatar}}style="background-color:#fff;"{{/if}}>{{#if _id.user.avatar}}<img class="img-thumbnail" src="{{_id.user.avatar.url}}" alt="avatar">{{else}}{{getCommentImgContent _id.user.fullname}}{{/if}}</div>
+                          <div class="comment-img-box" {{#if _id.user.avatar}}style="background-color:#fff;"{{/if}}>{{#if _id.user.avatar}}<img src="{{_id.user.avatar.url}}" alt="avatar">{{else}}{{getCommentImgContent _id.user.fullname}}{{/if}}</div>
                           <div class="comment-box">
                             <div class="comment-name">{{_id.user.fullname}}<div class="comment-time">{{getDateFromId _id._id}}</div></div>
                             <div class="comment-text">{{_id.text}}</div>
@@ -318,7 +312,7 @@
 
                         <!-- Reply form -->
                         <div class="collapse" id="{{_id._id}}">
-                          <form action="/product/{{../product._id}}/reply-comment/{{_id._id}}?commentPage={{../commentPage}}" method="POST" class="comment-question-form level2">
+                          <form action="/product/{{../product._id}}/reply-comment/{{_id._id}}?commentPage={{../commentPage}}" method="POST" style="margin-left: 80px;width:80%" class="comment-question-form level2">
                             {{#if ../user}}
                             {{else}}
                             <div class="input-box">
@@ -339,7 +333,7 @@
                           {{#if _id}}
                             <div class="child-reply-comment-container">
                               {{#if user_id}}
-                              <div class="comment-img-box2" style="background-color:{{#if user.avatar}}#fff{{else}}{{#if user.is_admin}}#000{{/if}}{{/if}}">{{#if user.avatar}}<img class="img-thumbnail" src="{{user.avatar.url}}" alt="avatar">{{else}}Admin{{/if}}</div>
+                              <div class="comment-img-box2" style="background-color:{{#if user.avatar}}#fff{{else}}{{#if user.is_admin}}#000{{/if}}{{/if}}">{{#if user.avatar}}<img src="{{user.avatar.url}}" alt="avatar">{{else}}Admin{{/if}}</div>
                               <div class="comment-box level2">
                                 <div class="comment-name">{{user.fullname}}{{#if user.is_admin}}<span style="margin-left: 10px;" class="badge">Admin</span>{{/if}}<div class="comment-time">{{getDateFromId _id}}</div></div>
                                 <div class="comment-text">{{text}}</div>
